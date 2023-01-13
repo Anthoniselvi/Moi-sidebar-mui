@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import "./Home.css";
+import Button from "@mui/material/Button";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 import { AiOutlineArrowLeft, AiFillEdit } from "react-icons/ai";
 import { BiSearch } from "react-icons/bi";
@@ -15,6 +17,7 @@ import axios from "axios";
 import Box from "@mui/material/Box";
 import Fab from "@mui/material/Fab";
 import AddIcon from "@mui/icons-material/Add";
+import EditIcon from "@mui/icons-material/Edit";
 
 export default function EntriesList(props) {
   const navigate = useNavigate();
@@ -43,14 +46,14 @@ export default function EntriesList(props) {
 
   const totalGift = entries.filter((entry) => entry.gift !== "").length;
 
-  const navigateToAddNewEntry = (e) => {
-    e.stopPropagation();
-    navigate("/entry/new");
-  };
-
-  const navigateToEntryForm = () => {
+  const navigateToAddNewEntry = () => {
+    // e.stopPropagation();
     navigate(`/entry/new?event=${eventId}`);
   };
+
+  // const navigateToEntryForm = () => {
+  //   navigate(`/entry/new?event=${eventId}`);
+  // };
 
   const moveToEventListPage = () => {
     navigate("/eventslist");
@@ -60,7 +63,8 @@ export default function EntriesList(props) {
     navigate(`/edit?entry=${id}`);
   };
 
-  const deleteEntry = (id) => {
+  const deleteEntry = (e, id) => {
+    e.stopPropagation();
     const entryArray = entries.filter((item) => {
       return item.id !== id;
     });
@@ -71,6 +75,7 @@ export default function EntriesList(props) {
     axios
       .get(`http://localhost:2023/entries/all/${eventId}`)
       .then((response) => {
+        console.log(eventId);
         console.log(response);
         console.log(response.data);
         setEntries(response.data);
@@ -81,25 +86,24 @@ export default function EntriesList(props) {
     <div className="entry_container">
       <h1 className="entry-title">Entry List</h1>
       <div className="entry_content">
-        {entries.length > 0 && (
-          <>
-            <div className="entry-inner-box">
-              <div className="entry_searchbar">
-                <BiSearch style={{ fontSize: "20px" }} />
-                <input
-                  type="text"
-                  placeholder="Search by Person Name"
-                  className="entry_searchbar_input"
-                  // value={searchName}
-                  onChange={onChangeHandle}
-                />
-              </div>
-
+        <div className="entry-inner-box">
+          <div className="entry_searchbar">
+            <BiSearch style={{ fontSize: "20px" }} />
+            <input
+              type="text"
+              placeholder="Search by Person Name"
+              className="entry_searchbar_input"
+              // value={searchName}
+              onChange={onChangeHandle}
+            />
+          </div>
+          {entries.length > 0 && (
+            <>
               <table className="entry-table">
                 <thead>
                   <tr>
                     <th>Person Name</th>
-                    <th>Amount</th>
+                    <th>Amount (Rs.)</th>
                     <th>Gift</th>
                     <th>Edit</th>
                     <th>Delete</th>
@@ -121,9 +125,23 @@ export default function EntriesList(props) {
                       <td>{entry.gift}</td>
                       <td>
                         <AiFillEdit onClick={() => editEntry(entry.id)} />
+                        {/* <Button
+                          onClick={() => editEntry(entry.id)}
+                          variant="outlined"
+                          startIcon={<EditIcon />}
+                        >
+                          Edit
+                        </Button> */}
                       </td>
                       <td>
                         <MdDelete onClick={() => deleteEntry(entry.id)} />
+                        {/* <Button
+                          onClick={() => deleteEntry(entry.id)}
+                          variant="outlined"
+                          startIcon={<DeleteIcon />}
+                        >
+                          Delete
+                        </Button> */}
                       </td>
                     </tr>
                   ))}
@@ -135,9 +153,9 @@ export default function EntriesList(props) {
                   </tr>
                 </tbody>
               </table>
-            </div>
-          </>
-        )}
+            </>
+          )}
+        </div>
 
         {entries.length < 1 && (
           <>
@@ -148,12 +166,6 @@ export default function EntriesList(props) {
             </button>
           </>
         )}
-        {/* <p className="text">No Entries found</p>
-       <div className="add-button">
-        <button className="addentry-button" onClick={navigateToEntryForm}>
-         Add New Entry
-        </button>
-        </div> */}
       </div>
       <Box sx={{ "& > :not(style)": { m: 1 } }} className="plus-icon">
         <Fab color="primary" aria-label="add">

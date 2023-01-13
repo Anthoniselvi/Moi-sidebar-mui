@@ -125,44 +125,54 @@ export default function EventList() {
         <h1 className="entry-title">Total Events List</h1>
         <div className="eventlist-content">
           {eventsList.length > 0 && (
-            <div className="card-container">
+            <>
               {eventsList.map((singleEvent, id) => (
-                <Card sx={{ maxWidth: 345 }} className="card">
-                  <CardHeader
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      console.log("Navigating to entry list");
-                      navigateToEntryList(singleEvent.id);
-                    }}
-                    // avatar={
-                    //   <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe"></Avatar>
-                    // }
-                    action={
-                      <IconButton aria-label="settings">
-                        <MenuList className="more-icon" />
-                      </IconButton>
-                    }
-                    title={singleEvent.name}
-                    subheader={singleEvent.date}
-                  />
-                  <CardMedia className="card-image" height="194" />
-                  <CardContent>
-                    <Typography variant="body2" color="text.secondary">
-                      <ul className="event-list">
-                        <li>
-                          <p>Total Amount - Rs.</p>
-                          <span>{getTotalAmount(singleEvent.id)}</span>
-                        </li>
-                        <li>
-                          <p>Total No.of Gifts - </p>
-                          <td>{gettotalGiftforEvent(singleEvent.id)}</td>
-                        </li>
-                      </ul>
-                    </Typography>
-                  </CardContent>
-                </Card>
+                <div
+                  className="card-container"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    console.log("Navigating to entry list");
+                    navigateToEntryList(singleEvent.id);
+                  }}
+                >
+                  {/* {eventsList.map((singleEvent, id) => ( */}
+                  <Card sx={{ maxWidth: 345 }} className="card">
+                    <CardHeader
+                      // onClick={(e) => {
+                      //   e.stopPropagation();
+                      //   console.log("Navigating to entry list");
+                      //   navigateToEntryList(singleEvent.id);
+                      // }}
+                      // avatar={
+                      //   <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe"></Avatar>
+                      // }
+                      action={
+                        <IconButton aria-label="settings">
+                          <MenuList className="more-icon" />
+                        </IconButton>
+                      }
+                      title={singleEvent.name}
+                      subheader={singleEvent.date}
+                    />
+                    <CardMedia className="card-image" height="194" />
+                    <CardContent>
+                      <Typography variant="body2" color="text.secondary">
+                        <ul className="event-list">
+                          <li>
+                            <p>Total Amount - Rs.</p>
+                            <span>{getTotalAmount(singleEvent.id)}</span>
+                          </li>
+                          <li>
+                            <p>Total No.of Gifts - </p>
+                            <span>{gettotalGiftforEvent(singleEvent.id)}</span>
+                          </li>
+                        </ul>
+                      </Typography>
+                    </CardContent>
+                  </Card>
+                </div>
               ))}
-            </div>
+            </>
           )}
         </div>
         {eventsList.length < 1 && (

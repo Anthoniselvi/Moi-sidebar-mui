@@ -10,6 +10,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import axios from "axios";
+import Button from "@mui/material/Button";
 
 export default function EditEntry() {
   const [personName, setPersonName] = useState();
@@ -52,74 +53,84 @@ export default function EditEntry() {
   return (
     <div className="addevent-container">
       <h1>Edit Entry</h1>
-      <form onSubmit={handleSubmitEditEntry}>
-        <Box
-          className="addevent-form"
-          component="form"
-          // sx={{
-          //   "& > :not(style)": { m: 1, width: "50ch" },
-          // }}
-          noValidate
-          autoComplete="off"
-        >
-          <TextField
-            id="outlined-name"
-            label="Person Name"
-            onChange={(e) => setPersonName(e.target.value)}
-            value={personName}
-            sx={{ width: "300px" }}
-          />
-          <TextField
-            id="outlined-place"
-            label="City"
-            onChange={(e) => setCity(e.target.value)}
-            value={city}
-            sx={{ width: "300px" }}
-          />
 
+      <Box
+        onSubmit={handleSubmitEditEntry}
+        className="addevent-form"
+        component="form"
+        // sx={{
+        //   "& > :not(style)": { m: 1, width: "50ch" },
+        // }}
+        noValidate
+        autoComplete="off"
+      >
+        <TextField
+          id="outlined-name"
+          // label="Person Name"
+          onChange={(e) => setPersonName(e.target.value)}
+          value={personName}
+          sx={{ width: "300px" }}
+        />
+        <TextField
+          id="outlined-place"
+          // label="City"
+          onChange={(e) => setCity(e.target.value)}
+          value={city}
+          sx={{ width: "300px" }}
+        />
+        <div className="radio-box">
           <FormControl>
             <FormLabel id="demo-controlled-radio-buttons-group">
               Type of Presentation :
             </FormLabel>
             <RadioGroup>
-              <FormControlLabel
-                control={<Radio />}
-                label="Amount"
-                value="amount"
-                defaultChecked={selected === "amount"}
-                onChange={(e) => setSelected(e.target.value)}
-              />
-              <TextField
-                id="outlined-date"
-                label="amount"
-                onChange={(e) => setAmount(e.target.value)}
-                value={amount}
-                sx={{ width: "300px" }}
-              />
-              <FormControlLabel
-                control={<Radio />}
-                label="Gift"
-                value="gift"
-                defaultChecked={selected === "gift"}
-                onChange={(e) => setSelected(e.target.value)}
-              />
+              <div className="radio-button">
+                <FormControlLabel
+                  control={<Radio />}
+                  label="Amount"
+                  value="amount"
+                  type="number"
+                  defaultChecked={selected === "amount"}
+                  onChange={(e) => setSelected(e.target.value)}
+                />
+                <FormControlLabel
+                  control={<Radio />}
+                  label="Gift"
+                  value="gift"
+                  defaultChecked={selected === "gift"}
+                  onChange={(e) => setSelected(e.target.value)}
+                />
+              </div>
+              {selected === "amount" && (
+                <TextField
+                  id="outlined-date"
+                  // label="Rs."
+                  onChange={(e) => setAmount(e.target.value)}
+                  value={amount}
+                  sx={{ width: "300px" }}
+                />
+              )}
+
               {selected === "gift" && (
-                <>
+                <div className="gift-box">
                   <TextField
                     id="outlined-multiline-static"
-                    label="about gift"
+                    // label="about gift"
                     multiline
                     rows={4}
+                    sx={{ width: "300px" }}
                     onChange={(e) => setGift(e.target.value)}
                     value={gift}
                   />
-                </>
+                </div>
               )}
             </RadioGroup>
           </FormControl>
-          <button className="addevent-button">Update Entry</button>
-        </Box>
-      </form>
+        </div>
+        <Button variant="contained" type="submit">
+          Update
+        </Button>
+      </Box>
     </div>
   );
 }

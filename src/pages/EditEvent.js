@@ -48,40 +48,50 @@ export default function EditEvent() {
   return (
     <div className="addevent-container">
       <h1>Edit Event - {name}</h1>
-      <form onSubmit={handleSubmitEvent}>
-        <Box
-          className="addevent-form"
-          component="form"
-          // sx={{
-          //   "& > :not(style)": { m: 1, width: "50ch" },
-          // }}
-          noValidate
-          autoComplete="off"
+      <Box
+        onSubmit={handleSubmitEvent}
+        className="addevent-form"
+        component="form"
+        // sx={{
+        //   "& > :not(style)": { m: 1, width: "50ch" },
+        // }}
+        noValidate
+        autoComplete="off"
+      >
+        <TextField
+          // id="outlined-error-helper-text"
+          // label="Error"
+          // helperText="Incorrect entry."
+          id="outlined-name"
+          label="Event Name"
+          onChange={(e) => setName(e.target.value)}
+          value={name}
+          sx={{ width: "300px" }}
+          // className={classes.textField}
+        />
+        <TextField
+          id="outlined-place"
+          label="Event Place"
+          value={place}
+          onChange={(e) => setPlace(e.target.value)}
+          sx={{ width: "300px" }}
+        />
+        <TextField
+          id="outlined-date"
+          label="Event Date"
+          type="date"
+          value={eventDate}
+          onChange={(e) => setEventDate(e.target.value)}
+          sx={{ width: "300px" }}
+        />
+        <button
+          type="submit"
+          // onClick={handleSubmitEvent}
+          className="addevent-button"
         >
-          <TextField
-            id="outlined-name"
-            label="Event Name"
-            onChange={(e) => setName(e.target.value)}
-            value={name}
-            sx={{ width: "300px" }}
-          />
-          <TextField
-            id="outlined-place"
-            label="Event Place"
-            value={place}
-            onChange={(e) => setPlace(e.target.value)}
-            sx={{ width: "300px" }}
-          />
-          <TextField
-            id="outlined-date"
-            label="Event Date"
-            value={eventDate}
-            onChange={(e) => setEventDate(e.target.value)}
-            sx={{ width: "300px" }}
-          />
-          <button className="addevent-button">Update Event</button>
-        </Box>
-      </form>
+          Edit
+        </button>
+      </Box>
     </div>
   );
 }
