@@ -63,12 +63,22 @@ export default function EntriesList(props) {
     navigate(`/edit?entry=${id}`);
   };
 
-  const deleteEntry = (e, id) => {
-    e.stopPropagation();
-    const entryArray = entries.filter((item) => {
-      return item.id !== id;
+  const deleteEntry = (id) => {
+    console.log(id);
+
+    // const entryArray = entries.filter((item) => {
+    //   return item.id !== id;
+    // });
+    // setEntries(entryArray);
+    // console.log(entryArray);
+    axios.delete(`http://localhost:2023/entries/${id}`).then((response) => {
+      console.log(response);
+      console.log(response.data);
+      setEntries(response.data);
+      navigate(`/entryList?event=${eventId}`);
+      console.log(eventId);
+      // navigate("/eventslist");
     });
-    setEntries(entryArray);
   };
 
   useEffect(() => {
@@ -155,23 +165,20 @@ export default function EntriesList(props) {
               </table>
             </>
           )}
+
+          {entries.length < 1 && <p className="no-text">No Entries found</p>}
+
+          <button className="addevent-button" onClick={navigateToAddNewEntry}>
+            Add New Entry
+          </button>
+
+          <Box sx={{ "& > :not(style)": { m: 1 } }} className="plus-icon">
+            <Fab color="primary" aria-label="add">
+              <AddIcon onClick={navigateToAddNewEntry} />
+            </Fab>
+          </Box>
         </div>
-
-        {entries.length < 1 && (
-          <>
-            <p className="no-text">No Entries found</p>
-
-            <button className="addevent-button" onClick={navigateToAddNewEntry}>
-              Add New Entry
-            </button>
-          </>
-        )}
       </div>
-      <Box sx={{ "& > :not(style)": { m: 1 } }} className="plus-icon">
-        <Fab color="primary" aria-label="add">
-          <AddIcon onClick={navigateToAddNewEntry} />
-        </Fab>
-      </Box>
     </div>
   );
 }
