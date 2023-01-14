@@ -38,7 +38,7 @@ export default function SignIn() {
   const navigate = useNavigate();
 
   const navigateToEventList = () => {
-    navigate("/eventlist");
+    navigate("/eventslist");
   };
 
   const handleSubmit = (event) => {
