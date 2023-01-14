@@ -11,6 +11,7 @@ import {
 }from "react-icons/fa";
 import { NavLink } from 'react-router-dom';
 import "./Sidebar.css"
+import "../App.css"
 import Footer from '../pages/Footer';
 import Box from "@mui/material/Box";
 // import BottomNavigation from "@mui/material/BottomNavigation";
@@ -54,7 +55,7 @@ const Sidebar = ({children}) => {
       
     ]
     return (
-        <div className="container" >
+        <div className="sidebar-container" >
            
            <div style={{width: isOpen ? "200px" : "50px", backgroundColor: "#03045e"}} className="sidebar">
                <div className="top_section">

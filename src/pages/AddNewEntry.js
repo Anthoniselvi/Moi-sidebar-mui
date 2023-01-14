@@ -19,7 +19,7 @@ export default function AddNewEntry() {
   const [amount, setAmount] = useState(0);
   const [gift, setGift] = useState();
   const [selected, setSelected] = useState("amount");
-
+  // const [entries, setEntries] = useState();
   const navigate = useNavigate();
   const [searchParam] = useSearchParams();
   const eventId = searchParam.get("event");
@@ -38,7 +38,6 @@ export default function AddNewEntry() {
       .then((response) => {
         console.log(response);
         navigate(`/entryList?event=${eventId}`);
-        console.log(eventId);
       });
 
     setPersonName("");
@@ -86,7 +85,6 @@ export default function AddNewEntry() {
                   control={<Radio />}
                   label="Amount"
                   value="amount"
-                  type="number"
                   defaultChecked={selected === "amount"}
                   onChange={(e) => setSelected(e.target.value)}
                 />
@@ -99,15 +97,16 @@ export default function AddNewEntry() {
                 />
               </div>
               {selected === "amount" && (
-                <TextField
-                  id="outlined-amount"
-                  label="Rs."
-                  onChange={(e) => setAmount(e.target.value)}
-                  value={amount}
-                  sx={{ width: "300px" }}
-                />
+                <div>
+                  <TextField
+                    id="outlined-amount"
+                    label="Rs."
+                    onChange={(e) => setAmount(e.target.value)}
+                    value={amount}
+                    sx={{ width: "300px" }}
+                  />
+                </div>
               )}
-
               {selected === "gift" && (
                 <div className="gift-box">
                   <TextField
@@ -124,10 +123,10 @@ export default function AddNewEntry() {
             </RadioGroup>
           </FormControl>
         </div>
-        {/* <Button variant="contained" type="submit">
+        <Button variant="contained" type="submit">
           Add
-        </Button> */}
-        <Button type="submit">Add</Button>
+        </Button>
+        {/* <Button type="submit">Add</Button> */}
       </Box>
     </div>
   );

@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import axios from "axios";
+import { Button } from "@mui/material";
 // import { makeStyles } from "@material-ui/core";
 
 // const useStyles = makeStyles((theme) => ({
@@ -83,13 +84,9 @@ export default function AddNewEvent() {
           onChange={(e) => setDate(e.target.value)}
           sx={{ width: "300px" }}
         />
-        <button
-          type="submit"
-          // onClick={handleSubmitEvent}
-          className="addevent-button"
-        >
+        <Button variant="contained" type="submit">
           Add
-        </button>
+        </Button>
       </Box>
       {/* </form> */}
     </div>

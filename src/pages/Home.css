@@ -79,45 +79,90 @@ padding: 10px 40px;
   }
   .more-icon{
     background-color: none;
+    position: absolute;
+  }
+  .card{
+    font-size: 40px;
   }
   .card-contaier{
     z-index: 2;
+    position: relative;
   }
   .menu-list{
-    z-index: 1;
+    position: absolute;
+    z-index: 1000;
   }
+CardHeader{
+    background-color: #03045e;
+
+    color: #fff
+  }
+
+  .event-menu{
+    display: flex;
+    /* flex-direction: column; */
+    gap:10px;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    /* background: #03045e;
+    color: #fff; */
+    color: #03045e;
+  }
+  @media (max-width: 380px) {
+    .event-menu{
+    display: flex;
+    flex-direction: column;
+  }
+}
   .card-image{
     background-image: url("../images/family1.jpg");
     background-size: contain;
     border: none;
     outline: none;
-    height: 150px;
+    height: 200px;
   }
   .event-list{
     list-style: none;
-  padding: 0px 20px;
+    padding: 10px;
+  /* padding: 0px 20px; */
+  display: flex;
+  flex-direction: column;
+  /* gap: 10px; */
   }
   .event-list > li{
     display: flex;
     justify-content: space-between;
+    font-size: 16px;
+  }
+  .event-list > li > p{
+    font-weight: 500;
+    font-size: 16px;
+    color: #03045e;
   }
   .event-list > li > span{
     font-weight: 600;
-    font-size: 20px;
+    font-size: 18px;
     color: #03045e;
   }
+ 
   .eventlist-container{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
   }
+  @media (max-width:600px) {
+    .eventlist-container{
+    margin: 20px auto;
+  }
+  }
   .eventlist-content{
-   
+  
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     align-items: center;
-    gap:20px;
+    gap:40px;
     padding: 20px;
 
   }
@@ -239,8 +284,8 @@ padding-bottom: 50px;
 
       }
      tr:last-child {
-      background-color: #03045e;
-      color: #fff;
+      background-color: #ffd500;
+      color: #03045e;
       font-weight: 600;
       font-size: 22px;
       text-align: center !important;
@@ -248,8 +293,8 @@ padding-bottom: 50px;
       th{
       padding:12px;
         text-align: center;
-        background-color: #03045e;
-        color: white;
+        background-color: #ffd500;
+        color: #03045e;
       }
       .entry_container{
         width: 100%;
@@ -306,3 +351,6 @@ padding-bottom: 50px;
               margin:0;
               padding: 0;
             }
+.error{
+  color: red
+}

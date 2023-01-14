@@ -4,6 +4,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import axios from "axios";
+import { Button } from "@mui/material";
 
 export default function EditEvent() {
   const [name, setName] = useState("");
@@ -84,13 +85,16 @@ export default function EditEvent() {
           onChange={(e) => setEventDate(e.target.value)}
           sx={{ width: "300px" }}
         />
-        <button
+        {/* <button
           type="submit"
           // onClick={handleSubmitEvent}
           className="addevent-button"
         >
           Edit
-        </button>
+        </button> */}
+        <Button variant="contained" type="submit">
+          Edit
+        </Button>
       </Box>
     </div>
   );

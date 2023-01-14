@@ -17,11 +17,14 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Box from "@mui/material/Box";
 import Fab from "@mui/material/Fab";
 import AddIcon from "@mui/icons-material/Add";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 import MenuList from "./MenuList";
 import "./Home.css";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
 import { useState, useEffect } from "react";
+import Add from "@mui/icons-material/Add";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -79,6 +82,9 @@ export default function EventList() {
     navigate(`/entryList?event=${id}`);
   };
 
+  // const handleClick = () => {
+  //   return <MenuList />;
+  // };
   const moveToFrontPage = () => {
     navigate("/frontpage");
   };
@@ -131,31 +137,82 @@ export default function EventList() {
                   className="card-container"
                   onClick={(e) => {
                     e.stopPropagation();
-                    console.log("Navigating to entry list");
                     navigateToEntryList(singleEvent.id);
                   }}
                 >
                   {/* {eventsList.map((singleEvent, id) => ( */}
-                  <Card sx={{ maxWidth: 345 }} className="card">
+                  <Card
+                    sx={{
+                      maxWidth: 345,
+                      borderRadius: "10px",
+                      border: "#ffff3f",
+                    }}
+                    className="card"
+                  >
                     <CardHeader
-                      // onClick={(e) => {
-                      //   e.stopPropagation();
-                      //   console.log("Navigating to entry list");
-                      //   navigateToEntryList(singleEvent.id);
-                      // }}
-                      // avatar={
-                      //   <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe"></Avatar>
-                      // }
+                      sx={{ backgroundColor: "#ffff3f", color: "#03045e" }}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        console.log("Navigating to entry list");
+                        navigateToEntryList(singleEvent.id);
+                      }}
+                      avatar={
+                        <Avatar
+                          sx={{ bgcolor: red[500] }}
+                          aria-label="recipe"
+                        ></Avatar>
+                      }
                       action={
-                        <IconButton aria-label="settings">
-                          <MenuList className="more-icon" />
-                        </IconButton>
+                        // <div className="menu-list">
+                        // <IconButton aria-label="settings" className="more-icon">
+                        //   <MenuList />
+                        // </IconButton>
+                        // </div>
+                        // {singleEvent.id === selectedEvent && show ? (
+                        <div className="event-menu">
+                          <AddIcon
+                            sx={{
+                              bgcolor: "red",
+                              color: "white",
+                              borderRadius: "50%",
+                              fontSize: "15px",
+                              padding: "5px",
+                            }}
+                            onClick={(e) =>
+                              navigateToAddNewEntry(e, singleEvent.id)
+                            }
+                          />
+
+                          <EditIcon
+                            sx={{
+                              bgcolor: "#03045e",
+                              color: "#fff",
+                              borderRadius: "50%",
+                              fontSize: "15px",
+                              padding: "5px",
+                            }}
+                            onClick={(e) => editEvent(e, singleEvent.id)}
+                          />
+
+                          <DeleteIcon
+                            sx={{
+                              bgcolor: "red",
+                              color: "white",
+                              borderRadius: "50%",
+                              fontSize: "15px",
+                              padding: "5px",
+                            }}
+                            onClick={(e) => deleteEvent(e, singleEvent.id)}
+                          />
+                        </div>
+                        // ) : null}
                       }
                       title={singleEvent.name}
+                      // sx={{ color: "#03045e", backgroundColor: "#ffff3f" }}
                       subheader={singleEvent.date}
                     />
                     <CardMedia className="card-image" height="194" />
-                    <CardContent>
+                    <CardContent sx={{ backgroundColor: "#ffff3f" }}>
                       <Typography variant="body2" color="text.secondary">
                         <ul className="event-list">
                           <li>
