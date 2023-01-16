@@ -17,6 +17,7 @@ import axios from "axios";
 import Box from "@mui/material/Box";
 import Fab from "@mui/material/Fab";
 import AddIcon from "@mui/icons-material/Add";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import EditIcon from "@mui/icons-material/Edit";
 
 export default function EntriesList(props) {
@@ -55,7 +56,7 @@ export default function EntriesList(props) {
   //   navigate(`/entry/new?event=${eventId}`);
   // };
 
-  const moveToEventListPage = () => {
+  const navigateToEventslist = () => {
     navigate("/eventslist");
   };
 
@@ -173,6 +174,9 @@ export default function EntriesList(props) {
           </button>
 
           <Box sx={{ "& > :not(style)": { m: 1 } }} className="plus-icon">
+            <Fab color="primary" aria-label="add">
+              <ArrowBackIcon onClick={navigateToEventslist} />
+            </Fab>
             <Fab color="primary" aria-label="add">
               <AddIcon onClick={navigateToAddNewEntry} />
             </Fab>

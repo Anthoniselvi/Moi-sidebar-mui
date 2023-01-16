@@ -17,7 +17,7 @@ export default function AddNewEntry() {
   const [personName, setPersonName] = useState();
   const [city, setCity] = useState();
   const [amount, setAmount] = useState(0);
-  const [gift, setGift] = useState();
+  const [gift, setGift] = useState(0);
   const [selected, setSelected] = useState("amount");
   // const [entries, setEntries] = useState();
   const navigate = useNavigate();

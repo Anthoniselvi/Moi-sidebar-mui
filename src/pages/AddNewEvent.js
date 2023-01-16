@@ -78,7 +78,7 @@ export default function AddNewEvent() {
         />
         <TextField
           id="outlined-date"
-          label="Event Date"
+          // label="Event Date"
           type="date"
           value={date}
           onChange={(e) => setDate(e.target.value)}
