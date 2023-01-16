@@ -6,7 +6,7 @@
 .container,
 .sidebar-container{
     display:flex;
-    height:100vh;
+    min-height:100vh;
     width: 100vw;
     /* background-color: #fdc500; */
     /* font-family: 'Nunito', sans-serif; */

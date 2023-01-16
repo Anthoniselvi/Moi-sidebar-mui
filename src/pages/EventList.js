@@ -198,10 +198,10 @@ export default function EventList() {
                           Add Entry
                         </p>
                         <p onClick={(e) => editEvent(e, singleEvent.id)}>
-                          Edit
+                          Edit Event
                         </p>
                         <p onClick={(e) => deleteEvent(e, singleEvent.id)}>
-                          Delete
+                          Delete Event
                         </p>
                       </div>
                     ) : null}

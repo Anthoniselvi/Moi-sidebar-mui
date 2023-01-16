@@ -19,6 +19,8 @@ import AddIcon from "@mui/icons-material/Add";
 import SearchIcon from "@mui/icons-material/Search";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import { useNavigate } from "react-router-dom";
+import AppsIcon from "@mui/icons-material/Apps";
+import HomeIcon from "@mui/icons-material/Home";
 
 const StyledFab = styled(Fab)({
   position: "absolute",
@@ -35,23 +37,31 @@ export default function BottomAppBar() {
   const moveToDashboard = () => {
     navigate("/");
   };
+  const moveToEventsList = () => {
+    navigate("/eventslist");
+  };
+
+  const moveToAddEvent = () => {
+    navigate("/entry/new");
+  };
   return (
     <React.Fragment>
       <AppBar position="fixed" color="primary" sx={{ top: "auto", bottom: 0 }}>
         <Toolbar>
           <IconButton color="inherit" aria-label="open drawer">
-            <MenuIcon onClick={moveToDashboard} />
+            {/* <MenuIcon onClick={moveToDashboard} /> */}
+            <HomeIcon onClick={moveToDashboard} />
           </IconButton>
           {/* <StyledFab color="secondary" aria-label="add">
-            <AddIcon />
+            <AddIcon onClick={moveToAddEvent} />
           </StyledFab> */}
           <Box sx={{ flexGrow: 1 }} />
-          {/* <IconButton color="inherit">
-            <SearchIcon />
-          </IconButton> */}
           <IconButton color="inherit">
-            <MoreIcon />
+            <AppsIcon onClick={moveToEventsList} />
           </IconButton>
+          {/* <IconButton color="inherit">
+            <MoreIcon />
+          </IconButton> */}
         </Toolbar>
       </AppBar>
     </React.Fragment>

@@ -376,10 +376,10 @@ padding-bottom: 50px;
   background-color: #ffff3f;
 }
 .event_dropdown{
-  width:28%;
+  width:35%;
  position: absolute;
  z-index: 3000;
- margin-left: 89%;
+ margin-left: 80%;
  margin-top: -10%;
  padding: 0;
  display: flex;
@@ -396,7 +396,6 @@ overflow: hidden;
   /* border: 1px solid gray; */
   background-color: #03045e;
   color: #fff;
-
 
 }
 .event_dropdown > p:hover{
