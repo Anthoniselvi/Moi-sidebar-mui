@@ -9,10 +9,8 @@ import { Button } from "@mui/material";
 export default function EditEvent() {
   const [name, setName] = useState("");
   const [place, setPlace] = useState("");
-  //   const [date, setDate] = useState("");
-  const [eventDate, setEventDate] = useState(
-    new Date().toISOString().slice(0, 10)
-  );
+  const [date, setDate] = useState("");
+  // const [date, setDate] = useState(new Date().toISOString().slice(0, 10));
   const navigate = useNavigate();
 
   const [searchParam] = useSearchParams();
@@ -26,7 +24,7 @@ export default function EditEvent() {
         id: parseInt(eventId),
         name: name,
         place: place,
-        date: eventDate,
+        date: date,
       })
       .then((response) => {
         console.log(response);
@@ -79,10 +77,10 @@ export default function EditEvent() {
         />
         <TextField
           id="outlined-date"
-          label="Event Date"
+          // label="Event Date"
           type="date"
-          value={eventDate}
-          onChange={(e) => setEventDate(e.target.value)}
+          value={date}
+          onChange={(e) => setDate(e.target.value)}
           sx={{ width: "300px" }}
         />
         {/* <button

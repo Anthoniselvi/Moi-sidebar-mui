@@ -67,19 +67,19 @@ export default function EntriesList(props) {
   const deleteEntry = (id) => {
     console.log(id);
 
-    // const entryArray = entries.filter((item) => {
-    //   return item.id !== id;
-    // });
-    // setEntries(entryArray);
-    // console.log(entryArray);
-    axios.delete(`http://localhost:2023/entries/${id}`).then((response) => {
-      console.log(response);
-      console.log(response.data);
-      setEntries(response.data);
-      navigate(`/entryList?event=${eventId}`);
-      console.log(eventId);
-      // navigate("/eventslist");
+    const entryArray = entries.filter((item) => {
+      return item.id !== id;
     });
+    setEntries(entryArray);
+    console.log(entryArray);
+    // axios.delete(`http://localhost:2023/entries/${id}`).then((response) => {
+    //   console.log(response);
+    //   console.log(response.data);
+    //   setEntries(response.data);
+    //   navigate(`/entryList?event=${eventId}`);
+    //   console.log(eventId);
+    //   // navigate("/eventslist");
+    // });
   };
 
   useEffect(() => {

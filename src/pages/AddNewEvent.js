@@ -16,7 +16,7 @@ export default function AddNewEvent() {
   // const classes = useStyles();
   const [name, setName] = useState("");
   const [place, setPlace] = useState("");
-  const [date, setDate] = useState("");
+  const [date, setDate] = useState(new Date().toISOString().slice(0, 10));
   const navigate = useNavigate();
 
   const handleSubmitEvent = (e) => {
