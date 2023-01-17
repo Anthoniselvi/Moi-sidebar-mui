@@ -18,25 +18,6 @@ import { auth } from "./firebase";
 import Validation from "./Validation";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import "./Home.css";
-
-// function Copyright(props) {
-//   return (
-//     <Typography
-//       variant="body2"
-//       color="text.secondary"
-//       align="center"
-//       {...props}
-//     >
-//       {"Copyright © "}
-//       <Link color="inherit" href="https://mui.com/">
-//         Your Website
-//       </Link>{" "}
-//       {new Date().getFullYear()}
-//       {"."}
-//     </Typography>
-//   );
-// }
-
 const theme = createTheme();
 
 export default function SignUp() {
@@ -47,10 +28,10 @@ export default function SignUp() {
     password: "",
   });
   const navigate = useNavigate();
-  const [errors, setErrors] = useState({});
-  const [dataIsCorrect, setDataIsCorrect] = useState(false);
-  const [err, setErr] = useState(false);
-  const [loading, setLoading] = useState(false);
+  // const [errors, setErrors] = useState({});
+  // const [dataIsCorrect, setDataIsCorrect] = useState(false);
+  // const [err, setErr] = useState(false);
+  // const [loading, setLoading] = useState(false);
 
   const navigateToSignIn = () => {
     navigate("/signin");
@@ -63,10 +44,10 @@ export default function SignUp() {
   };
 
   const handleSubmitSignup = async (e) => {
-    setLoading(true);
     e.preventDefault();
-    setErrors(Validation(signupData));
-    setDataIsCorrect(true);
+    // setLoading(true);
+    // setErrors(Validation(signupData));
+    // setDataIsCorrect(true);
   };
   //   const name = e.target[0].value;
   //   const mobile = e.target[1].value;
@@ -83,13 +64,13 @@ export default function SignUp() {
   //     setLoading(false);
   //   }
   // };
-  useEffect(() => {
-    if (Object.keys(errors).length === 0 && dataIsCorrect) {
-      alert("signup successfully");
+  // useEffect(() => {
+  //   if (Object.keys(errors).length === 0 && dataIsCorrect) {
+  //     alert("signup successfully");
 
-      // navigate("/eventslist");
-    }
-  }, [errors]);
+  //     // navigate("/eventslist");
+  //   }
+  // }, [errors]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -128,8 +109,10 @@ export default function SignUp() {
                   autoFocus
                   value={signupData.name}
                   onChange={updateHandleChange}
+                  error={!signupData.name}
+                  helperText="Name is Required"
                 />
-                {errors.name && <p className="error">{errors.name}</p>}
+                {/* {errors.name && <p className="error">{errors.name}</p>} */}
               </Grid>
               {/* {errors.name && <p className="error">{errors.name}</p>} */}
               <Grid item xs={12} sm={6}>
@@ -142,9 +125,11 @@ export default function SignUp() {
                   autoComplete="mobile-number"
                   value={signupData.mobile}
                   onChange={updateHandleChange}
+                  error={!signupData.mobile}
+                  helperText="Mobile Number is Required"
                 />
               </Grid>
-              {errors.mobile && <p className="error">{errors.mobile}</p>}
+              {/* {errors.mobile && <p className="error">{errors.mobile}</p>} */}
               <Grid item xs={12}>
                 <TextField
                   required
@@ -155,9 +140,11 @@ export default function SignUp() {
                   autoComplete="email"
                   value={signupData.email}
                   onChange={updateHandleChange}
+                  error={!signupData.email}
+                  helperText="Email is Required"
                 />
               </Grid>
-              {errors.email && <p className="error">{errors.email}</p>}
+              {/* {errors.email && <p className="error">{errors.email}</p>} */}
               <Grid item xs={12}>
                 <TextField
                   required
@@ -169,9 +156,11 @@ export default function SignUp() {
                   autoComplete="new-password"
                   value={signupData.password}
                   onChange={updateHandleChange}
+                  error={!signupData.password}
+                  helperText="Password is Required"
                 />
               </Grid>
-              {errors.password && <p className="error">{errors.password}</p>}
+              {/* {errors.password && <p className="error">{errors.password}</p>} */}
               <Grid item xs={12}>
                 <FormControlLabel
                   control={

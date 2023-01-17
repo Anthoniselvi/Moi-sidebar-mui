@@ -50,8 +50,24 @@
     width: 30%;
     border: none;
   }
+  .signup_container{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid red;
+  }
+  .signup_form{
+    width:60%;
+    border: 2px solid red;
+    display: flex;
+    flex-direction: column;
+   align-items: center; 
+    justify-content: center;
+    gap:30px;
+  }
   .addentry-button,
-  .addevent-button{
+  .addevent-buttonn{
     background: #03045e;
     align-items: center;
     padding: 10px 20px;
@@ -65,9 +81,23 @@
   .addevent-button{
 padding: 10px 40px;
   }
+  .signup-button{
+    /* font-size: 16px; */
+    background: #03045e;
+    color: skyblue;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .signup-head{
+    /* font-size: 20px; */
+    text-align: center;
+    padding: 20px;
+  }
   .home-button:hover, 
   .addentry-button:hover,
-  .addevent-button:hover{
+  .addevent-button:hover,
+  .signup-button:hover{
     color:#03045e;
     background: lightskyblue;
   }
@@ -389,7 +419,8 @@ cursor: pointer;
 border-radius: 10px;
 overflow: hidden;
 }
-.event_dropdown > p{
+.event_dropdown > p,
+.entry_dropdown > p{
   font-size: 15px;
   margin: 0;
   padding:5px;
@@ -398,7 +429,22 @@ overflow: hidden;
   color: #fff;
 
 }
-.event_dropdown > p:hover{
+.event_dropdown > p:hover,
+.entry_dropdown > p:hover{
   color: #03045e;
   background-color: #fff;
+}
+.entry_dropdown{
+  width:auto;
+  position: absolute;
+  z-index: 3000;
+  margin-left: 11%;
+  margin-top: -2%;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+ border-radius: 10px;
+ cursor: pointer;
+ border-radius: 10px;
+ overflow: hidden;
 }

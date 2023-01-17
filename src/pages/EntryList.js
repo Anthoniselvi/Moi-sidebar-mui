@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import "./Home.css";
 import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { IconButton } from "@mui/material";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 import { AiOutlineArrowLeft, AiFillEdit } from "react-icons/ai";
 import { BiSearch } from "react-icons/bi";
@@ -26,6 +28,8 @@ export default function EntriesList(props) {
   const eventId = searchParam.get("event");
 
   const [entries, setEntries] = useState([]);
+  const [selectedEntry, setSelectedEntry] = useState("");
+  const [show, setShow] = useState(false);
 
   function onChangeHandle(e) {
     console.log("e.target.value", e.target.value);
@@ -64,22 +68,24 @@ export default function EntriesList(props) {
     navigate(`/edit?entry=${id}`);
   };
 
-  const deleteEntry = (id) => {
-    console.log(id);
+  const deleteEntry = (eventId) => {
+    console.log(entries);
 
-    const entryArray = entries.filter((item) => {
-      return item.id !== id;
-    });
-    setEntries(entryArray);
-    console.log(entryArray);
-    // axios.delete(`http://localhost:2023/entries/${id}`).then((response) => {
-    //   console.log(response);
-    //   console.log(response.data);
-    //   setEntries(response.data);
-    //   navigate(`/entryList?event=${eventId}`);
-    //   console.log(eventId);
-    //   // navigate("/eventslist");
+    // const entryArray = entries.filter((item) => {
+    //   return item.id !== id;
     // });
+    // setEntries(entryArray);
+    // console.log(entryArray);
+    axios
+      .delete(`http://localhost:2023/entries/${eventId}`)
+      .then((response) => {
+        console.log(response);
+        console.log(response.data);
+        setEntries(response.data);
+        navigate(`/entryList?event=${eventId}`);
+        console.log(eventId);
+        // navigate("/eventslist");
+      });
   };
 
   useEffect(() => {
@@ -116,8 +122,8 @@ export default function EntriesList(props) {
                     <th>Person Name</th>
                     <th>Amount (Rs.)</th>
                     <th>Gift</th>
-                    <th>Edit</th>
-                    <th>Delete</th>
+                    <th>Remarks</th>
+                    {/* <th>Delete</th> */}
                   </tr>
                 </thead>
                 <tbody>
@@ -135,6 +141,32 @@ export default function EntriesList(props) {
                       <td>{entry.amount}</td>
                       <td>{entry.gift}</td>
                       <td>
+                        <IconButton
+                          aria-label="settings"
+                          className="more-icon"
+                          // className="event_icon_dropdown"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            console.log("set show clicked..");
+                            setSelectedEntry(entry.id);
+                            setShow((show) => !show);
+                          }}
+                        >
+                          {/* <MenuList /> */}
+                          <MoreVertIcon />
+                        </IconButton>
+
+                        {entry.id === selectedEntry && show ? (
+                          <div className="entry_dropdown">
+                            <p onClick={(e) => editEntry(entry.id)}>
+                              Edit Entry
+                            </p>
+                            <p onClick={(e) => deleteEntry(entry.id)}>
+                              Delete Entry
+                            </p>
+                          </div>
+                        ) : null}
+                        {/* <td>
                         <AiFillEdit onClick={() => editEntry(entry.id)} />
                         {/* <Button
                           onClick={() => editEntry(entry.id)}
@@ -144,16 +176,16 @@ export default function EntriesList(props) {
                           Edit
                         </Button> */}
                       </td>
-                      <td>
-                        <MdDelete onClick={() => deleteEntry(entry.id)} />
-                        {/* <Button
+                      {/* <td>
+                        <MdDelete onClick={() => deleteEntry(entry.id)} /> */}
+                      {/* <Button
                           onClick={() => deleteEntry(entry.id)}
                           variant="outlined"
                           startIcon={<DeleteIcon />}
                         >
                           Delete
                         </Button> */}
-                      </td>
+                      {/* </td> */}
                     </tr>
                   ))}
 

@@ -13,6 +13,7 @@
     "@mui/material": "^5.11.4",
     "@mui/styled-engine-sc": "^5.11.0",
     "@mui/styles": "^5.11.2",
+    "antd": "^5.1.5",
     "axios": "^1.2.2",
     "back-button": "^0.0.1",
     "cra-template": "1.1.3",

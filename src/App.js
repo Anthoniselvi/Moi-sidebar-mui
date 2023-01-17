@@ -14,6 +14,7 @@ import EditEntry from "./pages/EditEntry";
 import Footer from "./pages/Footer";
 import EntryTable from "./pages/EntryTable";
 import MenuList from "./pages/MenuList";
+import Form from "./pages/Form";
 
 const App = () => {
   return (
@@ -33,6 +34,7 @@ const App = () => {
             <Route path="edit" element={<EditEntry />} />
             <Route path="footer" element={<Footer />} />
             <Route path="table" element={<EntryTable />} />
+            <Route path="form" element={<Form />} />
             <Route path="menu" element={<MenuList />} />
           </Routes>
         </Sidebar>

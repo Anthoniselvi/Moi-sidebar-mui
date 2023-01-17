@@ -83,21 +83,26 @@ export default function EditEntry() {
             <FormLabel id="demo-controlled-radio-buttons-group">
               Type of Presentation :
             </FormLabel>
-            <RadioGroup>
+            <RadioGroup
+              // defaultValue="amount">
+              defaultValue={amount > 0 ? "amount" : "gift"}
+            >
               <div className="radio-button">
                 <FormControlLabel
                   control={<Radio />}
                   label="Amount"
                   value="amount"
                   type="number"
-                  defaultChecked={selected === "amount"}
+                  // defaultChecked={selected === "amount"}
+                  checked={selected === "amount"}
                   onChange={(e) => setSelected(e.target.value)}
                 />
                 <FormControlLabel
                   control={<Radio />}
                   label="Gift"
                   value="gift"
-                  defaultChecked={selected === "gift"}
+                  // defaultChecked={selected === "gift"}
+                  checked={selected === "gift"}
                   onChange={(e) => setSelected(e.target.value)}
                 />
               </div>
@@ -110,7 +115,6 @@ export default function EditEntry() {
                   sx={{ width: "300px" }}
                 />
               )}
-
               {selected === "gift" && (
                 <div className="gift-box">
                   <TextField

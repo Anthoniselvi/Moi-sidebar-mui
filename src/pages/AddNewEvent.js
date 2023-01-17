@@ -84,6 +84,14 @@ export default function AddNewEvent() {
           onChange={(e) => setDate(e.target.value)}
           sx={{ width: "300px" }}
         />
+        {/* <DatePicker
+          aria-required={"true"}
+          className="m-2"
+          format="DD-MM-YYYY"
+          onChange={(value) => {
+            setDate(moment(value).format("DD-MM-YYYY"));
+          }}
+        /> */}
         <Button variant="contained" type="submit">
           Add
         </Button>
