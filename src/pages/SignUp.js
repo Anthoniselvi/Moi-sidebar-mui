@@ -28,7 +28,10 @@ export default function SignUp() {
     password: "",
   });
   const navigate = useNavigate();
-  // const [errors, setErrors] = useState({});
+  const [error, setError] = useState(null);
+  const [helperText, setHelperText] = React.useState("");
+  const [required, setRequired] = useState(false);
+
   // const [dataIsCorrect, setDataIsCorrect] = useState(false);
   // const [err, setErr] = useState(false);
   // const [loading, setLoading] = useState(false);
@@ -37,6 +40,18 @@ export default function SignUp() {
     navigate("/signin");
   };
   const updateHandleChange = (event) => {
+    if (
+      signupData.name !== "" &&
+      signupData.mobile !== "" &&
+      signupData.email !== "" &&
+      signupData.password !== ""
+    ) {
+      setError(false);
+      setHelperText("");
+    } else {
+      setError(true);
+      setHelperText("required");
+    }
     setSignupData({
       ...signupData,
       [event.target.name]: event.target.value,
@@ -45,6 +60,22 @@ export default function SignUp() {
 
   const handleSubmitSignup = async (e) => {
     e.preventDefault();
+    if (
+      signupData.name !== "" ||
+      signupData.mobile !== "" ||
+      signupData.email !== "" ||
+      signupData.password !== ""
+    ) {
+      // alert("Submitted");
+      setError(false);
+      setHelperText("");
+      // setShow(true);
+    } else {
+      // alert("Submit failure");
+      setError(true);
+      setHelperText("required");
+    }
+    // navigate("/signin");
     // setLoading(true);
     // setErrors(Validation(signupData));
     // setDataIsCorrect(true);
@@ -109,8 +140,8 @@ export default function SignUp() {
                   autoFocus
                   value={signupData.name}
                   onChange={updateHandleChange}
-                  error={!signupData.name}
-                  helperText="Name is Required"
+                  error={true}
+                  helperText={helperText}
                 />
                 {/* {errors.name && <p className="error">{errors.name}</p>} */}
               </Grid>
@@ -125,8 +156,8 @@ export default function SignUp() {
                   autoComplete="mobile-number"
                   value={signupData.mobile}
                   onChange={updateHandleChange}
-                  error={!signupData.mobile}
-                  helperText="Mobile Number is Required"
+                  error={true}
+                  helperText={helperText}
                 />
               </Grid>
               {/* {errors.mobile && <p className="error">{errors.mobile}</p>} */}
@@ -140,8 +171,8 @@ export default function SignUp() {
                   autoComplete="email"
                   value={signupData.email}
                   onChange={updateHandleChange}
-                  error={!signupData.email}
-                  helperText="Email is Required"
+                  error={true}
+                  helperText={helperText}
                 />
               </Grid>
               {/* {errors.email && <p className="error">{errors.email}</p>} */}
@@ -156,8 +187,8 @@ export default function SignUp() {
                   autoComplete="new-password"
                   value={signupData.password}
                   onChange={updateHandleChange}
-                  error={!signupData.password}
-                  helperText="Password is Required"
+                  error={true}
+                  helperText={helperText}
                 />
               </Grid>
               {/* {errors.password && <p className="error">{errors.password}</p>} */}

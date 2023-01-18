@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -14,40 +15,49 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 
-function Copyright(props) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
-
 const theme = createTheme();
 
 export default function SignIn() {
   const navigate = useNavigate();
+  const [signinData, setSigninData] = useState({
+    email: "",
+    password: "",
+  });
+  const [error, setError] = useState(null);
+  const [helperText, setHelperText] = React.useState("");
 
   const navigateToEventList = () => {
     navigate("/eventslist");
   };
 
+  const handleChange = (event) => {
+    if (signinData.mobile !== "" && signinData.password !== "") {
+      setError(false);
+      setHelperText("");
+    } else {
+      setError(true);
+      setHelperText("required");
+    }
+    setSigninData({
+      ...signinData,
+      [event.target.name]: event.target.value,
+    });
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+    if (signinData.mobile !== "" && signinData.password !== "") {
+      setError(false);
+      setHelperText("");
+    } else {
+      setError(true);
+      setHelperText("required");
+    }
+    // const data = new FormData(event.currentTarget);
+    // console.log({
+    //   email: data.get("email"),
+    //   password: data.get("password"),
+    // });
   };
 
   return (
@@ -83,6 +93,10 @@ export default function SignIn() {
               name="mobile"
               autoComplete="mobile"
               autoFocus
+              value={signinData.mobile}
+              onChange={handleChange}
+              error={true}
+              helperText={helperText}
             />
             <TextField
               margin="normal"
@@ -93,6 +107,10 @@ export default function SignIn() {
               type="password"
               id="password"
               autoComplete="current-password"
+              value={signinData.password}
+              onChange={handleChange}
+              error={true}
+              helperText={helperText}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
