@@ -325,7 +325,7 @@ padding-bottom: 50px;
         display: flex;
         gap: 20px;
         align-items: center;
-   
+   outline: none;
 
       }
      tr:last-child {
@@ -419,9 +419,10 @@ cursor: pointer;
 border-radius: 10px;
 overflow: hidden;
 }
+
 .event_dropdown > p,
 .entry_dropdown > p{
-  font-size: 15px;
+    font-size: 15px;
   margin: 0;
   padding:5px;
   /* border: 1px solid gray; */
@@ -438,8 +439,8 @@ overflow: hidden;
   width:auto;
   position: absolute;
   z-index: 3000;
-  margin-left: 11%;
-  margin-top: -2%;
+  margin-left: 5%;
+  margin-top: -3%;
   padding: 0;
   display: flex;
   flex-direction: column;

@@ -122,7 +122,7 @@ export default function EntriesList(props) {
                     <th>Person Name</th>
                     <th>Amount (Rs.)</th>
                     <th>Gift</th>
-                    <th>Remarks</th>
+                    {/* <th>Remarks</th> */}
                     {/* <th>Delete</th> */}
                   </tr>
                 </thead>
@@ -140,33 +140,31 @@ export default function EntriesList(props) {
                       </td>
                       <td>{entry.amount}</td>
                       <td>{entry.gift}</td>
-                      <td>
-                        <IconButton
-                          aria-label="settings"
-                          className="more-icon"
-                          // className="event_icon_dropdown"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            console.log("set show clicked..");
-                            setSelectedEntry(entry.id);
-                            setShow((show) => !show);
-                          }}
-                        >
-                          {/* <MenuList /> */}
-                          <MoreVertIcon />
-                        </IconButton>
+                      {/* <td> */}
+                      <IconButton
+                        aria-label="settings"
+                        className="more-icon"
+                        // className="event_icon_dropdown"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          console.log("set show clicked..");
+                          setSelectedEntry(entry.id);
+                          setShow((show) => !show);
+                        }}
+                      >
+                        {/* <MenuList /> */}
+                        <MoreVertIcon />
+                      </IconButton>
 
-                        {entry.id === selectedEntry && show ? (
-                          <div className="entry_dropdown">
-                            <p onClick={(e) => editEntry(entry.id)}>
-                              Edit Entry
-                            </p>
-                            <p onClick={(e) => deleteEntry(entry.id)}>
-                              Delete Entry
-                            </p>
-                          </div>
-                        ) : null}
-                        {/* <td>
+                      {entry.id === selectedEntry && show ? (
+                        <div className="entry_dropdown">
+                          <p onClick={(e) => editEntry(entry.id)}>Edit Entry</p>
+                          <p onClick={(e) => deleteEntry(entry.id)}>
+                            Delete Entry
+                          </p>
+                        </div>
+                      ) : null}
+                      {/* <td>
                         <AiFillEdit onClick={() => editEntry(entry.id)} />
                         {/* <Button
                           onClick={() => editEntry(entry.id)}
@@ -175,7 +173,7 @@ export default function EntriesList(props) {
                         >
                           Edit
                         </Button> */}
-                      </td>
+                      {/* </td> */}
                       {/* <td>
                         <MdDelete onClick={() => deleteEntry(entry.id)} /> */}
                       {/* <Button

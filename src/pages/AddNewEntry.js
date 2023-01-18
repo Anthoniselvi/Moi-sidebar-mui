@@ -43,6 +43,7 @@ export default function AddNewEntry() {
 
     setPersonName("");
     setCity("");
+    setSelected("");
     setAmount("");
     setGift("");
   };
@@ -100,30 +101,52 @@ export default function AddNewEntry() {
                   // onChange={(e) => setSelected(e.target.value)}
                 />
               </div>
-              {/* {selected === 1 && ( */}
-              <div>
-                <TextField
-                  id="outlined-amount"
-                  label="Rs."
-                  onChange={(e) => setAmount(e.target.value)}
-                  value={amount}
-                  sx={{ width: "300px" }}
-                />
-              </div>
-              {/* )} */}
-              {/* {selected === 0 && ( */}
-              <div className="gift-box">
-                <TextField
-                  id="outlined-multiline-static"
-                  label="about gift"
-                  multiline
-                  rows={4}
-                  sx={{ width: "300px" }}
-                  onChange={(e) => setGift(e.target.value)}
-                  value={gift}
-                />
-              </div>
-              {/* )} */}
+              {selected === 1 ? (
+                <div>
+                  <TextField
+                    id="outlined-amount"
+                    label="Rs."
+                    onChange={(e) => setAmount(e.target.value)}
+                    value={amount}
+                    sx={{ width: "300px" }}
+                  />
+                </div>
+              ) : (
+                <div className="gift-box">
+                  <TextField
+                    id="outlined-multiline-static"
+                    label="about gift"
+                    multiline
+                    rows={4}
+                    sx={{ width: "300px" }}
+                    onChange={(e) => setGift(e.target.value)}
+                    value={gift}
+                  />
+                </div>
+              )}
+              {/* {selected === 0 ? (
+                <div className="gift-box">
+                  <TextField
+                    id="outlined-multiline-static"
+                    label="about gift"
+                    multiline
+                    rows={4}
+                    sx={{ width: "300px" }}
+                    onChange={(e) => setGift(e.target.value)}
+                    value={gift}
+                  />
+                </div>
+              ) : (
+                <div>
+                  <TextField
+                    id="outlined-amount"
+                    label="Rs."
+                    onChange={(e) => setAmount(e.target.value)}
+                    value={amount}
+                    sx={{ width: "300px" }}
+                  />
+                </div>
+              )} */}
             </RadioGroup>
           </FormControl>
         </div>
