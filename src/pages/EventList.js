@@ -37,7 +37,7 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-export default function EventList() {
+export default function EventList(props) {
   const [expanded, setExpanded] = useState(false);
   const navigate = useNavigate();
   const [totalAmount, setTotalAmount] = useState([]);
@@ -130,6 +130,7 @@ export default function EventList() {
   return (
     <div className="eventlist-container">
       <>
+        {/* <h2>{props.name ? `Welcome - ${props.name}` : "Login please"}</h2> */}
         <h1 className="entry-title">Total Events List</h1>
         <div className="eventlist-content">
           {eventsList.length > 0 && (

@@ -5,11 +5,11 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 // import Nav from "./Nav";
 
-function Dashboard() {
+function Dashboard(props) {
   const navigate = useNavigate();
 
   const navigateToSignUp = () => {
-    navigate("/signup");
+    navigate("/new");
   };
   return (
     <>
@@ -17,6 +17,7 @@ function Dashboard() {
       <div className="home">
         {/* <div className="home-pic"></div> */}
         <div className="home-content">
+        
         <h1>Moi Registry</h1>
         <p>
           Families are like branches on a tree. We grow in different directions

@@ -15,6 +15,7 @@ import Footer from "./pages/Footer";
 import EntryTable from "./pages/EntryTable";
 import MenuList from "./pages/MenuList";
 import Form from "./pages/Form";
+import NewSignUp from "./pages/NewSignup";
 
 const App = () => {
   return (
@@ -36,6 +37,7 @@ const App = () => {
             <Route path="table" element={<EntryTable />} />
             <Route path="form" element={<Form />} />
             <Route path="menu" element={<MenuList />} />
+            <Route path="new" element={<NewSignUp />} />
           </Routes>
         </Sidebar>
       </BrowserRouter>

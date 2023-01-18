@@ -16,92 +16,90 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 import { auth } from "./firebase";
 import Validation from "./Validation";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  updateProfile,
+} from "firebase/auth";
 import "./Home.css";
 const theme = createTheme();
 
-export default function SignUp() {
+export default function NewSignUp() {
   const [signupData, setSignupData] = useState({
     name: "",
     mobile: "",
     email: "",
     password: "",
   });
+  const [errors, setErrors] = useState({});
+  //   const [error, setError] = useState();
+  const [dataIsCorrect, setDataIsCorrect] = useState(false);
   const navigate = useNavigate();
-  const [error, setError] = useState(null);
-  const [helperText, setHelperText] = React.useState("");
-  const [required, setRequired] = useState(false);
-
-  // const [dataIsCorrect, setDataIsCorrect] = useState(false);
-  // const [err, setErr] = useState(false);
-  // const [loading, setLoading] = useState(false);
+  const [err, setErr] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const navigateToSignIn = () => {
     navigate("/signin");
   };
   const updateHandleChange = (event) => {
-    // if (
-    //   signupData.name !== "" &&
-    //   signupData.mobile !== "" &&
-    //   signupData.email !== "" &&
-    //   signupData.password !== ""
-    // ) {
-    //   setError(false);
-    //   setHelperText("");
-    // } else {
-    //   setError(true);
-    //   setHelperText("required");
-    // }
+    // setErrors(Validation(signupData));
+
     setSignupData({
       ...signupData,
       [event.target.name]: event.target.value,
     });
   };
+  //   const handleSubmitSignup = (e) => {
+  //     // setLoading(true);
+  //     e.preventDefault();
+  //     setErrors(Validation(signupData));
+  //     setDataIsCorrect(true);
 
+  //     createUserWithEmailAndPassword(auth, signupData.email, signupData.password)
+  //       .then(async (res) => {
+  //         // setSubmitButtonDisabled(false);
+  //         const user = res.user;
+  //         await updateProfile(user, {
+  //           displayName: signupData.name,
+  //         });
+  //         navigate("/signin");
+  //       })
+  //       .catch((err) => {
+  //         // setSubmitButtonDisabled(false);
+  //         setErr(err.message);
+  //       });
+  //   };
   const handleSubmitSignup = async (e) => {
+    setLoading(true);
     e.preventDefault();
-    if (
-      signupData.name !== "" ||
-      signupData.mobile !== "" ||
-      signupData.email !== "" ||
-      signupData.password !== ""
-    ) {
-      // alert("Submitted");
-      setError(false);
-      setHelperText("");
-      // setShow(true);
-    } else {
-      // alert("Submit failure");
-      setError(true);
-      setHelperText("required");
+    setErrors(Validation(signupData));
+    setDataIsCorrect(true);
+
+    // const name = e.target[0].value;
+    // const mobile = e.target[1].value;
+    // const email = e.target[2].value;
+    // const password = e.target[3].value;
+
+    try {
+      const res = await createUserWithEmailAndPassword(
+        auth,
+        signupData.email,
+        signupData.password
+      );
+      console.log(res);
+      navigate("/signin");
+    } catch (err) {
+      console.log(err);
+      setErr(true);
+      setLoading(false);
     }
-    // navigate("/signin");
-    // setLoading(true);
-    // setErrors(Validation(signupData));
-    // setDataIsCorrect(true);
   };
-  //   const name = e.target[0].value;
-  //   const mobile = e.target[1].value;
-  //   const email = e.target[2].value;
-  //   const password = e.target[3].value;
-
-  //   try {
-  //     const res = await createUserWithEmailAndPassword(auth, email, password);
-  //     console.log(res);
-  //     navigate("/");
-  //   } catch (err) {
-  //     console.log(err);
-  //     setErr(true);
-  //     setLoading(false);
-  //   }
-  // };
-  // useEffect(() => {
-  //   if (Object.keys(errors).length === 0 && dataIsCorrect) {
-  //     alert("signup successfully");
-
-  //     // navigate("/eventslist");
-  //   }
-  // }, [errors]);
+  useEffect(() => {
+    if (Object.keys(errors).length === 0 && dataIsCorrect) {
+      alert("signup successfully");
+      navigate("/signin");
+    }
+  }, [errors]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -140,10 +138,10 @@ export default function SignUp() {
                   autoFocus
                   value={signupData.name}
                   onChange={updateHandleChange}
-                  error={true}
-                  helperText={helperText}
+                  error={errors.name}
+                  //   helperText={helperText}
                 />
-                {/* {errors.name && <p className="error">{errors.name}</p>} */}
+                {errors.name && <p className="error">{errors.name}</p>}
               </Grid>
               {/* {errors.name && <p className="error">{errors.name}</p>} */}
               <Grid item xs={12} sm={6}>
@@ -156,11 +154,11 @@ export default function SignUp() {
                   autoComplete="mobile-number"
                   value={signupData.mobile}
                   onChange={updateHandleChange}
-                  error={true}
-                  helperText={helperText}
+                  error={errors.mobile}
                 />
+                {errors.mobile && <p className="error">{errors.mobile}</p>}
               </Grid>
-              {/* {errors.mobile && <p className="error">{errors.mobile}</p>} */}
+
               <Grid item xs={12}>
                 <TextField
                   required
@@ -171,11 +169,11 @@ export default function SignUp() {
                   autoComplete="email"
                   value={signupData.email}
                   onChange={updateHandleChange}
-                  error={true}
-                  helperText={helperText}
+                  error={errors.email}
                 />
+                {errors.email && <p className="error">{errors.email}</p>}
               </Grid>
-              {/* {errors.email && <p className="error">{errors.email}</p>} */}
+
               <Grid item xs={12}>
                 <TextField
                   required
@@ -187,11 +185,11 @@ export default function SignUp() {
                   autoComplete="new-password"
                   value={signupData.password}
                   onChange={updateHandleChange}
-                  error={true}
-                  helperText={helperText}
+                  error={errors.password}
                 />
+                {errors.password && <p className="error">{errors.password}</p>}
               </Grid>
-              {/* {errors.password && <p className="error">{errors.password}</p>} */}
+
               <Grid item xs={12}>
                 <FormControlLabel
                   control={

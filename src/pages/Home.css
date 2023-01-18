@@ -397,7 +397,8 @@ padding-bottom: 50px;
               padding: 0;
             }
 .error{
-  color: red
+  color: red;
+  font-size: 10px;
 }
 .card-header{
   padding: 10px;

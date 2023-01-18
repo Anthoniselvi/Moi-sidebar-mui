@@ -3,23 +3,23 @@
 const Validation = (signupData) => {
   let errors = {};
 
-  if (!signupData.fullname) {
-    errors.fullname = "Name is required";
+  if (!signupData.name) {
+    errors.name = "Name is required";
   }
   //   else if (!/^[a-zA-Z]+$/.test(signupData.name)) {
   //     errors.name = "Name is invalid";
   //   }
 
+  if (!signupData.mobile) {
+    errors.mobile = "Phone Number is required";
+  } else if (signupData.mobile.length < 10) {
+    errors.mobile = "Mobile Number must be in 10 character";
+  }
+
   if (!signupData.email) {
     errors.email = "Email is required";
   } else if (!/\S+@\S+\.\S+/.test(signupData.email)) {
     errors.email = "Email is invalid";
-  }
-
-  if (!signupData.phone) {
-    errors.phone = "Phone Number is required";
-  } else if (signupData.phone.length < 10) {
-    errors.phone = "Mobile Number must be in 10 character";
   }
 
   if (!signupData.password) {

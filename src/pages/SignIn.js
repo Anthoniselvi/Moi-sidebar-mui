@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -14,6 +14,10 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
+import SigninValidation from "./SigninValidation";
+import { auth, google, facebook } from "./firebase";
+import { signInWithPopup } from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 const theme = createTheme();
 
@@ -23,42 +27,54 @@ export default function SignIn() {
     email: "",
     password: "",
   });
-  const [error, setError] = useState(null);
-  const [helperText, setHelperText] = React.useState("");
+  const [errors, setErrors] = useState({});
+  // const [error, setError] = useState(null);
+  // const [helperText, setHelperText] = React.useState("");
 
-  const navigateToEventList = () => {
-    navigate("/eventslist");
-  };
+  const [err, setErr] = useState(false);
+
+  const [dataIsCorrect, setDataIsCorrect] = useState(false);
 
   const handleChange = (event) => {
-    if (signinData.mobile !== "" && signinData.password !== "") {
-      setError(false);
-      setHelperText("");
-    } else {
-      setError(true);
-      setHelperText("required");
-    }
     setSigninData({
       ...signinData,
       [event.target.name]: event.target.value,
     });
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    if (signinData.mobile !== "" && signinData.password !== "") {
-      setError(false);
-      setHelperText("");
-    } else {
-      setError(true);
-      setHelperText("required");
+  // const login = async (provider) => {
+  //   const result = await signInWithPopup(auth, provider);
+  //   console.log(result);
+  // };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setErrors(SigninValidation(signinData));
+    setDataIsCorrect(true);
+
+    const email = e.target[0].value;
+    const password = e.target[1].value;
+
+    try {
+      await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+        // signinData.email,
+        // signinData.password
+      );
+      // navigate("/eventslist");
+    } catch (err) {
+      setErr(true);
     }
-    // const data = new FormData(event.currentTarget);
-    // console.log({
-    //   email: data.get("email"),
-    //   password: data.get("password"),
-    // });
   };
+
+  useEffect(() => {
+    if (Object.keys(errors).length === 0 && dataIsCorrect) {
+      alert("login successfully");
+      navigate("/eventslist");
+    }
+  }, [errors]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -88,16 +104,17 @@ export default function SignIn() {
               margin="normal"
               required
               fullWidth
-              id="mobile"
-              label="Mobile Number"
-              name="mobile"
-              autoComplete="mobile"
+              id="email"
+              label="Email"
+              name="email"
+              autoComplete="email"
               autoFocus
-              value={signinData.mobile}
+              value={signinData.email}
               onChange={handleChange}
-              error={true}
-              helperText={helperText}
+              error={errors.email}
             />
+            {errors.email && <p className="error">{errors.email}</p>}
+            {/* /> */}
             <TextField
               margin="normal"
               required
@@ -109,15 +126,16 @@ export default function SignIn() {
               autoComplete="current-password"
               value={signinData.password}
               onChange={handleChange}
-              error={true}
-              helperText={helperText}
+              error={errors.password}
             />
+            {errors.password && <p className="error">{errors.password}</p>}
+            {/* /> */}
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
             />
             <Button
-              onClick={navigateToEventList}
+              // onClick={navigateToEventList}
               type="submit"
               fullWidth
               variant="contained"
