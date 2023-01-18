@@ -18,7 +18,7 @@ export default function AddNewEntry() {
   const [city, setCity] = useState();
   const [amount, setAmount] = useState(0);
   const [gift, setGift] = useState("");
-  const [selected, setSelected] = useState("amount");
+  const [selected, setSelected] = useState(1);
   // const [entries, setEntries] = useState();
   const navigate = useNavigate();
   const [searchParam] = useSearchParams();
@@ -31,6 +31,7 @@ export default function AddNewEntry() {
       .post("http://localhost:2023/entries", {
         personName: personName,
         city: city,
+        selected: selected,
         amount: amount,
         gift: gift,
         eventId: eventId,
@@ -79,47 +80,50 @@ export default function AddNewEntry() {
             <FormLabel id="demo-controlled-radio-buttons-group">
               Type of Presentation :
             </FormLabel>
-            <RadioGroup defaultValue="amount">
+            <RadioGroup
+              value={selected}
+              onChange={(e) => setSelected(e.target.value)}
+            >
               <div className="radio-button">
                 <FormControlLabel
                   control={<Radio />}
                   label="Amount"
-                  value="amount"
-                  defaultChecked={selected === "amount"}
-                  onChange={(e) => setSelected(e.target.value)}
+                  value={1}
+                  // defaultChecked={selected === 1}
+                  // onChange={(e) => setSelected(e.target.value)}
                 />
                 <FormControlLabel
                   control={<Radio />}
                   label="Gift"
-                  value="gift"
-                  defaultChecked={selected === "gift"}
-                  onChange={(e) => setSelected(e.target.value)}
+                  value={0}
+                  // defaultChecked={selected === 0}
+                  // onChange={(e) => setSelected(e.target.value)}
                 />
               </div>
-              {selected === "amount" && (
-                <div>
-                  <TextField
-                    id="outlined-amount"
-                    label="Rs."
-                    onChange={(e) => setAmount(e.target.value)}
-                    value={amount}
-                    sx={{ width: "300px" }}
-                  />
-                </div>
-              )}
-              {selected === "gift" && (
-                <div className="gift-box">
-                  <TextField
-                    id="outlined-multiline-static"
-                    label="about gift"
-                    multiline
-                    rows={4}
-                    sx={{ width: "300px" }}
-                    onChange={(e) => setGift(e.target.value)}
-                    value={gift}
-                  />
-                </div>
-              )}
+              {/* {selected === 1 && ( */}
+              <div>
+                <TextField
+                  id="outlined-amount"
+                  label="Rs."
+                  onChange={(e) => setAmount(e.target.value)}
+                  value={amount}
+                  sx={{ width: "300px" }}
+                />
+              </div>
+              {/* )} */}
+              {/* {selected === 0 && ( */}
+              <div className="gift-box">
+                <TextField
+                  id="outlined-multiline-static"
+                  label="about gift"
+                  multiline
+                  rows={4}
+                  sx={{ width: "300px" }}
+                  onChange={(e) => setGift(e.target.value)}
+                  value={gift}
+                />
+              </div>
+              {/* )} */}
             </RadioGroup>
           </FormControl>
         </div>
