@@ -3,13 +3,22 @@ import { useNavigate } from "react-router-dom";
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import { useUserAuth } from "../Context/UserAuthContext";
 // import Nav from "./Nav";
 
 function Dashboard(props) {
   const navigate = useNavigate();
-
-  const navigateToSignUp = () => {
-    navigate("/new");
+  const { logOut, user } = useUserAuth();
+  const navigateToEventsList = () => {
+    navigate("/eventslist");
+  };
+  const handleLogout = async () => {
+    try {
+      await logOut();
+      navigate("/");
+    } catch (error) {
+      console.log(error.message);
+    }
   };
   return (
     <>
@@ -17,7 +26,19 @@ function Dashboard(props) {
       <div className="home">
         {/* <div className="home-pic"></div> */}
         <div className="home-content">
-        
+        <h2>{props.name ? `Welcome ${props.name}` : "Login Please"} </h2>
+        <Button
+          variant="contained"
+          onClick={handleLogout}
+          size="large"
+          style={{
+            backgroundColor: "#03045e",
+            color: "skyblue",
+            fontWeight: "600",
+          }}
+        >
+          Log Out
+        </Button>
         <h1>Moi Registry</h1>
         <p>
           Families are like branches on a tree. We grow in different directions
@@ -29,7 +50,7 @@ function Dashboard(props) {
         {/* <button className="home-button" onClick={navigateToSignUp}>Start</button> */}
         <Box sx={{ '& button': { m: 1 } }} >
            <div>
-        <Button variant="contained" onClick={navigateToSignUp} size="large" style={{ backgroundColor: "#03045e", color: "skyblue", fontWeight: "600"}}>
+        <Button variant="contained" onClick={navigateToEventsList} size="large" style={{ backgroundColor: "#03045e", color: "skyblue", fontWeight: "600"}}>
           Start
         </Button>
       </div>
@@ -41,3 +62,5 @@ function Dashboard(props) {
 }
 
 export default Dashboard;
+
+

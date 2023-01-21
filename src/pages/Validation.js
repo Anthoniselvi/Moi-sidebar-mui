@@ -10,6 +10,18 @@ const Validation = (signupData) => {
   //     errors.name = "Name is invalid";
   //   }
 
+  if (!signupData.age) {
+    errors.age = "Age is required";
+  }
+
+  if (!signupData.gender) {
+    errors.gender = "Kindly select Gender";
+  }
+
+  if (!signupData.city) {
+    errors.city = "City is required";
+  }
+
   if (!signupData.mobile) {
     errors.mobile = "Phone Number is required";
   } else if (signupData.mobile.length < 10) {

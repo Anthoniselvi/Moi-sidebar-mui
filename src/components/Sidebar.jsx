@@ -37,11 +37,11 @@ const Sidebar = ({children}) => {
             name:"Dashboard",
             icon:<FaTh/>
         },
-        // {
-        //     path:"/eventlist",
-        //     name:"Event",
-        //     icon:<FaUserAlt/>
-        // },
+        {
+            path:"/profile",
+            name:"Profile",
+            icon:<FaUserAlt/>
+        },
         {
             path:"/signup",
             name:"SignUp",

@@ -16,28 +16,40 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 import { auth } from "./firebase";
 import Validation from "./Validation";
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
+import axios from "axios";
+import FormControl from "@mui/material/FormControl";
+import FormLabel from "@mui/material/FormLabel";
 import {
   getAuth,
   createUserWithEmailAndPassword,
   updateProfile,
 } from "firebase/auth";
 import "./Home.css";
+import { useUserAuth } from "../Context/UserAuthContext";
+
 const theme = createTheme();
 
 export default function NewSignUp() {
   const [signupData, setSignupData] = useState({
     name: "",
+    age: "",
+    gender: "",
+    city: "",
     mobile: "",
     email: "",
+    username: "",
     password: "",
   });
   const [errors, setErrors] = useState({});
-  //   const [error, setError] = useState();
+  const [gender, setGender] = useState("");
   const [dataIsCorrect, setDataIsCorrect] = useState(false);
   const navigate = useNavigate();
   const [err, setErr] = useState(false);
   const [loading, setLoading] = useState(false);
-
+  const [error, setError] = useState("");
+  const { signUp } = useUserAuth();
   const navigateToSignIn = () => {
     navigate("/signin");
   };
@@ -49,57 +61,70 @@ export default function NewSignUp() {
       [event.target.name]: event.target.value,
     });
   };
-  //   const handleSubmitSignup = (e) => {
-  //     // setLoading(true);
-  //     e.preventDefault();
-  //     setErrors(Validation(signupData));
-  //     setDataIsCorrect(true);
 
-  //     createUserWithEmailAndPassword(auth, signupData.email, signupData.password)
-  //       .then(async (res) => {
-  //         // setSubmitButtonDisabled(false);
-  //         const user = res.user;
-  //         await updateProfile(user, {
-  //           displayName: signupData.name,
-  //         });
-  //         navigate("/signin");
-  //       })
-  //       .catch((err) => {
-  //         // setSubmitButtonDisabled(false);
-  //         setErr(err.message);
-  //       });
-  //   };
   const handleSubmitSignup = async (e) => {
     setLoading(true);
     e.preventDefault();
     setErrors(Validation(signupData));
     setDataIsCorrect(true);
+    setError("");
 
-    // const name = e.target[0].value;
-    // const mobile = e.target[1].value;
-    // const email = e.target[2].value;
-    // const password = e.target[3].value;
+    axios
+      .post("http://localhost:2023/profile", {
+        name: signupData.name,
+        age: signupData.age,
+        gender: signupData.gender,
+        city: signupData.city,
+        mobile: signupData.mobile,
+        email: signupData.email,
+        username: signupData.username,
+        password: signupData.password,
+      })
+      .then((response) => {
+        console.log(response);
+        // navigate("/eventslist");
+      });
 
-    try {
-      const res = await createUserWithEmailAndPassword(
-        auth,
-        signupData.email,
-        signupData.password
-      );
-      console.log(res);
-      navigate("/signin");
-    } catch (err) {
-      console.log(err);
-      setErr(true);
-      setLoading(false);
-    }
+    createUserWithEmailAndPassword(auth, signupData.email, signupData.password)
+      .then(async (res) => {
+        // setSubmitButtonDisabled(false);
+        const user = res.user;
+        await updateProfile(user, {
+          displayName: signupData.name,
+        });
+        navigate("/");
+      })
+      .catch((err) => {
+        // setSubmitButtonDisabled(false);
+        setError(err.message);
+      });
+
+    // try {
+    //   await signUp(signupData.email, signupData.password);
+    //   navigate("/");
+    // } catch (err) {
+    //   console.log(err);
+    //   setErr(true);
+    //   setLoading(false);
+    //   setError(err.message);
+    // }
   };
-  useEffect(() => {
-    if (Object.keys(errors).length === 0 && dataIsCorrect) {
-      alert("signup successfully");
-      navigate("/signin");
-    }
-  }, [errors]);
+  // const handleSubmitSignup = async (e) => {
+  //   e.preventDefault();
+  //   setError("");
+  //   try {
+  //     await signUp(email, password);
+  //     navigate("/");
+  //   } catch (err) {
+  //     setError(err.message);
+  //   }
+  // };
+  // useEffect(() => {
+  //   if (Object.keys(errors).length === 0 && dataIsCorrect) {
+  //     alert("signup successfully");
+  //     navigate("/signin");
+  //   }
+  // }, [errors]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -118,8 +143,13 @@ export default function NewSignUp() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign up
+            Sign Up
           </Typography>
+          {error && (
+            <p className="error" variant="danger">
+              {error}
+            </p>
+          )}
           <Box
             component="form"
             noValidate
@@ -143,7 +173,72 @@ export default function NewSignUp() {
                 />
                 {errors.name && <p className="error">{errors.name}</p>}
               </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  name="age"
+                  required
+                  fullWidth
+                  id="age"
+                  label="Age"
+                  autoFocus
+                  value={signupData.age}
+                  onChange={updateHandleChange}
+                  error={errors.age}
+                  //   helperText={helperText}
+                />
+                {errors.age && <p className="error">{errors.age}</p>}
+              </Grid>
               {/* {errors.name && <p className="error">{errors.name}</p>} */}
+              <Grid item xs={12}>
+                <div className="radio-box">
+                  <FormControl>
+                    <FormLabel id="demo-controlled-radio-buttons-group">
+                      Gender :
+                    </FormLabel>
+                    <RadioGroup
+                      error={errors.gender}
+                      required
+                      value={signupData.gender}
+                      // onChange={(e) => setSignupData.gender(e.target.value)}
+                      onChange={updateHandleChange}
+                    >
+                      <div className="radio-button">
+                        <FormControlLabel
+                          control={<Radio />}
+                          label="Male"
+                          value="male"
+                          checked={signupData.gender === "male"}
+                          // defaultChecked={selected === 1}
+                          // onChange={(e) => setSelected(e.target.value)}
+                        />
+                        <FormControlLabel
+                          control={<Radio />}
+                          label="Female"
+                          value="female"
+                          checked={signupData.gender === "female"}
+                          // defaultChecked={selected === 0}
+                          // onChange={(e) => setSelected(e.target.value)}
+                        />
+                      </div>
+                    </RadioGroup>
+                  </FormControl>
+                </div>
+                {errors.gender && <p className="error">{errors.gender}</p>}
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  required
+                  fullWidth
+                  id="city"
+                  label="City"
+                  name="city"
+                  autoComplete="city"
+                  value={signupData.city}
+                  onChange={updateHandleChange}
+                  error={errors.city}
+                />
+                {errors.city && <p className="error">{errors.city}</p>}
+              </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
                   required
@@ -172,6 +267,20 @@ export default function NewSignUp() {
                   error={errors.email}
                 />
                 {errors.email && <p className="error">{errors.email}</p>}
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  id="username"
+                  label="Username"
+                  name="username"
+                  autoComplete="username"
+                  value={signupData.username}
+                  onChange={updateHandleChange}
+                  error={errors.username}
+                />
+                {errors.username && <p className="error">{errors.username}</p>}
               </Grid>
 
               <Grid item xs={12}>
@@ -210,7 +319,7 @@ export default function NewSignUp() {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="signin" variant="body2">
                   Already have an account? Sign in
                 </Link>
               </Grid>

@@ -28,7 +28,7 @@ export default function SignIn() {
     password: "",
   });
   const [errors, setErrors] = useState({});
-  // const [error, setError] = useState(null);
+  const [error, setError] = useState("");
   // const [helperText, setHelperText] = React.useState("");
 
   const [err, setErr] = useState(false);
@@ -51,30 +51,49 @@ export default function SignIn() {
     e.preventDefault();
     setErrors(SigninValidation(signinData));
     setDataIsCorrect(true);
+    setError("");
 
-    const email = e.target[0].value;
-    const password = e.target[1].value;
+    // const email = e.target[0].value;
+    // const password = e.target[1].value;
+    signInWithEmailAndPassword(auth, signinData.email, signinData.password)
+      .then(async (res) => {
+        // setSubmitButtonDisabled(false);
 
-    try {
-      await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-        // signinData.email,
-        // signinData.password
-      );
-      // navigate("/eventslist");
-    } catch (err) {
-      setErr(true);
-    }
+        navigate("/dashboard");
+      })
+      .catch((err) => {
+        // setSubmitButtonDisabled(false);
+        setError(err.message);
+      });
+    // try {
+    //   await signInWithEmailAndPassword(
+    //     auth,
+    //     signinData.email,
+    //     signinData.password
+    //   );
+    //   navigate("/dashboard");
+    // } catch (err) {
+    //   setError(err.message);
+    // }
   };
 
-  useEffect(() => {
-    if (Object.keys(errors).length === 0 && dataIsCorrect) {
-      alert("login successfully");
-      navigate("/eventslist");
-    }
-  }, [errors]);
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   setError("");
+  //   try {
+  //     await logIn(email, password);
+  //     navigate("/home");
+  //   } catch (err) {
+  //     setError(err.message);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   if (Object.keys(errors).length === 0 && dataIsCorrect) {
+  //     alert("login successfully");
+  //     navigate("/eventslist");
+  //   }
+  // }, [errors]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -94,6 +113,11 @@ export default function SignIn() {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
+          {error && (
+            <p className="error" variant="danger">
+              {error}
+            </p>
+          )}
           <Box
             component="form"
             onSubmit={handleSubmit}
@@ -150,13 +174,15 @@ export default function SignIn() {
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="#" variant="body2">
-                  {"Don't have an account? Sign Up"}
+                <Link href="signup" variant="body2">
+                  Don't have an account?Sign Up
                 </Link>
+                {/* <Link to="/signup">Don't have an account?Sign Up</Link> */}
               </Grid>
             </Grid>
           </Box>
         </Box>
+        {/* {err && <span>Something went wrong</span>} */}
         {/* <Copyright sx={{ mt: 8, mb: 4 }} /> */}
       </Container>
     </ThemeProvider>

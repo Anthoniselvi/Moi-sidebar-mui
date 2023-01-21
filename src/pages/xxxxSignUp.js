@@ -14,7 +14,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
-import { auth } from "./firebase";
+// import { auth } from "../Firebase/firebase";
 import Validation from "./Validation";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import "./Home.css";
