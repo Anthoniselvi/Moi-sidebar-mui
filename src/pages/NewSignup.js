@@ -21,6 +21,9 @@ import RadioGroup from "@mui/material/RadioGroup";
 import axios from "axios";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
 import {
   getAuth,
   createUserWithEmailAndPassword,
