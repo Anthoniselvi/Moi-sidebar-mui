@@ -208,7 +208,7 @@ export default function NewSignUp() {
                           label="Male"
                           value="male"
                           checked={signupData.gender === "male"}
-                          // defaultChecked={selected === 1}
+
                           // onChange={(e) => setSelected(e.target.value)}
                         />
                         <FormControlLabel
@@ -216,7 +216,7 @@ export default function NewSignUp() {
                           label="Female"
                           value="female"
                           checked={signupData.gender === "female"}
-                          // defaultChecked={selected === 0}
+
                           // onChange={(e) => setSelected(e.target.value)}
                         />
                       </div>

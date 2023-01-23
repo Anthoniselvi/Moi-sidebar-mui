@@ -3,42 +3,50 @@ import { useNavigate } from "react-router-dom";
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import { useUserAuth } from "../Context/UserAuthContext";
+// import { useUserAuth } from "../Context/UserAuthContext";
+import Header from "./Header";
 // import Nav from "./Nav";
 
 function Dashboard(props) {
   const navigate = useNavigate();
-  const { logOut, user } = useUserAuth();
+  // const { logOut, user } = useUserAuth();
   const navigateToEventsList = () => {
     navigate("/eventslist");
   };
-  const handleLogout = async () => {
-    try {
-      await logOut();
-      navigate("/");
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
+
+  // const handleLogout = async () => {
+  //   try {
+  //     await logOut();
+  //     navigate("/");
+  //   } catch (error) {
+  //     console.log(error.message);
+  //   }
+  // };
   return (
-    <>
+    <div className="home">
+       <Header />
       {/* <Nav /> */}
-      <div className="home">
+      {/* <div className="home"> */}
+     
         {/* <div className="home-pic"></div> */}
         <div className="home-content">
-        <h2>{props.name ? `Welcome ${props.name}` : "Login Please"} </h2>
-        <Button
+          <div className="home-nav">
+        {/* <h2>{props.name ? `Welcome ${props.name} !` : "Login Please"} </h2> */}
+        <h2>{ `Welcome ${props.name} !` } </h2>
+        {/* <Button
           variant="contained"
           onClick={handleLogout}
-          size="large"
+          size="medium"
           style={{
-            backgroundColor: "#03045e",
-            color: "skyblue",
-            fontWeight: "600",
+            // backgroundColor: "#03045e",
+            // color: "skyblue",
+            // fontWeight: "600",
+            // width: "200px"
           }}
         >
           Log Out
-        </Button>
+        </Button>  */}
+        </div>
         <h1>Moi Registry</h1>
         <p>
           Families are like branches on a tree. We grow in different directions
@@ -57,7 +65,7 @@ function Dashboard(props) {
     </Box>
         </div>
       </div>
-    </>
+    // </div>
   );
 }
 

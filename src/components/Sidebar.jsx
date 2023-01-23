@@ -25,12 +25,14 @@ import RestoreIcon from "@mui/icons-material/Restore";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ArchiveIcon from "@mui/icons-material/Archive";
 import Paper from "@mui/material/Paper";
+import { useUserAuth } from "../Context/UserAuthContext";
 
 
 const Sidebar = ({children}) => {
     const [value, setValue] = React.useState(0);
     const[isOpen ,setIsOpen] = useState(false);
     const toggle = () => setIsOpen (!isOpen);
+    // const { user } = useUserAuth();
     const menuItem=[
         {
             path:"/",

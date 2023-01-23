@@ -21,6 +21,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import MenuList from "./MenuList";
 import "./Home.css";
+import Header from "./Header";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
 import { useState, useEffect } from "react";
@@ -129,6 +130,7 @@ export default function EventList(props) {
 
   return (
     <div className="eventlist-container">
+      <Header />
       <>
         {/* <h2>{props.name ? `Welcome - ${props.name}` : "Login please"}</h2> */}
         <h1 className="entry-title">Total Events List</h1>

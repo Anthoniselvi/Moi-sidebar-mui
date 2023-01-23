@@ -23,6 +23,7 @@ import { UserAuthContextProvider } from "./Context/UserAuthContext";
 import Home from "./pages/Home";
 import { auth } from "./pages/firebase";
 import axios from "axios";
+import Header from "./pages/Header";
 
 const App = () => {
   const [name, setName] = useState("");
@@ -36,17 +37,6 @@ const App = () => {
     });
   }, []);
 
-  // const getProfile = () => {
-  //   axios.get("http://localhost:2023/profile").then((response) => {
-  //     // console.log(response);
-  //     console.log(response.data);
-  //     setName(response.data.name);
-  //   });
-  // };
-
-  // useEffect(() => {
-  //   getProfile();
-  // }, []);
   return (
     <div className="container">
       {/* <BrowserRouter>
@@ -71,25 +61,40 @@ const App = () => {
           </Routes>
         </Sidebar>
       </BrowserRouter> */}
+
       <BrowserRouter>
         <UserAuthContextProvider>
-          <Sidebar>
-            <Routes>
-              <Route
-                path="/dashboard"
-                element={
-                  <ProtectedRoute>
-                    {/* <Home /> */}
-                    <Dashboard name={name} />
-                  </ProtectedRoute>
-                }
-              />
-              <Route path="/" element={<SignIn />} />
-              <Route path="signin" element={<SignIn />} />
-              <Route path="signup" element={<NewSignUp />} />
-              <Route path="eventslist" element={<EventList />} />
-            </Routes>
-          </Sidebar>
+          {/* <Sidebar> */}
+          {/* <Header> */}
+          {/* <Footer> */}
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <ProtectedRoute>
+                  {/* <Home /> */}
+                  <Dashboard name={name} />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="dashboard" element={<Dashboard name={name} />} />
+            <Route path="signin" element={<SignIn />} />
+            <Route path="signup" element={<NewSignUp />} />
+            <Route path="eventslist" element={<EventList />} />
+            <Route path="event/new" element={<AddNewEvent />} />
+            <Route path="entry/new" element={<AddNewEntry />} />
+            <Route path="entrylist" element={<EntryList />} />
+            <Route path="event" element={<EditEvent />} />
+            <Route path="edit" element={<EditEntry />} />
+            <Route path="footer" element={<Footer />} />
+            <Route path="table" element={<EntryTable />} />
+            <Route path="form" element={<Form />} />
+            <Route path="menu" element={<MenuList />} />
+            {/* <Route path="new" element={<NewSignUp />} /> */}
+            <Route path="profile" element={<Profile />} />
+          </Routes>
+          {/* </Footer> */}
+          {/* </Header> */}
         </UserAuthContextProvider>
       </BrowserRouter>
     </div>
