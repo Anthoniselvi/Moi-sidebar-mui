@@ -82,9 +82,9 @@ export default function EntriesList(props) {
         console.log(response);
         console.log(response.data);
         setEntries(response.data);
-        navigate(`/entryList?event=${eventId}`);
+        // navigate(`/entryList?event=${eventId}`);
         console.log(eventId);
-        // navigate("/eventslist");
+        navigate("/eventslist");
       });
   };
 

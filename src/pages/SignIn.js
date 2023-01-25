@@ -58,8 +58,8 @@ export default function SignIn() {
     signInWithEmailAndPassword(auth, signinData.email, signinData.password)
       .then(async (res) => {
         // setSubmitButtonDisabled(false);
-
-        navigate("/dashboard");
+        console.log(res);
+        navigate("/eventslist");
       })
       .catch((err) => {
         // setSubmitButtonDisabled(false);

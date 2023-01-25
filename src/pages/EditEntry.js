@@ -39,7 +39,7 @@ export default function EditEntry() {
         console.log(response);
         navigate("/eventslist");
       });
-    navigate(`/entrylist?event=${entryId}`);
+    // navigate(`/entrylist?event=${entryId}`);
   };
 
   useEffect(() => {

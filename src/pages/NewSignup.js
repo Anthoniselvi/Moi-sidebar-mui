@@ -14,7 +14,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
-import { auth } from "./firebase";
+// import { auth } from "./firebase";
 import Validation from "./Validation";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
@@ -31,18 +31,20 @@ import {
 } from "firebase/auth";
 import "./Home.css";
 import { useUserAuth } from "../Context/UserAuthContext";
-
+import { auth, db, storage } from "./firebase";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { doc, setDoc } from "firebase/firestore";
 const theme = createTheme();
 
 export default function NewSignUp() {
   const [signupData, setSignupData] = useState({
     name: "",
-    age: "",
-    gender: "",
-    city: "",
+    // age: "",
+    // gender: "",
+    // city: "",
     mobile: "",
     email: "",
-    username: "",
+    // username: "",
     password: "",
   });
   const [errors, setErrors] = useState({});
@@ -72,21 +74,22 @@ export default function NewSignUp() {
     setDataIsCorrect(true);
     setError("");
 
-    axios
-      .post("http://localhost:2023/profile", {
-        name: signupData.name,
-        age: signupData.age,
-        gender: signupData.gender,
-        city: signupData.city,
-        mobile: signupData.mobile,
-        email: signupData.email,
-        username: signupData.username,
-        password: signupData.password,
-      })
-      .then((response) => {
-        console.log(response);
-        // navigate("/eventslist");
-      });
+    // axios
+    //   .post("http://localhost:2023/profile", {
+    //     // id:
+    //     name: signupData.name,
+    //     age: signupData.age,
+    //     gender: signupData.gender,
+    //     city: signupData.city,
+    //     mobile: signupData.mobile,
+    //     email: signupData.email,
+    //     username: signupData.username,
+    //     password: signupData.password,
+    //   })
+    //   .then((response) => {
+    //     console.log(response);
+    //     // navigate("/eventslist");
+    //   });
 
     createUserWithEmailAndPassword(auth, signupData.email, signupData.password)
       .then(async (res) => {
@@ -95,7 +98,15 @@ export default function NewSignUp() {
         await updateProfile(user, {
           displayName: signupData.name,
         });
-        navigate("/");
+        // create Profile here
+        await setDoc(doc(db, "users", res.user.uid), {
+          uid: res.user.uid,
+          name: signupData.name,
+          mobile: signupData.mobile,
+          email: signupData.email,
+          password: signupData.password,
+        });
+        navigate("/signin");
       })
       .catch((err) => {
         // setSubmitButtonDisabled(false);
@@ -176,7 +187,7 @@ export default function NewSignUp() {
                 />
                 {errors.name && <p className="error">{errors.name}</p>}
               </Grid>
-              <Grid item xs={12} sm={6}>
+              {/* <Grid item xs={12} sm={6}>
                 <TextField
                   name="age"
                   required
@@ -192,7 +203,7 @@ export default function NewSignUp() {
                 {errors.age && <p className="error">{errors.age}</p>}
               </Grid>
               {/* {errors.name && <p className="error">{errors.name}</p>} */}
-              <Grid item xs={12}>
+              {/* <Grid item xs={12}>
                 <div className="radio-box">
                   <FormControl>
                     <FormLabel id="demo-controlled-radio-buttons-group">
@@ -204,8 +215,8 @@ export default function NewSignUp() {
                       value={signupData.gender}
                       // onChange={(e) => setSignupData.gender(e.target.value)}
                       onChange={updateHandleChange}
-                    >
-                      <div className="radio-button">
+                    > */}
+              {/* <div className="radio-button">
                         <FormControlLabel
                           control={<Radio />}
                           label="Male"
@@ -222,8 +233,8 @@ export default function NewSignUp() {
 
                           // onChange={(e) => setSelected(e.target.value)}
                         />
-                      </div>
-                    </RadioGroup>
+                      </div> */}
+              {/* </RadioGroup>
                   </FormControl>
                 </div>
                 {errors.gender && <p className="error">{errors.gender}</p>}
@@ -241,7 +252,7 @@ export default function NewSignUp() {
                   error={errors.city}
                 />
                 {errors.city && <p className="error">{errors.city}</p>}
-              </Grid>
+              </Grid> */}
               <Grid item xs={12} sm={6}>
                 <TextField
                   required
@@ -271,7 +282,7 @@ export default function NewSignUp() {
                 />
                 {errors.email && <p className="error">{errors.email}</p>}
               </Grid>
-              <Grid item xs={12}>
+              {/* <Grid item xs={12}>
                 <TextField
                   required
                   fullWidth
@@ -284,7 +295,7 @@ export default function NewSignUp() {
                   error={errors.username}
                 />
                 {errors.username && <p className="error">{errors.username}</p>}
-              </Grid>
+              </Grid> */}
 
               <Grid item xs={12}>
                 <TextField

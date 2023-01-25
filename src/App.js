@@ -24,6 +24,7 @@ import Home from "./pages/Home";
 import { auth } from "./pages/firebase";
 import axios from "axios";
 import Header from "./pages/Header";
+import AddProfile from "./pages/AddProfile";
 
 const App = () => {
   const [name, setName] = useState("");
@@ -90,8 +91,8 @@ const App = () => {
             <Route path="table" element={<EntryTable />} />
             <Route path="form" element={<Form />} />
             <Route path="menu" element={<MenuList />} />
-            {/* <Route path="new" element={<NewSignUp />} /> */}
-            <Route path="profile" element={<Profile />} />
+            <Route path="addprofile" element={<AddProfile />} />
+            <Route path="profile" element={<Profile name={name} />} />
           </Routes>
           {/* </Footer> */}
           {/* </Header> */}
