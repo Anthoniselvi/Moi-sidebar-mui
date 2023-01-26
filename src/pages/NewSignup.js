@@ -106,7 +106,8 @@ export default function NewSignUp() {
           email: signupData.email,
           password: signupData.password,
         });
-        navigate("/signin");
+        // navigate("/signin");
+        navigate(`/eventslist?id=${res.user.uid}`);
       })
       .catch((err) => {
         // setSubmitButtonDisabled(false);

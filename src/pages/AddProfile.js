@@ -6,11 +6,11 @@ import { auth } from "./firebase";
 export default function AddProfile() {
   const navigate = useNavigate();
   const [profiles, setProfiles] = useState([]);
-  const [id, setId] = useState("");
+  const [id, setId] = useState();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [mobile, setMobile] = useState("");
-  const [age, setAge] = useState("");
+  const [age, setAge] = useState();
   const [gender, setGender] = useState("");
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
@@ -64,7 +64,7 @@ export default function AddProfile() {
         />
         <label>Age</label>
         <input
-          type="text"
+          type="number"
           name="age"
           value={age}
           onChange={(e) => setAge(e.target.value)}

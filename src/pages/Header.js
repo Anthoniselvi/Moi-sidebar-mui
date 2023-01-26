@@ -6,7 +6,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import "./Home.css";
 import { useUserAuth } from "../Context/UserAuthContext";
 
@@ -18,6 +18,9 @@ export default function Header() {
   const { logOut, user } = useUserAuth();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+  const [searchParam] = useSearchParams();
+  const profileId = searchParam.get("profile");
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -29,7 +32,8 @@ export default function Header() {
   };
 
   const navigateToProfile = () => {
-    navigate("/profile");
+    // navigate("/profile");
+    navigate(`/profile?id=${profileId}`);
   };
 
   const navigateToNewEvent = () => {
@@ -90,9 +94,9 @@ export default function Header() {
               Moi App
             </Typography>
 
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            {/* <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               {user.name}
-            </Typography>
+            </Typography> */}
             {!user ? (
               <Button color="inherit" onClick={navigateToSignIn}>
                 Login

@@ -13,7 +13,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import SigninValidation from "./SigninValidation";
 import { auth, google, facebook } from "./firebase";
 import { signInWithPopup } from "firebase/auth";
@@ -34,6 +34,8 @@ export default function SignIn() {
   const [err, setErr] = useState(false);
 
   const [dataIsCorrect, setDataIsCorrect] = useState(false);
+  const [searchParam] = useSearchParams();
+  const profileId = searchParam.get("profile");
 
   const handleChange = (event) => {
     setSigninData({
@@ -59,7 +61,7 @@ export default function SignIn() {
       .then(async (res) => {
         // setSubmitButtonDisabled(false);
         console.log(res);
-        navigate("/eventslist");
+        navigate(`/eventslist?profile=${res.user.uid}`);
       })
       .catch((err) => {
         // setSubmitButtonDisabled(false);

@@ -47,7 +47,7 @@ export default function EventList(props) {
   const [selectedEvent, setSelectedEvent] = useState("");
   const [show, setShow] = useState(false);
   const [searchParam] = useSearchParams();
-  const eventId = searchParam.get("event");
+  const profileId = searchParam.get("id");
 
   const handleExpandClick = () => {
     setExpanded(!expanded);

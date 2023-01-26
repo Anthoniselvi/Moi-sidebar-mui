@@ -64,20 +64,17 @@ function Profile(props) {
             <p>Name: {name}</p>
             <p>Email: {email}</p>
           </div>
-          {profiles.id === user.uid && show ? (
-            <div>
-              <h3>Personal Information</h3>
-              <p>Name: {profiles.name}</p>
-              <p>Age: {profiles.age}</p>
-              <p>Email: {profiles.gender}</p>
-              <p>Address: {profiles.address}</p>
-              <p>City: {profiles.city}</p>
-              <p>Mobile Number: {profiles.mobile}</p>
-              <p>Email: {profiles.email}</p>
-            </div>
-          ) : (
-            <AddProfile />
-          )}
+
+          <div>
+            <h3>Personal Information</h3>
+            <p>Name: {profiles.name}</p>
+            <p>Age: {profiles.age}</p>
+            <p>Email: {profiles.gender}</p>
+            <p>Address: {profiles.address}</p>
+            <p>City: {profiles.city}</p>
+            <p>Mobile Number: {profiles.mobile}</p>
+            <p>Email: {profiles.email}</p>
+          </div>
         </div>
         {/* <AddProfile /> */}
         {/* {profiles.map((singleProfile, id) => ( */}
