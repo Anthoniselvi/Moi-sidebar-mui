@@ -23,6 +23,31 @@ function Profile(props) {
   const [show, setShow] = useState(true);
   const { user } = useUserAuth();
 
+  const [mobile, setMobile] = useState("");
+  const [age, setAge] = useState();
+  const [gender, setGender] = useState("");
+  const [address, setAddress] = useState("");
+  const [city, setCity] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    axios
+      .post("http://localhost:2023/profile", {
+        id: id,
+        name: name,
+        age: age,
+        gender: gender,
+        address: address,
+        city: city,
+        mobile: mobile,
+        email: email,
+      })
+      .then((response) => {
+        console.log(response);
+        navigate(`/eventslist?id=${id}`);
+      });
+  };
+
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       console.log(user);
@@ -54,77 +79,65 @@ function Profile(props) {
       <div className="editprofile-container">
         <h1>Profile</h1>
 
-        <div className="editprofile-body">
-          <div className="editprofile-image">
-            <FaUserAlt className="profile-icon" />
-          </div>
-
-          <div>
-            <h3>Account Information</h3>
-            <p>Name: {name}</p>
-            <p>Email: {email}</p>
-          </div>
-
-          <div>
-            <h3>Personal Information</h3>
-            <p>Name: {profiles.name}</p>
-            <p>Age: {profiles.age}</p>
-            <p>Email: {profiles.gender}</p>
-            <p>Address: {profiles.address}</p>
-            <p>City: {profiles.city}</p>
-            <p>Mobile Number: {profiles.mobile}</p>
-            <p>Email: {profiles.email}</p>
-          </div>
+        <div className="editprofile-image">
+          <FaUserAlt className="profile-icon" />
         </div>
-        {/* <AddProfile /> */}
-        {/* {profiles.map((singleProfile, id) => ( */}
-        {/* <div className="profile-table">
-            <div className="editprofile-personalinfo">
-              <h4>Personal Information</h4> */}
 
-        {/* <table>
-                <tr className="editprofile-tablerow">
-                  <td>Name</td>
-                  <td className="editprofile-answer">{props.name}</td>
-                </tr>
+        <form onSubmit={handleSubmit}>
+          <label>Name</label>
+          <input
+            type="text"
+            name="name"
+            value={name}
+            readOnly
+            onChange={(e) => setName(e.target.value)}
+          />
+          <label>Age</label>
+          <input
+            type="number"
+            name="age"
+            value={age}
+            onChange={(e) => setAge(e.target.value)}
+          />
+          <label>Gender</label>
+          <input
+            type="text"
+            name="gender"
+            value={gender}
+            onChange={(e) => setGender(e.target.value)}
+          />
+          <label>Address</label>
+          <input
+            type="text"
+            name="address"
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
+          />
+          <label>City</label>
+          <input
+            type="text"
+            name="city"
+            value={city}
+            onChange={(e) => setCity(e.target.value)}
+          />
+          <label>Mobile Number</label>
+          <input
+            type="text"
+            name="mobile"
+            value={mobile}
+            onChange={(e) => setMobile(e.target.value)}
+          />
+          <label>Email</label>
+          <input
+            type="text"
+            name="email"
+            value={email}
+            readOnly
+            onChange={(e) => setEmail(e.target.value)}
+          />
 
-                <tr className="editprofile-tablerow">
-                  <td>Email</td>
-                  <td className="editprofile-answer">
-                    {email} */}
-        {/* {singleProfile.email} */}
-        {/* </td>
-                </tr>
-                <tr className="editprofile-tablerow">
-                  <td>Phone</td>
-                  <td className="editprofile-answer">
-                    {mobile} */}
-        {/* {singleProfile.mobile} */}
-        {/* </td>
-                </tr> */}
-        {/* <tr className="editprofile-tablerow">
-                  <td>Gender</td>
-                  <td className="editprofile-answer"> */}
-        {/* {singleProfile.gender} */}
-        {/* </td>
-                </tr>
-                <tr className="editprofile-tablerow">
-                  <td>City</td>
-                  <td className="editprofile-answer"> */}
-        {/* {singleProfile.city} */}
-        {/* </td>
-                </tr>
-                <tr className="editprofile-tablerow">
-                  <td>Username</td>
-                  <td className="editprofile-answer"> */}
-        {/* {singleProfile.username} */}
-        {/* </td>
-                </tr> */}
-        {/* </table>
-            </div>
-          </div> */}
-        {/* ))} */}
-        {/* </div> */}
+          <button type="submit">Submit</button>
+        </form>
       </div>
     </div>
   );

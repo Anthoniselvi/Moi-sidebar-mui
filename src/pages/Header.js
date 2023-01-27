@@ -19,7 +19,7 @@ export default function Header() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const [searchParam] = useSearchParams();
-  const profileId = searchParam.get("profile");
+  const profileId = searchParam.get("id");
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);

@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import axios from "axios";
@@ -16,13 +16,22 @@ import Select from "@mui/material/Select";
 //     border: "1px solid red",
 //   },
 // }));
+const images = {
+  image1: "/images/family.jpg",
+  image2: "/images/family1.jpg",
+  image3: "/images/family2.jpg",
+  image4: "/images/family3.jpg",
+};
 export default function AddNewEvent() {
   // const classes = useStyles();
+  const [imageSource, setImageSource] = useState("");
   const [eventType, setEventType] = useState("");
   const [name, setName] = useState("");
   const [place, setPlace] = useState("");
   const [date, setDate] = useState(new Date().toISOString().slice(0, 10));
   const navigate = useNavigate();
+  const [searchParam] = useSearchParams();
+  const id = searchParam.get("id");
 
   const handleSubmitEvent = (e) => {
     e.preventDefault();
@@ -32,10 +41,11 @@ export default function AddNewEvent() {
         name: name,
         place: place,
         date: date,
+        profileId: id,
       })
       .then((response) => {
         console.log(response);
-        navigate("/eventslist");
+        navigate(`/eventslist?id=${id}`);
       });
     setEventType("");
     setName("");
@@ -72,14 +82,18 @@ export default function AddNewEvent() {
             id="demo-simple-select"
             value={eventType}
             label="Event Type"
-            onChange={(e) => setEventType(e.target.value)}
+            onChange={
+              ((e) => setEventType(e.target.value),
+              (e) => setImageSource(images[e.target.value]))
+            }
           >
-            <MenuItem value={eventType === "wedding"}>Wedding</MenuItem>
-            <MenuItem value={eventType === "birthday"}>Birthday</MenuItem>
-            <MenuItem value={eventType === "baby"}>Baby Shower</MenuItem>
-            <MenuItem value={eventType === "others"}>Others</MenuItem>
+            <MenuItem value="wedding">Wedding</MenuItem>
+            <MenuItem value="birthday">Birthday</MenuItem>
+            <MenuItem value="baby">Baby Shower</MenuItem>
+            <MenuItem value="others">Others</MenuItem>
           </Select>
         </FormControl>
+        <img src={imageSource} alt="Image" />
         <TextField
           // id="outlined-error-helper-text"
           // label="Error"

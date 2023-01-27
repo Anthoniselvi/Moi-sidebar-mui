@@ -72,12 +72,12 @@ export default function EventList(props) {
 
   const navigateToAddNewEvent = (e) => {
     e.stopPropagation();
-    navigate("/event/new");
+    navigate(`/event/new?id=${profileId}`);
   };
 
   const navigateToAddNewEntry = (e, eventId) => {
     e.stopPropagation();
-    navigate(`/entry/new?event=${eventId}`);
+    navigate(`/entry/new?id=${profileId}&event=${eventId}`);
   };
   const navigateToEntryList = (id) => {
     navigate(`/entryList?event=${id}`);
@@ -93,7 +93,7 @@ export default function EventList(props) {
     <MenuList />;
   };
   const fetchAllEvents = () => {
-    axios.get("http://localhost:2023/events").then((response) => {
+    axios.get(`http://localhost:2023/events/${profileId}`).then((response) => {
       // console.log(response);
       console.log(response.data);
       setEventsList(response.data);

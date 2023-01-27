@@ -25,6 +25,7 @@ import { auth } from "./pages/firebase";
 import axios from "axios";
 import Header from "./pages/Header";
 import AddProfile from "./pages/AddProfile";
+import Image from "./pages/Image";
 
 const App = () => {
   const [name, setName] = useState("");
@@ -93,6 +94,7 @@ const App = () => {
             <Route path="menu" element={<MenuList />} />
             <Route path="addprofile" element={<AddProfile />} />
             <Route path="profile" element={<Profile name={name} />} />
+            <Route path="image" element={<Image />} />
           </Routes>
           {/* </Footer> */}
           {/* </Header> */}

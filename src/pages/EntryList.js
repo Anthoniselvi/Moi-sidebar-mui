@@ -60,8 +60,8 @@ export default function EntriesList(props) {
   //   navigate(`/entry/new?event=${eventId}`);
   // };
 
-  const navigateToEventslist = () => {
-    navigate("/eventslist");
+  const navigateToEventslist = (id) => {
+    navigate(`/eventslist?id=${id}`);
   };
 
   const editEntry = (id) => {

@@ -35,7 +35,7 @@ export default function SignIn() {
 
   const [dataIsCorrect, setDataIsCorrect] = useState(false);
   const [searchParam] = useSearchParams();
-  const profileId = searchParam.get("profile");
+  const id = searchParam.get("id");
 
   const handleChange = (event) => {
     setSigninData({
@@ -61,7 +61,7 @@ export default function SignIn() {
       .then(async (res) => {
         // setSubmitButtonDisabled(false);
         console.log(res);
-        navigate(`/eventslist?profile=${res.user.uid}`);
+        navigate(`/eventslist?id=${res.user.uid}`);
       })
       .catch((err) => {
         // setSubmitButtonDisabled(false);
