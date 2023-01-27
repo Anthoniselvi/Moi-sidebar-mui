@@ -9,6 +9,10 @@ import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
+import image1 from "../images/family.jpg";
+import image2 from "../images/family1.jpg";
+import image3 from "../images/family2.jpg";
+import image4 from "../images/family3.jpg";
 // import { makeStyles } from "@material-ui/core";
 
 // const useStyles = makeStyles((theme) => ({
@@ -17,10 +21,10 @@ import Select from "@mui/material/Select";
 //   },
 // }));
 const images = {
-  image1: "/images/family.jpg",
-  image2: "/images/family1.jpg",
-  image3: "/images/family2.jpg",
-  image4: "/images/family3.jpg",
+  wedding: image1,
+  others: image2,
+  baby: image3,
+  birthday: image4,
 };
 export default function AddNewEvent() {
   // const classes = useStyles();

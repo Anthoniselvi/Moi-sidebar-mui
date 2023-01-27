@@ -40,6 +40,7 @@ const ExpandMore = styled((props) => {
 
 export default function EventList(props) {
   const [expanded, setExpanded] = useState(false);
+  const [imageSource, setImageSource] = useState("");
   const navigate = useNavigate();
   const [totalAmount, setTotalAmount] = useState([]);
   const [eventsList, setEventsList] = useState([]);
@@ -93,7 +94,7 @@ export default function EventList(props) {
     <MenuList />;
   };
   const fetchAllEvents = () => {
-    axios.get(`http://localhost:2023/events/${profileId}`).then((response) => {
+    axios.get("http://localhost:2023/events").then((response) => {
       // console.log(response);
       console.log(response.data);
       setEventsList(response.data);
@@ -217,6 +218,7 @@ export default function EventList(props) {
                         navigateToEntryList(singleEvent.id);
                       }}
                     />
+                    {/* <img src={imageSource} alt="Image" /> */}
                     <CardContent sx={{ backgroundColor: "#ffff3f" }}>
                       <Typography
                         variant="body2"

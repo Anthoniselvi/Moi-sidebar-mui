@@ -23,7 +23,7 @@ function Image() {
   return (
     <div>
       <input type="text" onChange={handleInputChange} />
-      <img src={imageSource} alt="Image" />
+      <img src={imageSource} alt="Image" className="card-image" />
     </div>
   );
 }
