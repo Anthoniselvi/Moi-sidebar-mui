@@ -26,6 +26,9 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import Add from "@mui/icons-material/Add";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import Button from "@mui/material/Button";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -49,6 +52,12 @@ export default function EventList(props) {
   const [show, setShow] = useState(false);
   const [searchParam] = useSearchParams();
   const profileId = searchParam.get("id");
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -177,38 +186,88 @@ export default function EventList(props) {
                         title={singleEvent.name}
                         subheader={singleEvent.date}
                       />
-                      <IconButton
+                      {/* <IconButton
                         aria-label="settings"
                         className="more-icon"
-                        // className="event_icon_dropdown"
+                        className="event_icon_dropdown"
                         onClick={(e) => {
                           e.stopPropagation();
                           console.log("set show clicked..");
                           setSelectedEvent(singleEvent.id);
                           setShow((show) => !show);
                         }}
+                      > */}
+                      {/* <MenuList /> */}
+                      {/* <MoreVertIcon />
+                      </IconButton> */}
+
+                      {/* {singleEvent.id === selectedEvent && show ? (
+                        <div className="event_dropdown">
+                          <p
+                            onClick={(e) =>
+                              navigateToAddNewEntry(e, singleEvent.id)
+                            }
+                          >
+                            Add Entry
+                          </p>
+                          <p onClick={(e) => editEvent(e, singleEvent.id)}>
+                            Edit Event
+                          </p>
+                          <p onClick={(e) => deleteEvent(e, singleEvent.id)}>
+                            Delete Event
+                          </p>
+                        </div>
+                      ) : null} */}
+                      <Button
+                        id="demo-positioned-button"
+                        aria-controls={
+                          open ? "demo-positioned-menu" : undefined
+                        }
+                        aria-haspopup="true"
+                        aria-expanded={open ? "true" : undefined}
+                        // onClick={handleClick}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          console.log("set show clicked..");
+                          setSelectedEvent(singleEvent.id);
+                          setAnchorEl(e.currentTarget);
+                        }}
                       >
-                        {/* <MenuList /> */}
                         <MoreVertIcon />
-                      </IconButton>
-                    </div>
-                    {singleEvent.id === selectedEvent && show ? (
-                      <div className="event_dropdown">
-                        <p
-                          onClick={(e) =>
-                            navigateToAddNewEntry(e, singleEvent.id)
-                          }
-                        >
-                          Add Entry
-                        </p>
-                        <p onClick={(e) => editEvent(e, singleEvent.id)}>
+                      </Button>
+                      <Menu
+                        // className="entry_dropdown"
+                        id="demo-positioned-menu"
+                        aria-labelledby="demo-positioned-button"
+                        anchorEl={anchorEl}
+                        open={open}
+                        onClose={handleClose}
+                        anchorOrigin={{
+                          vertical: "top",
+                          horizontal: "left",
+                        }}
+                        transformOrigin={{
+                          vertical: "top",
+                          horizontal: "left",
+                        }}
+                      >
+                        {/* <MenuItem
+                        onClick={(e) =>
+                          navigateToAddNewEntry(e, singleEvent.id)
+                        }
+                      >
+                        Add Event
+                      </MenuItem> */}
+                        <MenuItem onClick={(e) => editEvent(e, singleEvent.id)}>
                           Edit Event
-                        </p>
-                        <p onClick={(e) => deleteEvent(e, singleEvent.id)}>
+                        </MenuItem>
+                        <MenuItem
+                          onClick={(e) => deleteEvent(e, singleEvent.id)}
+                        >
                           Delete Event
-                        </p>
-                      </div>
-                    ) : null}
+                        </MenuItem>
+                      </Menu>
+                    </div>
                     {/* </div> */}
                     <CardMedia
                       className="card-image"

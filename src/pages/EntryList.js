@@ -21,6 +21,8 @@ import Fab from "@mui/material/Fab";
 import AddIcon from "@mui/icons-material/Add";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import EditIcon from "@mui/icons-material/Edit";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
 
 export default function EntriesList(props) {
   const navigate = useNavigate();
@@ -30,6 +32,20 @@ export default function EntriesList(props) {
   const [entries, setEntries] = useState([]);
   const [selectedEntry, setSelectedEntry] = useState("");
   const [show, setShow] = useState(false);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+
+  const handleClick = (event) => {
+    // event.stopPropagation();
+    // setAnchorEl(event.currentTarget);
+    // console.log("set show clicked..");
+    // setSelectedEntry(entry.id);
+    // setShow((show) => !show);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   function onChangeHandle(e) {
     console.log("e.target.value", e.target.value);
@@ -143,7 +159,7 @@ export default function EntriesList(props) {
                       <td>
                         {entry.gift}
                         {/* <td> */}
-                        <IconButton
+                        {/* <IconButton
                           aria-label="settings"
                           className="more-icon"
                           // className="event_icon_dropdown"
@@ -155,19 +171,61 @@ export default function EntriesList(props) {
                           }}
                         >
                           {/* <MenuList /> */}
+                        {/* <MoreVertIcon />
+                        </IconButton>  */}
+                        <Button
+                          id="demo-positioned-button"
+                          aria-controls={
+                            open ? "demo-positioned-menu" : undefined
+                          }
+                          aria-haspopup="true"
+                          aria-expanded={open ? "true" : undefined}
+                          // onClick={handleClick}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setAnchorEl(e.currentTarget);
+                            console.log("set show clicked..");
+                            setSelectedEntry(entry.id);
+                          }}
+                        >
                           <MoreVertIcon />
-                        </IconButton>
+                        </Button>
+                        <Menu
+                          // className="entry_dropdown"
+                          id="demo-positioned-menu"
+                          aria-labelledby="demo-positioned-button"
+                          anchorEl={anchorEl}
+                          open={open}
+                          onClose={handleClose}
+                          anchorOrigin={{
+                            vertical: "top",
+                            horizontal: "left",
+                          }}
+                          transformOrigin={{
+                            vertical: "top",
+                            horizontal: "left",
+                          }}
+                        >
+                          <MenuItem onClick={() => editEntry(entry.id)}>
+                            Edit Entry
+                          </MenuItem>
+                          <MenuItem onClick={() => deleteEntry(entry.id)}>
+                            Delete Entry
+                          </MenuItem>
+                          {/* <MenuItem onClick={handleLogout}>Logout</MenuItem> */}
+                        </Menu>
 
-                        {entry.id === selectedEntry && show ? (
-                          <div className="entry_dropdown">
-                            <p onClick={(e) => editEntry(entry.id)}>
-                              Edit Entry
-                            </p>
-                            <p onClick={(e) => deleteEntry(entry.id)}>
-                              Delete Entry
-                            </p>
-                          </div>
-                        ) : null}
+                        {/* {entry.id === selectedEntry && show ? ( */}
+                        {/* // <div className="entry_dropdown">
+                          //   <p onClick={(e) => editEntry(entry.id)}>
+                          //     Edit Entry
+                          //   </p>
+                          //   <p onClick={(e) => deleteEntry(entry.id)}>
+                          //     Delete Entry
+                          //   </p>
+                          // </div> */}
+
+                        {/* ) : null} */}
                       </td>
                       {/* <td>
                         <AiFillEdit onClick={() => editEntry(entry.id)} />
