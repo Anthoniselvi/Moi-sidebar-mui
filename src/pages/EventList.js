@@ -29,6 +29,10 @@ import Add from "@mui/icons-material/Add";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Button from "@mui/material/Button";
+import image1 from "../images/family.jpg";
+import image2 from "../images/family1.jpg";
+import image3 from "../images/family2.jpg";
+import image4 from "../images/family3.jpg";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -41,6 +45,12 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
+const images = {
+  wedding: image1,
+  others: image2,
+  baby: image3,
+  birthday: image4,
+};
 export default function EventList(props) {
   const [expanded, setExpanded] = useState(false);
   const [imageSource, setImageSource] = useState("");
@@ -269,15 +279,54 @@ export default function EventList(props) {
                       </Menu>
                     </div>
                     {/* </div> */}
-                    <CardMedia
+                    {/* <CardMedia
                       className="card-image"
                       height="194"
                       onClick={(e) => {
                         e.stopPropagation();
                         navigateToEntryList(singleEvent.id);
                       }}
-                    />
-                    {/* <img src={imageSource} alt="Image" /> */}
+                    /> */}
+                    {singleEvent.eventType === "birthday" ? (
+                      <CardMedia
+                        className="card-image-birthday"
+                        height="194"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          navigateToEntryList(singleEvent.id);
+                        }}
+                      />
+                    ) : null}
+                    {singleEvent.eventType === "wedding" ? (
+                      <CardMedia
+                        className="card-image-wedding"
+                        height="194"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          navigateToEntryList(singleEvent.id);
+                        }}
+                      />
+                    ) : null}
+                    {singleEvent.eventType === "baby" ? (
+                      <CardMedia
+                        className="card-image-baby"
+                        height="194"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          navigateToEntryList(singleEvent.id);
+                        }}
+                      />
+                    ) : null}
+                    {singleEvent.eventType === "others" ? (
+                      <CardMedia
+                        className="card-image-other"
+                        height="194"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          navigateToEntryList(singleEvent.id);
+                        }}
+                      />
+                    ) : null}
                     <CardContent sx={{ backgroundColor: "#ffff3f" }}>
                       <Typography
                         variant="body2"

@@ -52,8 +52,16 @@
         background-color: #ffd500;
         color: #03045e;
       } */
-  .profile-table{
+  .profile-form{
     display: flex;
     flex-direction: column;
+    gap: 20px;
+    /* border: 2px solid red; */
+  }
+  .profile-row{
+    display: flex;
     gap: 50px;
+    align-items: center;
+    justify-content: left;
+
   }

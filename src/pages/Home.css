@@ -148,10 +148,32 @@ padding: 10px 40px;
     flex-direction: column;
   }
 }
-  .card-image{
-    background-image: url("../images/family1.jpg");
+  .card-image-birthday{
+    background-image: url("../images/family3.jpg");
     background-size: contain;
     border: none;
+    outline: none;
+    height: 200px;
+  }
+  .card-image-wedding{
+    background-image: url("../images/family.jpg");
+    background-size: contain;
+    border: none;
+    outline: none;
+    height: 200px;
+  }
+  .card-image-baby{
+    background-image: url("../images/baby.jpg");
+    background-size: contain;
+    border: none;
+    outline: none;
+    height: 200px;
+  }
+  .card-image-other{
+    background-image: url("../images/other.jpg");
+    background-size: contain;
+    border: none;
+    background-position: center;
     outline: none;
     height: 200px;
   }
@@ -506,7 +528,23 @@ overflow: hidden;
 }
 .signin-container{
   margin-top: 10%;
-  border: 1px solid red;
+  /* border: 1px solid red; */
   position: absolute;
   z-index: 2000;
+}
+.editprofile-container{
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+  width:50%;
+  margin: 0% 25%;
+  /* background-color: #ffd500; */
+}
+.profile-form{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* gap: 20px; */
+  width: 80%;
 }
