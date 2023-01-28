@@ -6,7 +6,7 @@ import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { IconButton } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-
+import Header from "./Header";
 import { AiOutlineArrowLeft, AiFillEdit } from "react-icons/ai";
 import { BiSearch } from "react-icons/bi";
 import { BsPersonCircle, BsFillPersonFill } from "react-icons/bs";
@@ -101,9 +101,10 @@ export default function EntriesList(props) {
 
   return (
     <div className="entry_container">
-      <h1 className="entry-title">Entry List</h1>
-      <div className="entry_content">
-        <div className="entry-inner-box">
+      <Header />
+      <div className="entry-body">
+        <h1 className="entry-title">Entry List</h1>
+        <div className="entry_content">
           <div className="entry_searchbar">
             <BiSearch style={{ fontSize: "20px" }} />
             <input
@@ -139,31 +140,35 @@ export default function EntriesList(props) {
                         {entry.personName}
                       </td>
                       <td>{entry.amount}</td>
-                      <td>{entry.gift}</td>
-                      {/* <td> */}
-                      <IconButton
-                        aria-label="settings"
-                        className="more-icon"
-                        // className="event_icon_dropdown"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          console.log("set show clicked..");
-                          setSelectedEntry(entry.id);
-                          setShow((show) => !show);
-                        }}
-                      >
-                        {/* <MenuList /> */}
-                        <MoreVertIcon />
-                      </IconButton>
+                      <td>
+                        {entry.gift}
+                        {/* <td> */}
+                        <IconButton
+                          aria-label="settings"
+                          className="more-icon"
+                          // className="event_icon_dropdown"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            console.log("set show clicked..");
+                            setSelectedEntry(entry.id);
+                            setShow((show) => !show);
+                          }}
+                        >
+                          {/* <MenuList /> */}
+                          <MoreVertIcon />
+                        </IconButton>
 
-                      {entry.id === selectedEntry && show ? (
-                        <div className="entry_dropdown">
-                          <p onClick={(e) => editEntry(entry.id)}>Edit Entry</p>
-                          <p onClick={(e) => deleteEntry(entry.id)}>
-                            Delete Entry
-                          </p>
-                        </div>
-                      ) : null}
+                        {entry.id === selectedEntry && show ? (
+                          <div className="entry_dropdown">
+                            <p onClick={(e) => editEntry(entry.id)}>
+                              Edit Entry
+                            </p>
+                            <p onClick={(e) => deleteEntry(entry.id)}>
+                              Delete Entry
+                            </p>
+                          </div>
+                        ) : null}
+                      </td>
                       {/* <td>
                         <AiFillEdit onClick={() => editEntry(entry.id)} />
                         {/* <Button

@@ -132,7 +132,7 @@ export default function EventList(props) {
   return (
     <div className="eventlist-container">
       <Header />
-      <>
+      <div className="eventlist-body">
         {/* <h2>{props.name ? `Welcome - ${props.name}` : "Login please"}</h2> */}
         <h1 className="entry-title">Total Events List</h1>
         <div className="eventlist-content">
@@ -256,12 +256,13 @@ export default function EventList(props) {
           </>
         )}
         {/* </div> */}
-      </>
-      <Box sx={{ "& > :not(style)": { m: 1 } }} className="plus-icon1">
-        <Fab color="primary" aria-label="add">
-          <AddIcon onClick={navigateToAddNewEvent} />
-        </Fab>
-      </Box>
+        {/* </> */}
+        <Box sx={{ "& > :not(style)": { m: 1 } }} className="plus-icon1">
+          <Fab color="primary" aria-label="add">
+            <AddIcon onClick={navigateToAddNewEvent} />
+          </Fab>
+        </Box>
+      </div>
     </div>
   );
 }

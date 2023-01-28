@@ -87,8 +87,8 @@ export default function AddNewEvent() {
             value={eventType}
             label="Event Type"
             onChange={
-              ((e) => setEventType(e.target.value),
-              (e) => setImageSource(images[e.target.value]))
+              (e) => setEventType(e.target.value)
+              // (e) => setImageSource(images[e.target.value]))
             }
           >
             <MenuItem value="wedding">Wedding</MenuItem>
@@ -97,7 +97,7 @@ export default function AddNewEvent() {
             <MenuItem value="others">Others</MenuItem>
           </Select>
         </FormControl>
-        <img src={imageSource} alt="Image" />
+        {/* <img src={imageSource} alt="Image" /> */}
         <TextField
           // id="outlined-error-helper-text"
           // label="Error"
