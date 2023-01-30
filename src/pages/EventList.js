@@ -143,6 +143,14 @@ export default function EventList(props) {
     e.stopPropagation();
 
     console.log(eventId);
+
+    axios
+      .delete(`http://localhost:2023/entries/all/${eventId}`)
+      .then((response) => {
+        console.log(response);
+        // fetchAllEvents();
+        // navigate("/eventslist");
+      });
     axios.delete(`http://localhost:2023/events/${eventId}`).then((response) => {
       console.log(response);
       fetchAllEvents();

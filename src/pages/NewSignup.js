@@ -13,7 +13,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 // import { auth } from "./firebase";
 import Validation from "./Validation";
 import Radio from "@mui/material/Radio";
@@ -54,7 +54,10 @@ export default function NewSignUp() {
   const [err, setErr] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const { signUp } = useUserAuth();
+  const [searchParam] = useSearchParams();
+  const id = searchParam.get("id");
+  const { signUp, user } = useUserAuth();
+
   const navigateToSignIn = () => {
     navigate("/signin");
   };
@@ -73,23 +76,6 @@ export default function NewSignUp() {
     setErrors(Validation(signupData));
     setDataIsCorrect(true);
     setError("");
-
-    // axios
-    //   .post("http://localhost:2023/profile", {
-    //     // id:
-    //     name: signupData.name,
-    //     age: signupData.age,
-    //     gender: signupData.gender,
-    //     city: signupData.city,
-    //     mobile: signupData.mobile,
-    //     email: signupData.email,
-    //     username: signupData.username,
-    //     password: signupData.password,
-    //   })
-    //   .then((response) => {
-    //     console.log(response);
-    //     // navigate("/eventslist");
-    //   });
 
     createUserWithEmailAndPassword(auth, signupData.email, signupData.password)
       .then(async (res) => {
@@ -113,6 +99,21 @@ export default function NewSignUp() {
         // setSubmitButtonDisabled(false);
         setError(err.message);
       });
+
+    // axios
+    //   .post("http://localhost:2023/profile", {
+    //     id: user.uid,
+    //     // id: id,
+    //     name: signupData.name,
+    //     email: signupData.email,
+    //   })
+    //   .then((response) => {
+    //     console.log(response);
+    //     console.log(response.data);
+    //     console.log(response.data.id);
+    //     // navigate(`/eventslist?id=${id}`);
+    //     navigate(`/eventslist?id=${user.uid}`);
+    //   });
 
     // try {
     //   await signUp(signupData.email, signupData.password);

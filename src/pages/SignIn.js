@@ -16,17 +16,22 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import SigninValidation from "./SigninValidation";
 import { auth, google, facebook } from "./firebase";
+
 import { signInWithPopup } from "firebase/auth";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { useUserAuth } from "../Context/UserAuthContext";
+import axios from "axios";
 
 const theme = createTheme();
 
 export default function SignIn() {
+  const { googleSignIn, user } = useUserAuth();
   const navigate = useNavigate();
   const [signinData, setSigninData] = useState({
     email: "",
     password: "",
   });
+  const [value, setValue] = useState();
   const [errors, setErrors] = useState({});
   const [error, setError] = useState("");
   // const [helperText, setHelperText] = React.useState("");
@@ -49,12 +54,35 @@ export default function SignIn() {
   //   console.log(result);
   // };
 
+  const handleClick = async () => {
+    try {
+      await googleSignIn();
+      navigate(`/eventslist?id=${user.uid}`);
+      // signInWithPopup(auth, provider).then((data) => {
+      //   setValue(data.user.email);
+      // localStorage.setItem("email", data.user.email);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrors(SigninValidation(signinData));
     setDataIsCorrect(true);
     setError("");
 
+    // axios
+    //   .post("http://localhost:2023/profile", {
+    //     id: id,
+    //     name: signinData.name,
+    //     email: signinData.email,
+    //   })
+    //   .then((response) => {
+    //     console.log(response);
+    //     console.log(response.data);
+    //     console.log(response.data.id);
+    //   });
     // const email = e.target[0].value;
     // const password = e.target[1].value;
     signInWithEmailAndPassword(auth, signinData.email, signinData.password)
@@ -183,6 +211,15 @@ export default function SignIn() {
               </Grid>
             </Grid>
           </Box>
+          <Button
+            onClick={handleClick}
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+          >
+            Sign In with Google
+          </Button>
         </Box>
         {/* {err && <span>Something went wrong</span>} */}
         {/* <Copyright sx={{ mt: 8, mb: 4 }} /> */}

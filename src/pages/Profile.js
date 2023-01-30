@@ -85,22 +85,33 @@ function Profile(props) {
       }
     });
   }, []);
-  const getProfile = () => {
-    axios.get(`http://localhost:2023/profile/${profileId}`).then((response) => {
-      // console.log(response);
-      console.log(response.data);
-      // setProfiles(response.data);
+  useEffect(() => {
+    axios.get(`http://localhost:2023/profile/${id}`).then((response) => {
+      console.log(response);
       setAge(response.data.age);
       setGender(response.data.gender);
       setAddress(response.data.address);
       setCity(response.data.city);
       setMobile(response.data.mobile);
+      // navigate(`/eventslist?id=${id}`);
     });
-  };
+  });
+  // const getProfile = () => {
+  //   axios.get(`http://localhost:2023/profile/${profileId}`).then((response) => {
+  //     // console.log(response);
+  //     console.log(response.data);
+  //     // setProfiles(response.data);
+  //     setAge(response.data.age);
+  //     setGender(response.data.gender);
+  //     setAddress(response.data.address);
+  //     setCity(response.data.city);
+  //     setMobile(response.data.mobile);
+  //   });
+  // };
 
-  useEffect(() => {
-    getProfile();
-  }, []);
+  // useEffect(() => {
+  //   getProfile();
+  // }, []);
 
   return (
     <div className="editprofile-container">
