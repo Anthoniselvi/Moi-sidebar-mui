@@ -1,17 +1,23 @@
 import "./Home.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import * as React from 'react';
+import { useEffect } from "react";
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 // import { useUserAuth } from "../Context/UserAuthContext";
 import Header from "./Header";
+import axios from "axios";
+import { useState } from "react";
 // import Nav from "./Nav";
 
 function Dashboard(props) {
   const navigate = useNavigate();
+  const [profileId, setProfileId] = useState()
+  // const [searchParam] = useSearchParams();
+  // const profileId = searchParam.get("id");
   // const { logOut, user } = useUserAuth();
   const navigateToEventsList = () => {
-    navigate("/eventslist");
+    navigate(`/eventslist?id=${profileId}`);
   };
 
   // const handleLogout = async () => {
@@ -22,6 +28,24 @@ function Dashboard(props) {
   //     console.log(error.message);
   //   }
   // };
+
+  const getProfile = () => {
+   
+  };
+
+  useEffect(() => {
+    axios.get("http://localhost:2023/profile").then((response) => {
+      // console.log(response);
+      console.log(response.data);
+      setProfileId(response.data.id)
+      // setProfiles(response.data);
+      // setAge(response.data.age);
+      // setGender(response.data.gender);
+      // setAddress(response.data.address);
+      // setCity(response.data.city);
+      // setMobile(response.data.mobile);
+    });
+  }, []);
   return (
     <div className="home">
        <Header />

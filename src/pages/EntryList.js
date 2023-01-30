@@ -28,7 +28,7 @@ export default function EntriesList(props) {
   const navigate = useNavigate();
   const [searchParam] = useSearchParams();
   const eventId = searchParam.get("event");
-
+  // const entryId = searchParam.get("event");
   const [entries, setEntries] = useState([]);
   const [selectedEntry, setSelectedEntry] = useState("");
   const [show, setShow] = useState(false);
@@ -77,14 +77,23 @@ export default function EntriesList(props) {
   // };
 
   const navigateToEventslist = (id) => {
-    navigate(`/eventslist?id=${id}`);
+    axios
+      // .get(`http://localhost:2023/events/profileId/${eventId}`)
+      .get(`http://localhost:2023/events/profileId?eventId=${eventId}`)
+      .then((response) => {
+        // console.log(eventId);
+        console.log(response);
+        console.log(response.data.profileId);
+        // setEntries(response.data);
+        navigate(`/eventslist?id=${response.data.profileId}`);
+      });
   };
 
   const editEntry = (id) => {
     navigate(`/edit?entry=${id}`);
   };
 
-  const deleteEntry = (eventId) => {
+  const deleteEntry = (entryId) => {
     console.log(entries);
 
     // const entryArray = entries.filter((item) => {
@@ -93,14 +102,22 @@ export default function EntriesList(props) {
     // setEntries(entryArray);
     // console.log(entryArray);
     axios
-      .delete(`http://localhost:2023/entries/${eventId}`)
+      .delete(`http://localhost:2023/entries/${entryId}`)
       .then((response) => {
-        console.log(response);
+        console.log("after deletion:" + response);
         console.log(response.data);
-        setEntries(response.data);
+        axios
+          .get(`http://localhost:2023/entries/all/${eventId}`)
+          .then((response) => {
+            console.log(eventId);
+            console.log(response);
+            console.log(response.data);
+            setEntries(response.data);
+          });
+        // setEntries(response.data);
         // navigate(`/entryList?event=${eventId}`);
-        console.log(eventId);
-        navigate("/eventslist");
+        // console.log(entryId);
+        // navigate("/eventslist");
       });
   };
 
@@ -159,7 +176,7 @@ export default function EntriesList(props) {
                       <td>
                         {entry.gift}
                         {/* <td> */}
-                        {/* <IconButton
+                        <IconButton
                           aria-label="settings"
                           className="more-icon"
                           // className="event_icon_dropdown"
@@ -171,17 +188,17 @@ export default function EntriesList(props) {
                           }}
                         >
                           {/* <MenuList /> */}
-                        {/* <MoreVertIcon />
-                        </IconButton>  */}
-                        <Button
+                          <MoreVertIcon />
+                        </IconButton>
+                        {/* <Button
                           id="demo-positioned-button"
                           aria-controls={
                             open ? "demo-positioned-menu" : undefined
                           }
                           aria-haspopup="true"
-                          aria-expanded={open ? "true" : undefined}
-                          // onClick={handleClick}
-                          onClick={(e) => {
+                          aria-expanded={open ? "true" : undefined} */}
+                        {/* // onClick={handleClick} */}
+                        {/* onClick={(e) => {
                             e.stopPropagation();
                             setAnchorEl(e.currentTarget);
                             console.log("set show clicked..");
@@ -189,9 +206,10 @@ export default function EntriesList(props) {
                           }}
                         >
                           <MoreVertIcon />
-                        </Button>
-                        <Menu
-                          // className="entry_dropdown"
+                        </Button> */}
+
+                        {/* <Menu */}
+                        {/* // className="entry_dropdown"
                           id="demo-positioned-menu"
                           aria-labelledby="demo-positioned-button"
                           anchorEl={anchorEl}
@@ -205,27 +223,26 @@ export default function EntriesList(props) {
                             vertical: "top",
                             horizontal: "left",
                           }}
-                        >
-                          <MenuItem onClick={() => editEntry(entry.id)}>
+                        > */}
+                        {/* <MenuItem onClick={() => editEntry(entry.id)}>
                             Edit Entry
                           </MenuItem>
                           <MenuItem onClick={() => deleteEntry(entry.id)}>
                             Delete Entry
                           </MenuItem>
                           {/* <MenuItem onClick={handleLogout}>Logout</MenuItem> */}
-                        </Menu>
+                        {/* </Menu> */}
 
-                        {/* {entry.id === selectedEntry && show ? ( */}
-                        {/* // <div className="entry_dropdown">
-                          //   <p onClick={(e) => editEntry(entry.id)}>
-                          //     Edit Entry
-                          //   </p>
-                          //   <p onClick={(e) => deleteEntry(entry.id)}>
-                          //     Delete Entry
-                          //   </p>
-                          // </div> */}
-
-                        {/* ) : null} */}
+                        {entry.id === selectedEntry && show ? (
+                          <div className="entry_dropdown">
+                            <p onClick={(e) => editEntry(entry.id)}>
+                              Edit Entry
+                            </p>
+                            <p onClick={(e) => deleteEntry(entry.id)}>
+                              Delete Entry
+                            </p>
+                          </div>
+                        ) : null}
                       </td>
                       {/* <td>
                         <AiFillEdit onClick={() => editEntry(entry.id)} />

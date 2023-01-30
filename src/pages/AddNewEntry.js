@@ -23,6 +23,7 @@ export default function AddNewEntry() {
   const navigate = useNavigate();
   const [searchParam] = useSearchParams();
   const eventId = searchParam.get("event");
+  const profileId = searchParam.get("id");
 
   const handleSubmitEntry = (e) => {
     e.preventDefault();

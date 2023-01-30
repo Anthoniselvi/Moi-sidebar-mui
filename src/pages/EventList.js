@@ -113,11 +113,13 @@ export default function EventList(props) {
     <MenuList />;
   };
   const fetchAllEvents = () => {
-    axios.get("http://localhost:2023/events").then((response) => {
-      // console.log(response);
-      console.log(response.data);
-      setEventsList(response.data);
-    });
+    axios
+      .get(`http://localhost:2023/events/all/${profileId}`)
+      .then((response) => {
+        // console.log(response);
+        console.log(response.data);
+        setEventsList(response.data);
+      });
   };
 
   const fetchAllEntries = () => {
@@ -196,9 +198,9 @@ export default function EventList(props) {
                         title={singleEvent.name}
                         subheader={singleEvent.date}
                       />
-                      {/* <IconButton
+                      <IconButton
                         aria-label="settings"
-                        className="more-icon"
+                        // className="more-icon"
                         className="event_icon_dropdown"
                         onClick={(e) => {
                           e.stopPropagation();
@@ -206,12 +208,12 @@ export default function EventList(props) {
                           setSelectedEvent(singleEvent.id);
                           setShow((show) => !show);
                         }}
-                      > */}
-                      {/* <MenuList /> */}
-                      {/* <MoreVertIcon />
-                      </IconButton> */}
+                      >
+                        {/* <MenuList /> */}
+                        <MoreVertIcon />
+                      </IconButton>
 
-                      {/* {singleEvent.id === selectedEvent && show ? (
+                      {singleEvent.id === selectedEvent && show ? (
                         <div className="event_dropdown">
                           <p
                             onClick={(e) =>
@@ -227,8 +229,8 @@ export default function EventList(props) {
                             Delete Event
                           </p>
                         </div>
-                      ) : null} */}
-                      <Button
+                      ) : null}
+                      {/* <Button
                         id="demo-positioned-button"
                         aria-controls={
                           open ? "demo-positioned-menu" : undefined
@@ -260,15 +262,15 @@ export default function EventList(props) {
                           vertical: "top",
                           horizontal: "left",
                         }}
-                      >
-                        {/* <MenuItem
+                      > */}
+                      {/* <MenuItem
                         onClick={(e) =>
                           navigateToAddNewEntry(e, singleEvent.id)
                         }
                       >
                         Add Event
                       </MenuItem> */}
-                        <MenuItem onClick={(e) => editEvent(e, singleEvent.id)}>
+                      {/* <MenuItem onClick={(e) => editEvent(e, singleEvent.id)}>
                           Edit Event
                         </MenuItem>
                         <MenuItem
@@ -276,7 +278,7 @@ export default function EventList(props) {
                         >
                           Delete Event
                         </MenuItem>
-                      </Menu>
+                      </Menu> */}
                     </div>
                     {/* </div> */}
                     {/* <CardMedia

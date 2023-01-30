@@ -27,7 +27,7 @@ export default function EditEntry() {
     e.preventDefault();
     axios
       .put("http://localhost:2023/entries/", {
-        id: parseInt(entryId),
+        id: entryId,
         personName: personName,
         city: city,
         selected: selected,
@@ -37,7 +37,14 @@ export default function EditEntry() {
       })
       .then((response) => {
         console.log(response);
-        navigate("/eventslist");
+        // navigate("/eventslist");
+        axios
+          .get(`http://localhost:2023/entries/eventId?entryId=${entryId}`)
+          .then((response) => {
+            console.log(response);
+
+            navigate(`/entrylist?event=${response.data.eventId}`);
+          });
       });
     // navigate(`/entrylist?event=${entryId}`);
   };

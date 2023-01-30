@@ -5,11 +5,16 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import axios from "axios";
 import { Button } from "@mui/material";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
 
 export default function EditEvent() {
-  const [name, setName] = useState("");
-  const [place, setPlace] = useState("");
-  const [date, setDate] = useState("");
+  const [eventType, setEventType] = useState();
+  const [name, setName] = useState();
+  const [place, setPlace] = useState();
+  const [date, setDate] = useState();
   // const [date, setDate] = useState(new Date().toISOString().slice(0, 10));
   const navigate = useNavigate();
 
@@ -21,22 +26,24 @@ export default function EditEvent() {
 
     axios
       .put("http://localhost:2023/events/", {
-        id: parseInt(eventId),
+        id: eventId,
+        eventType: eventType,
         name: name,
         place: place,
         date: date,
       })
       .then((response) => {
         console.log(response);
-        navigate("/eventslist");
+        // navigate("/eventslist");
       });
   };
   useEffect(() => {
     axios.get(`http://localhost:2023/events/${eventId}`).then((response) => {
       console.log(response);
+      setEventType(response.data.eventType);
       setName(response.data.name);
       setPlace(response.data.place);
-      // setEventDate(response.data.date);
+      setDate(response.data.date);
     });
   }, []);
 
@@ -57,6 +64,24 @@ export default function EditEvent() {
         noValidate
         autoComplete="off"
       >
+        <FormControl fullWidth>
+          <InputLabel id="demo-simple-select-label">Event Type</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={eventType}
+            label="Event Type"
+            onChange={
+              (e) => setEventType(e.target.value)
+              // (e) => setImageSource(images[e.target.value]))
+            }
+          >
+            <MenuItem value="wedding">Wedding</MenuItem>
+            <MenuItem value="birthday">Birthday</MenuItem>
+            <MenuItem value="baby">Baby Shower</MenuItem>
+            <MenuItem value="others">Others</MenuItem>
+          </Select>
+        </FormControl>
         <TextField
           // id="outlined-error-helper-text"
           // label="Error"
