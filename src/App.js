@@ -26,6 +26,9 @@ import axios from "axios";
 import Header from "./pages/Header";
 import AddProfile from "./pages/AddProfile";
 import Image from "./pages/Image";
+import Chart from "./pages/EventChart";
+import NewChart from "./pages/NewChart";
+// import BarChart from "./pages/BarChart";
 
 const App = () => {
   const [name, setName] = useState("");
@@ -69,6 +72,9 @@ const App = () => {
             <Route path="addprofile" element={<AddProfile />} />
             <Route path="profile" element={<Profile name={name} />} />
             <Route path="image" element={<Image />} />
+            <Route path="chart" element={<Chart />} />
+            <Route path="newchart" element={<NewChart />} />
+            {/* <Route path="barchart" element={<BarChart />} /> */}
           </Routes>
         </UserAuthContextProvider>
       </BrowserRouter>

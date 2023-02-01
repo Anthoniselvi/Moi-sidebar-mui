@@ -79,7 +79,6 @@ export default function NewSignUp() {
 
     createUserWithEmailAndPassword(auth, signupData.email, signupData.password)
       .then(async (res) => {
-        // setSubmitButtonDisabled(false);
         const user = res.user;
         await updateProfile(user, {
           displayName: signupData.name,
@@ -92,28 +91,29 @@ export default function NewSignUp() {
           email: signupData.email,
           password: signupData.password,
         });
+        console.log("firebase signup created");
+        axios
+          .post("http://localhost:2023/profile", {
+            id: user.uid,
+            // id: id,
+            name: signupData.name,
+            email: signupData.email,
+          })
+          .then((response) => {
+            console.log(response);
+            console.log(response.data);
+            console.log("axios id:" + response.data.id);
+            // navigate(`/eventslist?id=${id}`);
+            navigate(`/eventslist?id=${user.uid}`);
+          });
+
         // navigate("/signin");
-        navigate(`/eventslist?id=${res.user.uid}`);
+        // navigate(`/eventslist?id=${res.user.uid}`);
       })
       .catch((err) => {
         // setSubmitButtonDisabled(false);
         setError(err.message);
       });
-
-    // axios
-    //   .post("http://localhost:2023/profile", {
-    //     id: user.uid,
-    //     // id: id,
-    //     name: signupData.name,
-    //     email: signupData.email,
-    //   })
-    //   .then((response) => {
-    //     console.log(response);
-    //     console.log(response.data);
-    //     console.log(response.data.id);
-    //     // navigate(`/eventslist?id=${id}`);
-    //     navigate(`/eventslist?id=${user.uid}`);
-    //   });
 
     // try {
     //   await signUp(signupData.email, signupData.password);

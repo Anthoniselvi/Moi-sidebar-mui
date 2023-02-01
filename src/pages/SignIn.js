@@ -74,25 +74,22 @@ export default function SignIn() {
 
     // axios
     //   .post("http://localhost:2023/profile", {
-    //     id: id,
-    //     name: signinData.name,
-    //     email: signinData.email,
+    //     id: user.uid,
+    //     name: user.name,
+    //     email: user.email,
     //   })
     //   .then((response) => {
     //     console.log(response);
     //     console.log(response.data);
     //     console.log(response.data.id);
     //   });
-    // const email = e.target[0].value;
-    // const password = e.target[1].value;
+
     signInWithEmailAndPassword(auth, signinData.email, signinData.password)
       .then(async (res) => {
-        // setSubmitButtonDisabled(false);
         console.log(res);
         navigate(`/eventslist?id=${res.user.uid}`);
       })
       .catch((err) => {
-        // setSubmitButtonDisabled(false);
         setError(err.message);
       });
     // try {
