@@ -40,8 +40,9 @@ function Profile(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     axios
-      .post("http://localhost:2023/profile", {
+      .put("http://localhost:2023/profile", {
         id: id,
         name: name,
         age: age,
@@ -55,20 +56,6 @@ function Profile(props) {
         console.log(response);
         navigate(`/eventslist?id=${id}`);
       });
-    // axios
-
-    //   .put("http://localhost:2023/events/", {
-    //     id: id,
-    //     age: age,
-    //     gender: gender,
-    //     address: address,
-    //     city: city,
-    //     mobile: mobile,
-    //   })
-    //   .then((response) => {
-    //     console.log(response);
-    //     navigate(`/eventslist?id=${id}`);
-    //   });
   };
 
   useEffect(() => {

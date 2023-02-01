@@ -81,11 +81,11 @@ export default function EntriesList(props) {
       // .get(`http://localhost:2023/events/profileId/${eventId}`)
       .get(`http://localhost:2023/events/profileId?eventId=${eventId}`)
       .then((response) => {
-        // console.log(eventId);
+        console.log(eventId);
         console.log(response);
         console.log(response.data.profileId);
         // setEntries(response.data);
-        navigate(`/eventslist?id=${response.data.profileId}`);
+        navigate(`/eventslist?id=${eventId}`);
       });
   };
 

@@ -57,7 +57,19 @@ export default function SignIn() {
   const handleClick = async () => {
     try {
       await googleSignIn();
-      navigate(`/eventslist?id=${user.uid}`);
+      axios
+        .post("http://localhost:2023/profile", {
+          id: user.uid,
+          name: user.displayName,
+          email: user.email,
+        })
+        .then((response) => {
+          console.log(response);
+          console.log(response.data);
+          console.log(response.data.id);
+          navigate(`/eventslist?id=${id}`);
+        });
+
       // signInWithPopup(auth, provider).then((data) => {
       //   setValue(data.user.email);
       // localStorage.setItem("email", data.user.email);
@@ -71,18 +83,6 @@ export default function SignIn() {
     setErrors(SigninValidation(signinData));
     setDataIsCorrect(true);
     setError("");
-
-    // axios
-    //   .post("http://localhost:2023/profile", {
-    //     id: user.uid,
-    //     name: user.name,
-    //     email: user.email,
-    //   })
-    //   .then((response) => {
-    //     console.log(response);
-    //     console.log(response.data);
-    //     console.log(response.data.id);
-    //   });
 
     signInWithEmailAndPassword(auth, signinData.email, signinData.password)
       .then(async (res) => {
