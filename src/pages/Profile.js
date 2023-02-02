@@ -21,11 +21,7 @@ function Profile(props) {
   const [profiles, setProfiles] = useState([]);
   const [id, setId] = useState("");
   const [name, setName] = useState("");
-  // const [age, setAge] = useState("");
-  // const [gender, setGender] = useState("");
-  // const [address, setAddress] = useState("");
-  // const [city, setCity] = useState("");
-  // const [mobile, setMobile] = useState("");
+
   const [email, setEmail] = useState("");
   const [show, setShow] = useState(true);
   const { user } = useUserAuth();
