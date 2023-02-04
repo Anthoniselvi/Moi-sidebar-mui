@@ -52,6 +52,7 @@ const images = {
   birthday: image4,
 };
 export default function EventList(props) {
+  const [profile, setProfile] = useState([]);
   const [expanded, setExpanded] = useState(false);
   const [imageSource, setImageSource] = useState("");
   const navigate = useNavigate();
@@ -157,12 +158,28 @@ export default function EventList(props) {
       navigate("/eventslist");
     });
   };
-
+  useEffect(() => {
+    axios.get("http://localhost:2023/profile").then((response) => {
+      // console.log(response);
+      console.log(response.data);
+      setProfile(response.data);
+    });
+  }, []);
   return (
     <div className="eventlist-container">
       <Header />
       <div className="eventlist-body">
-        {/* <h2>{props.name ? `Welcome - ${props.name}` : "Login please"}</h2> */}
+        <div className="eventlist-head">
+          {profile.map((singleProfile) => (
+            <>
+              {singleProfile.id === profileId && (
+                <h2 className="welcome-name">
+                  Welcome {singleProfile.name} !{" "}
+                </h2>
+              )}
+            </>
+          ))}
+        </div>
         <h1 className="entry-title">Total Events List</h1>
         <div className="eventlist-content">
           {eventsList.length > 0 && (
@@ -371,6 +388,13 @@ export default function EventList(props) {
             <button className="addevent-button" onClick={navigateToAddNewEvent}>
               Add New Event
             </button>
+            {/* <Button
+              variant="contained"
+              type="submit"
+              sx={{ width: "50%", alignItems: "center" }}
+            >
+              Add
+            </Button> */}
           </>
         )}
         {/* </div> */}

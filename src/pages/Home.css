@@ -214,12 +214,13 @@ padding: 0;
   }
   .eventlist-body, .entry-body{
 height: 90vh;
-width: 100%;
+width: 90%;
 /* padding: 20px; */
+
 display: flex;
     flex-direction: column;
     /* justify-content: center; */
-    align-items: center;
+    /* align-items: center; */
     /* border: 1px solid red; */
   }
   @media (max-width:600px) {
@@ -526,7 +527,7 @@ overflow: hidden;
 }
 .header-container{
   /* height:10vh; */
-  width: 100%;
+  width: 100vw;
   /* height: fit-content; */
   height: 10vh;
   position: relative;
@@ -554,4 +555,18 @@ overflow: hidden;
   align-items: center;
   /* gap: 20px; */
   width: 80%;
+}
+.welcome-name{
+  text-align: left;
+  padding-top: 20px;
+  margin-left: 0;
+}
+.eventlist-head{
+  display: flex;
+  /* align-items: left; */
+  justify-content: space-between;
+}
+.entry-title{
+  text-align: center;
+  width: 100%;
 }

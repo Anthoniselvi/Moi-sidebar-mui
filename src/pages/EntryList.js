@@ -81,9 +81,9 @@ export default function EntriesList(props) {
       // .get(`http://localhost:2023/events/profileId/${eventId}`)
       .get(`http://localhost:2023/events/profileId?eventId=${eventId}`)
       .then((response) => {
-        console.log(eventId);
+        console.log(id);
         console.log(response);
-        console.log(response.data.profileId);
+        console.log(response.data.id);
         // setEntries(response.data);
         navigate(`/eventslist?id=${eventId}`);
       });

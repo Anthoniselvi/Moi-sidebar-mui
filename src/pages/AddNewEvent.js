@@ -84,6 +84,7 @@ export default function AddNewEvent() {
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
+            required
             value={eventType}
             label="Event Type"
             onChange={
@@ -103,6 +104,7 @@ export default function AddNewEvent() {
           // label="Error"
           // helperText="Incorrect entry."
           id="outlined-name"
+          required
           label="Event Name"
           onChange={(e) => setName(e.target.value)}
           value={name}
@@ -112,6 +114,7 @@ export default function AddNewEvent() {
         <TextField
           id="outlined-place"
           label="Event Place"
+          required
           value={place}
           onChange={(e) => setPlace(e.target.value)}
           sx={{ width: "300px" }}
@@ -120,6 +123,7 @@ export default function AddNewEvent() {
           id="outlined-date"
           // label="Event Date"
           type="date"
+          required
           value={date}
           onChange={(e) => setDate(e.target.value)}
           sx={{ width: "300px" }}

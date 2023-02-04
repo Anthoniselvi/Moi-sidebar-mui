@@ -87,8 +87,8 @@ export default function SignIn() {
     signInWithEmailAndPassword(auth, signinData.email, signinData.password)
       .then(async (res) => {
         console.log(res);
-        // navigate(`/eventslist?id=${res.user.uid}`);
-        navigate(`/chart?id=${res.user.uid}`);
+        navigate(`/eventslist?id=${res.user.uid}`);
+        // navigate(`/chart?id=${res.user.uid}`);
       })
       .catch((err) => {
         setError(err.message);
