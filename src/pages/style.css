@@ -9,6 +9,7 @@
 .header_container{
     width: 100%;
     height: 10%;
+    background-color: #9C27B0;
 }
 .dashboard_body{
     width: 100%;
@@ -60,19 +61,19 @@
 
 .eventslist_container{
     width: 100%;
-    height: 100vh;
-    overflow-y:hidden;
+    height: 100%;
+ 
+    /* overflow-y:hidden; */
 }
 
 .eventlist_body{
-    height:90%;
+    /* height:90%; */
     width: 100%;
-    padding: 20px;
-    /* border: 1px solid red; */
-    /* display: flex;
-    
-    justify-content: center;
-    align-items: center; */
+    padding: 10px;
+   display: grid;
+   grid-template-columns: 1fr 1fr;
+   /* grid-template-rows: 1fr 1fr 1fr; */
+   /* gap: 10px; */
 }
 .plus-icon1{
 
@@ -96,7 +97,7 @@
   .addevent_container{
     width: 100%;
     height: 100vh;
-    overflow-y:hidden;
+    /* overflow-y:hidden; */
 
   }
   .addevent_header{
@@ -126,45 +127,131 @@ background-color: #ffbe0b;
     width: 90%; */
   }
 
-  .eventlist_content{
-    border: 1px solid red;
-    display: grid;
+  .card_content{
+    padding: 0;
+    line-height: 2px;
+height: 60px;
+    /* display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    gap: 20px;
+    grid-template-columns: 1fr;
+    gap: 10px; */
   } 
+  .card_name{
+    padding-left: 0;
+    margin-top: 0;
+  }
+.card_container{
+  width: 160px;
+  height: 160px;
+}
   .card_header{
     display: flex;
     justify-content: space-between;
     background-color: #ffff3f;
+    align-items: center;
   }
   .card_heading{
+    /* padding: 0;
+    display: flex;
+    justify-content: space-between; */
+  }
+  .card_bottom_container{
     padding: 0;
+
+  }
+  .card_bottom{
+    padding: 0 20px;
+    padding-top: 10px;
+    margin: 0;
+    background-color: #ffff3f;
+  }
+  .card_table{
+    background-color: #ffff3f;
+    border: none;
+    outline: none;
+    /* height: 100px; */
+  }
+  .card-image-birthday{
+    background-image: url("../images/family3.jpg");
+    background-size: contain;
+    border: none;
+    outline: none;
+    height: 100px;
+  }
+  .card-image-wedding{
+    background-image: url("../images/family.jpg");
+    background-size: contain;
+    border: none;
+    outline: none;
+    height: 100px;
+  }
+  .card-image-baby{
+    background-image: url("../images/baby.jpg");
+    background-size: contain;
+    border: none;
+    outline: none;
+    height: 100px;
+  }
+  .card-image-other{
+    background-image: url("../images/other.jpg");
+    background-size: contain;
+    border: none;
+    background-position: center;
+    outline: none;
+    height: 100px;
+  }
+  .amount-row, .gift-row{
+    padding: 10px 20px;
+    padding-left: 0;
+   
+    padding-top: 5px;
+    padding-bottom: 0;
     display: flex;
     justify-content: space-between;
+    align-items: center;
   }
+  .inner-box{
+    display: flex;
+    gap: 50px;
+  }
+  .row-text{
+    /* text-align: left;
+    border: 1px solid red; */
+  }
+  
   @media (max-width:860px){
-    .eventlist_content{
+    /* .eventlist_content{
         grid-template-columns: 1fr 1fr;
-    }
+    } */
   }
   @media (max-width:600px){
-    .eventlist_content{
+    /* .eventlist_content{
         grid-template-columns: 1fr 1fr;
-    }
-    .card_container{
+    } */
+    /* .card_container{
       height: 100px;
     }
-    .card{
-      height: 200px;
-      padding: 0;
-    }
+    
     .card_header{
       height:50px;
-      /* margin: 0; */
+ 
     }
     .card_heading{
       padding: 0;
       display: flex;
       justify-content: space-between;
     }
+    .card-image-birthday{
+      height: 50px;
+    } */
+  }
+  .head-body{
+     align-items: center;
+    display: flex;
+  }
+  .add-btn{
+  
+    position: fixed;
+    left: 57%;
+    top: 85%;
   }

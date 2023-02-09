@@ -7,76 +7,58 @@ import axios from "axios";
 function ChartOutput() {
   const [entries, setEntries] = useState([]);
   const [eventsList, setEventsList] = useState([]);
-  const [totalAmount, setTotalAmount] = useState([]);
+  const [total, setTotal] = useState([]);
   const [searchParam] = useSearchParams();
-  const profileId = searchParam.get("id");
+  const profileId = searchParam.get("profile");
   const [data, setData] = useState([
     {
       //   labels: "Moi Amount",
       labels: eventsList.map((singleEvent) => singleEvent.name),
       // Event Map
       //   data: [{ values: [13, 14, 15] }, { values: [5, 10, 20] }],
-      data: [{ values: [totalAmount] }, { values: [5, 10, 20] }],
+      data: [
+        { values: total.map((singleTotal) => singleTotal.totalAmount) },
+        { values: total.map((singleTotal) => singleTotal.totalGift) },
+      ],
     },
   ]);
 
-  //   const getTotalAmount = (eventId) => {
-  //     console.log(eventId);
-
-  //     const totalAmount = entries
-  //       .filter((entry) => entry.eventId === eventId)
-  //       .map((entry) => parseInt(entry.amount))
-  //       .reduce((acc, value) => acc + +value, 0);
-
-  //     return totalAmount;
-  //   };
-
-  //   const gettotalGiftforEvent = (eventId) => {
-  //     return entries.filter(
-  //       (entry) => entry.eventId === eventId && entry.gift !== ""
-  //     ).length;
-  //   };
-  //   useEffect(() => {
-  //     fetch("http://localhost:3001/data", { method: "GET", redirect: "follow" })
-  //       .then((res) => res.json())
-  //       .then((json) => {
-  //         console.log(json);
-  //         setData(json);
-  //       })
-  //       .catch((err) => console.log(err));
-  //   }, []);
   const fetchAllEvents = () => {
     axios
-      .get(`http://localhost:2023/events/all/${profileId}`)
+      .get(`http://localhost:2010/events/all/${profileId}`)
       .then((response) => {
         // console.log(response);
-        console.log(response.data);
+        console.log(
+          "eventslist recd in useEffect: " + JSON.stringify(response.data)
+        );
         setEventsList(response.data);
       });
   };
 
   const fetchAllEntries = () => {
-    axios.get("http://localhost:2023/entries").then((response) => {
+    axios.get("http://localhost:2010/entries").then((response) => {
       // console.log(response);
       console.log(response.data);
       setEntries(response.data);
     });
   };
 
-  const fetchTotalAmount = () => {
+  const fetchTotal = () => {
     axios
-      .get(`http://localhost:2023/entries/total/${profileId}`)
+      .get(`http://localhost:2010/events/total/all/${profileId}`)
       .then((response) => {
         // console.log(response);
-        console.log(response.data);
-        setTotalAmount(response.data);
+        console.log(
+          "total recd in useEffect : " + JSON.stringify(response.data)
+        );
+        setTotal(response.data);
       });
   };
 
   useEffect(() => {
     fetchAllEvents();
-    fetchAllEntries();
-    fetchTotalAmount();
+    // fetchAllEntries();
+    fetchTotal();
   }, []);
 
   return (

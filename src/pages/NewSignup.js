@@ -29,7 +29,7 @@ import {
   createUserWithEmailAndPassword,
   updateProfile,
 } from "firebase/auth";
-import "./Home.css";
+// import "./Home.css";
 import { useUserAuth } from "../Context/UserAuthContext";
 import { auth, db, storage } from "./firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";

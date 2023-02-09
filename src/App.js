@@ -4,7 +4,7 @@ import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import Sidebar from "./components/Sidebar";
 import Dashboard from "./pages/Dashboard.jsx";
 import AddNewEvent from "./pages/AddNewEvent";
-import SignUp from "./pages/xxxxSignUp";
+// import SignUp from "./pages/xxxxSignUp";
 import SignIn from "./pages/SignIn";
 import EventList from "./pages/EventList";
 import EntryList from "./pages/EntryList";
@@ -14,7 +14,7 @@ import EditEntry from "./pages/EditEntry";
 import Footer from "./pages/Footer";
 import EntryTable from "./pages/EntryTable";
 import MenuList from "./pages/MenuList";
-import Form from "./pages/Form";
+// import Form from "./pages/Form";
 import NewSignUp from "./pages/NewSignup";
 import Profile from "./pages/Profile";
 // import { AuthContext } from "./Context/AuthContext";
@@ -30,6 +30,7 @@ import Image from "./pages/Image";
 // import NewChart from "./pages/NewChart";
 import ChartOutput from "./pages/ChartOutput";
 // import BarChart from "./pages/BarChart";
+import CardContainer from "./pages/CardContainer";
 
 const App = () => {
   const [name, setName] = useState("");
@@ -83,7 +84,7 @@ const App = () => {
             <Route path="editentry" element={<EditEntry />} />
             <Route path="footer" element={<Footer />} />
             <Route path="table" element={<EntryTable />} />
-            <Route path="form" element={<Form />} />
+            {/* <Route path="form" element={<Form />} /> */}
             <Route path="menu" element={<MenuList />} />
             <Route path="addprofile" element={<AddProfile />} />
             <Route path="profile" element={<Profile name={name} />} />
@@ -92,6 +93,7 @@ const App = () => {
             {/* <Route path="newchart" element={<NewChart />} /> */}
             {/* <Route path="barchart" element={<BarChart />} /> */}
             <Route path="chart" element={<ChartOutput />} />
+            <Route path="card" element={<CardContainer />} />
           </Routes>
         </UserAuthContextProvider>
       </BrowserRouter>

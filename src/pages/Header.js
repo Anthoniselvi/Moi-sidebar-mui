@@ -51,8 +51,19 @@ export default function Header(props) {
 
   return (
     // <div >
-    <Box sx={{ flexGrow: 1 }} className="header_container">
-      <AppBar position="static" sx={{ backgroundColor: "#ffbe0b" }}>
+    <Box
+      sx={{
+        flexGrow: 1,
+        width: "100%",
+        height: "10%",
+        backgroundColor: "#9C27B0",
+      }}
+      className="header_container"
+    >
+      <AppBar
+        position="static"
+        sx={{ backgroundColor: "#9C27B0", height: "100%" }}
+      >
         <Toolbar className="header-tool">
           {/* <IconButton
               size="large"

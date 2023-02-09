@@ -5,6 +5,7 @@ import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
+import { Button, CardActionArea } from "@mui/material";
 import Collapse from "@mui/material/Collapse";
 import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
@@ -20,6 +21,7 @@ import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import MenuList from "./MenuList";
+import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 // import "./Home.css";
 import "./style.css";
 import Header from "./Header";
@@ -29,7 +31,7 @@ import { useState, useEffect } from "react";
 import Add from "@mui/icons-material/Add";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import Button from "@mui/material/Button";
+
 import image1 from "../images/family.jpg";
 import image2 from "../images/family1.jpg";
 import image3 from "../images/family2.jpg";
@@ -69,6 +71,10 @@ export default function EventList(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   console.log("eventslist-recd-profileId : " + profileId);
+
+  const handleClick = (e) => {
+    setAnchorEl(e.currentTarget);
+  };
 
   const handleClose = () => {
     setAnchorEl(null);
@@ -171,163 +177,222 @@ export default function EventList(props) {
     });
   }, []);
   return (
+    // <div className="eventslist_container">
+    //   <Header name={props.name} />
+    //   <div className="eventlist_body">
+    //     <div className="eventlist_content">
+    //       {eventsList.length > 0 && (
+    //         <>
+    //           {eventsList.map((singleEvent, eventId) => (
+    //             <div className="card_container">
+    //               <Card
+    //                 sx={{
+    //                   maxWidth: 345,
+    //                   borderRadius: "10px",
+    //                   border: "#ffff3f",
+    //                 }}
+    //                 className="card"
+    //               >
+    //                 <div className="card_header">
+    //                   <CardHeader
+    //                     className="card_heading"
+    //                     sx={{ backgroundColor: "#ffff3f", color: "#03045e" }}
+    //                     onClick={(e) => {
+    //                       e.stopPropagation();
+    //                       console.log("Navigating to entry list");
+    //                       navigateToEntryList(singleEvent.eventId);
+    //                     }}
+    //                     avatar={
+    //                       <Avatar
+    //                         sx={{ bgcolor: red[500] }}
+    //                         aria-label="recipe"
+    //                         onClick={(e) => {
+    //                           e.stopPropagation();
+    //                           console.log("Navigating to entry list");
+    //                           navigateToEntryList(singleEvent.eventId);
+    //                         }}
+    //                       ></Avatar>
+    //                     }
+    //                     title={singleEvent.name}
+    //                     subheader={singleEvent.date}
+    //                   />
+
+    //                   <div className="head-body">
+    //                     <Button
+    //                       id="demo-positioned-button"
+    //                       aria-controls={
+    //                         open ? "demo-positioned-menu" : undefined
+    //                       }
+    //                       aria-haspopup="true"
+    //                       aria-expanded={open ? "true" : undefined}
+    //                       // onClick={handleClick}
+    //                       onClick={(e) => {
+    //                         e.stopPropagation();
+    //                         console.log("set show clicked..");
+    //                         setSelectedEvent(singleEvent.eventId);
+    //                         // setShow((show) => !show);
+    //                         setAnchorEl(e.currentTarget);
+    //                       }}
+    //                     >
+    //                       <MoreVertIcon />
+    //                     </Button>
+    //                     {singleEvent.eventId === selectedEvent && anchorEl ? (
+    //                       <Menu
+    //                         id="demo-positioned-menu"
+    //                         aria-labelledby="demo-positioned-button"
+    //                         anchorEl={anchorEl}
+    //                         open={open}
+    //                         onClose={handleClose}
+    //                         anchorOrigin={{
+    //                           vertical: "top",
+    //                           horizontal: "left",
+    //                         }}
+    //                         transformOrigin={{
+    //                           vertical: "top",
+    //                           horizontal: "left",
+    //                         }}
+    //                       >
+    //                         <MenuItem
+    //                           onClick={(e) => editEvent(e, singleEvent.eventId)}
+    //                         >
+    //                           Update Event
+    //                         </MenuItem>
+
+    //                         <MenuItem
+    //                           onClick={(e) =>
+    //                             deleteEvent(e, singleEvent.eventId)
+    //                           }
+    //                         >
+    //                           Delete Event
+    //                         </MenuItem>
+    //                       </Menu>
+    //                     ) : null}
+    //                   </div>
+    //                 </div>
+
+    //                 {singleEvent.eventType === "birthday" ? (
+    //                   <CardMedia
+    //                     className="card-image-birthday"
+    //                     height="194"
+    //                     onClick={(e) => {
+    //                       e.stopPropagation();
+    //                       navigateToEntryList(singleEvent.eventId);
+    //                     }}
+    //                   />
+    //                 ) : null}
+    //                 {singleEvent.eventType === "wedding" ? (
+    //                   <CardMedia
+    //                     className="card-image-wedding"
+    //                     height="194"
+    //                     onClick={(e) => {
+    //                       e.stopPropagation();
+    //                       navigateToEntryList(singleEvent.eventId);
+    //                     }}
+    //                   />
+    //                 ) : null}
+    //                 {singleEvent.eventType === "baby" ? (
+    //                   <CardMedia
+    //                     className="card-image-baby"
+    //                     height="194"
+    //                     onClick={(e) => {
+    //                       e.stopPropagation();
+    //                       navigateToEntryList(singleEvent.eventId);
+    //                     }}
+    //                   />
+    //                 ) : null}
+    //                 {singleEvent.eventType === "others" ? (
+    //                   <CardMedia
+    //                     className="card-image-other"
+    //                     height="194"
+    //                     onClick={(e) => {
+    //                       e.stopPropagation();
+    //                       navigateToEntryList(singleEvent.eventId);
+    //                     }}
+    //                   />
+    //                 ) : null}
+    //                 <CardContent
+    //                   className="card_bottom_container"
+    //                   sx={{ backgroundColor: "#ffff3f" }}
+    //                 >
+    //                   <Typography
+    //                     className="card_bottom"
+    //                     variant="body2"
+    //                     color="text.secondary"
+    //                     onClick={(e) => {
+    //                       e.stopPropagation();
+    //                       navigateToEntryList(singleEvent.eventId);
+    //                     }}
+    //                   >
+    //                     <ul>
+    //                       <li className="amount-row">
+    //                         {/* <Currency
+    //                           code="INR"
+    //                           // size="small"
+    //                           style={{ fontSize: "20px" }}
+    //                         /> */}
+    //                         <CurrencyRupeeIcon
+    //                           sx={{ fontSize: "20px", color: "black" }}
+    //                         />
+    //                         <p style={{ fontSize: "20px", color: "black" }}>
+    //                           Amount
+    //                         </p>
+    //                         <span style={{ fontSize: "20px", color: "black" }}>
+    //                           {getTotalAmount(singleEvent.eventId)}
+    //                         </span>
+    //                       </li>
+    //                       <li className="amount-row">
+    //                         <CardGiftcardIcon
+    //                           sx={{ fontSize: "20px", color: "black" }}
+    //                         />
+    //                         <p style={{ fontSize: "20px", color: "black" }}>
+    //                           {" "}
+    //                           No.of Gifts{" "}
+    //                         </p>
+    //                         <span style={{ fontSize: "20px", color: "black" }}>
+    //                           {gettotalGiftforEvent(singleEvent.eventId)}
+    //                         </span>
+    //                       </li>
+    //                     </ul>
+    //                   </Typography>
+    //                 </CardContent>
+    //               </Card>
+    //             </div>
+    //           ))}
+    //         </>
+    //       )}
+    //     </div>
+    //     {eventsList.length < 1 && (
+    //       <>
+    //         <p className="no-text">No Events found</p>
+
+    //         <button className="addevent-button" onClick={navigateToAddNewEvent}>
+    //           Add New Event
+    //         </button>
+    //       </>
+    //     )}
+
+    //     <Box className="add-btn" sx={{ "& > :not(style)": { m: 1 } }}>
+    //       <Fab color="secondary" aria-label="add">
+    //         <AddIcon onClick={navigateToAddNewEvent} />
+    //       </Fab>
+    //     </Box>
+    //   </div>
+    // </div>
+
     <div className="eventslist_container">
       <Header name={props.name} />
       <div className="eventlist_body">
-        {/* <div className="eventlist-head"> */}
-        {/* {profile.map((singleProfile) => (
-            <>
-              {singleProfile.profileId === profileId && (
-                <h2 className="welcome-name">
-                  {console.log("Profile Name :" + singleProfile.name)}
-                  Welcome {singleProfile.name} !{" "}
-                </h2>
-              )}
-            </>
-          ))} */}
-        {/* <h2 className="eventlist-heading">Welcome {props.name} !</h2> */}
-        {/* </div> */}
-        {/* <h1 className="entry-title">Total Events List</h1> */}
-        <div className="eventlist_content">
-          {eventsList.length > 0 && (
-            <>
-              {eventsList.map((singleEvent, eventId) => (
-                <div
-                  className="card_container"
-                  // onClick={(e) => {
-                  //   e.stopPropagation();
-                  //   navigateToEntryList(singleEvent.id);
-                  // }}
-                >
-                  {/* {eventsList.map((singleEvent, id) => ( */}
-                  <Card
-                    sx={{
-                      maxWidth: 345,
-                      borderRadius: "10px",
-                      border: "#ffff3f",
-                    }}
-                    className="card"
-                  >
-                    <div className="card_header">
-                      <CardHeader
-                        className="card_heading"
-                        sx={{ backgroundColor: "#ffff3f", color: "#03045e" }}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          console.log("Navigating to entry list");
-                          navigateToEntryList(singleEvent.eventId);
-                        }}
-                        avatar={
-                          <Avatar
-                            sx={{ bgcolor: red[500] }}
-                            aria-label="recipe"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              console.log("Navigating to entry list");
-                              navigateToEntryList(singleEvent.eventId);
-                            }}
-                          ></Avatar>
-                        }
-                        title={singleEvent.name}
-                        subheader={singleEvent.date}
-                      />
-                      <IconButton
-                        aria-label="settings"
-                        // className="more-icon"
-                        className="event_icon_dropdown"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          console.log("set show clicked..");
-                          setSelectedEvent(singleEvent.eventId);
-                          setShow((show) => !show);
-                        }}
-                      >
-                        {/* <MenuList /> */}
-                        <MoreVertIcon />
-                      </IconButton>
-
-                      {singleEvent.eventId === selectedEvent && show ? (
-                        <div className="event_dropdown">
-                          {/* <p
-                            onClick={(e) =>
-                              navigateToAddNewEntry(e, singleEvent.id)
-                            }
-                          >
-                            Add Entry
-                          </p> */}
-                          <p onClick={(e) => editEvent(e, singleEvent.eventId)}>
-                            Edit Event
-                          </p>
-                          <p
-                            onClick={(e) => deleteEvent(e, singleEvent.eventId)}
-                          >
-                            Delete Event
-                          </p>
-                        </div>
-                      ) : null}
-                      {/* <Button
-                        id="demo-positioned-button"
-                        aria-controls={
-                          open ? "demo-positioned-menu" : undefined
-                        }
-                        aria-haspopup="true"
-                        aria-expanded={open ? "true" : undefined}
-                        // onClick={handleClick}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          console.log("set show clicked..");
-                          setSelectedEvent(singleEvent.id);
-                          setAnchorEl(e.currentTarget);
-                        }}
-                      >
-                        <MoreVertIcon />
-                      </Button>
-                      <Menu
-                        // className="entry_dropdown"
-                        id="demo-positioned-menu"
-                        aria-labelledby="demo-positioned-button"
-                        anchorEl={anchorEl}
-                        open={open}
-                        onClose={handleClose}
-                        anchorOrigin={{
-                          vertical: "top",
-                          horizontal: "left",
-                        }}
-                        transformOrigin={{
-                          vertical: "top",
-                          horizontal: "left",
-                        }}
-                      > */}
-                      {/* <MenuItem
-                        onClick={(e) =>
-                          navigateToAddNewEntry(e, singleEvent.id)
-                        }
-                      >
-                        Add Event
-                      </MenuItem> */}
-                      {/* <MenuItem onClick={(e) => editEvent(e, singleEvent.id)}>
-                          Edit Event
-                        </MenuItem>
-                        <MenuItem
-                          onClick={(e) => deleteEvent(e, singleEvent.id)}
-                        >
-                          Delete Event
-                        </MenuItem>
-                      </Menu> */}
-                    </div>
-                    {/* </div> */}
-                    {/* <CardMedia
-                      className="card-image"
-                      height="194"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        navigateToEntryList(singleEvent.id);
-                      }}
-                    /> */}
+        {eventsList.length > 0 && (
+          <>
+            {eventsList.map((singleEvent, eventId) => (
+              <div className="card_container">
+                <Card>
+                  {/* sx={{ width: 200, height: 400 }}> */}
+                  <CardActionArea>
                     {singleEvent.eventType === "birthday" ? (
                       <CardMedia
                         className="card-image-birthday"
-                        height="194"
+                        // height="194"
                         onClick={(e) => {
                           e.stopPropagation();
                           navigateToEntryList(singleEvent.eventId);
@@ -337,7 +402,7 @@ export default function EventList(props) {
                     {singleEvent.eventType === "wedding" ? (
                       <CardMedia
                         className="card-image-wedding"
-                        height="194"
+                        // height="194"
                         onClick={(e) => {
                           e.stopPropagation();
                           navigateToEntryList(singleEvent.eventId);
@@ -347,7 +412,7 @@ export default function EventList(props) {
                     {singleEvent.eventType === "baby" ? (
                       <CardMedia
                         className="card-image-baby"
-                        height="194"
+                        // height="194"
                         onClick={(e) => {
                           e.stopPropagation();
                           navigateToEntryList(singleEvent.eventId);
@@ -357,14 +422,27 @@ export default function EventList(props) {
                     {singleEvent.eventType === "others" ? (
                       <CardMedia
                         className="card-image-other"
-                        height="194"
+                        // height="194"
                         onClick={(e) => {
                           e.stopPropagation();
                           navigateToEntryList(singleEvent.eventId);
                         }}
                       />
                     ) : null}
-                    <CardContent sx={{ backgroundColor: "#ffff3f" }}>
+                    <CardContent className="card_content">
+                      <Typography
+                        className="card_name"
+                        sx={{ fontSize: 16, marginBottom: 0 }}
+                        gutterBottom
+                        variant="h5"
+                        component="div"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          navigateToEntryList(singleEvent.eventId);
+                        }}
+                      >
+                        {singleEvent.name}
+                      </Typography>
                       <Typography
                         variant="body2"
                         color="text.secondary"
@@ -373,55 +451,44 @@ export default function EventList(props) {
                           navigateToEntryList(singleEvent.eventId);
                         }}
                       >
-                        <ul className="event-list">
-                          <li>
-                            <Currency
-                              code="INR"
-                              size="small"
-                              sx={{ fontSize: "20px" }}
+                        <ul>
+                          <li className="amount-row">
+                            <CurrencyRupeeIcon
+                              sx={{ fontSize: "14px", color: "black" }}
                             />
-                            <p> Amount </p>
-                            <span>{getTotalAmount(singleEvent.eventId)}</span>
+                            <p style={{ fontSize: "14px", color: "black" }}>
+                              Amount
+                            </p>
+                            <span style={{ fontSize: "14px", color: "black" }}>
+                              {getTotalAmount(singleEvent.eventId)}
+                            </span>
                           </li>
-                          <li>
-                            <CardGiftcardIcon sx={{ fontSize: "20px" }} />
-                            <p> No.of Gifts </p>
-                            <span>
+                          <li className="amount-row">
+                            <CardGiftcardIcon
+                              sx={{ fontSize: "14px", color: "black" }}
+                            />
+                            <p style={{ fontSize: "14px", color: "black" }}>
+                              {" "}
+                              No.of Gifts{" "}
+                            </p>
+                            <span style={{ fontSize: "14px", color: "black" }}>
                               {gettotalGiftforEvent(singleEvent.eventId)}
                             </span>
                           </li>
                         </ul>
                       </Typography>
                     </CardContent>
-                  </Card>
-                </div>
-              ))}
-            </>
-          )}
-        </div>
-        {eventsList.length < 1 && (
-          <>
-            <p className="no-text">No Events found</p>
-
-            <button className="addevent-button" onClick={navigateToAddNewEvent}>
-              Add New Event
-            </button>
-            {/* <Button
-              variant="contained"
-              type="submit"
-              sx={{ width: "50%", alignItems: "center" }}
-            >
-              Add
-            </Button> */}
+                  </CardActionArea>
+                </Card>
+              </div>
+            ))}
           </>
         )}
-        {/* </div> */}
-        {/* </> */}
-        {/* <Box sx={{ "& > :not(style)": { m: 1 } }} className="plus-icon1">
-          <Fab color="primary" aria-label="add">
+        <Box className="add-btn" sx={{ "& > :not(style)": { m: 1 } }}>
+          <Fab color="secondary" aria-label="add">
             <AddIcon onClick={navigateToAddNewEvent} />
           </Fab>
-        </Box> */}
+        </Box>
       </div>
     </div>
   );
