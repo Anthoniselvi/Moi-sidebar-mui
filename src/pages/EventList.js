@@ -20,7 +20,8 @@ import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import MenuList from "./MenuList";
-import "./Home.css";
+// import "./Home.css";
+import "./style.css";
 import Header from "./Header";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
@@ -33,6 +34,8 @@ import image1 from "../images/family.jpg";
 import image2 from "../images/family1.jpg";
 import image3 from "../images/family2.jpg";
 import image4 from "../images/family3.jpg";
+import Currency from "react-currency-icons";
+import CardGiftcardIcon from "@mui/icons-material/CardGiftcard";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -168,9 +171,9 @@ export default function EventList(props) {
     });
   }, []);
   return (
-    <div className="container">
+    <div className="eventslist_container">
       <Header name={props.name} />
-      <div className="eventlist-body">
+      <div className="eventlist_body">
         {/* <div className="eventlist-head"> */}
         {/* {profile.map((singleProfile) => (
             <>
@@ -185,12 +188,12 @@ export default function EventList(props) {
         {/* <h2 className="eventlist-heading">Welcome {props.name} !</h2> */}
         {/* </div> */}
         {/* <h1 className="entry-title">Total Events List</h1> */}
-        <div className="eventlist-content">
+        <div className="eventlist_content">
           {eventsList.length > 0 && (
             <>
               {eventsList.map((singleEvent, eventId) => (
                 <div
-                  className="card-container"
+                  className="card_container"
                   // onClick={(e) => {
                   //   e.stopPropagation();
                   //   navigateToEntryList(singleEvent.id);
@@ -205,8 +208,9 @@ export default function EventList(props) {
                     }}
                     className="card"
                   >
-                    <div className="card-header">
+                    <div className="card_header">
                       <CardHeader
+                        className="card_heading"
                         sx={{ backgroundColor: "#ffff3f", color: "#03045e" }}
                         onClick={(e) => {
                           e.stopPropagation();
@@ -371,11 +375,17 @@ export default function EventList(props) {
                       >
                         <ul className="event-list">
                           <li>
-                            <p>Total Amount - Rs.</p>
+                            <Currency
+                              code="INR"
+                              size="small"
+                              sx={{ fontSize: "20px" }}
+                            />
+                            <p> Amount </p>
                             <span>{getTotalAmount(singleEvent.eventId)}</span>
                           </li>
                           <li>
-                            <p>Total No.of Gifts - </p>
+                            <CardGiftcardIcon sx={{ fontSize: "20px" }} />
+                            <p> No.of Gifts </p>
                             <span>
                               {gettotalGiftforEvent(singleEvent.eventId)}
                             </span>
@@ -407,11 +417,11 @@ export default function EventList(props) {
         )}
         {/* </div> */}
         {/* </> */}
-        <Box sx={{ "& > :not(style)": { m: 1 } }} className="plus-icon1">
+        {/* <Box sx={{ "& > :not(style)": { m: 1 } }} className="plus-icon1">
           <Fab color="primary" aria-label="add">
             <AddIcon onClick={navigateToAddNewEvent} />
           </Fab>
-        </Box>
+        </Box> */}
       </div>
     </div>
   );

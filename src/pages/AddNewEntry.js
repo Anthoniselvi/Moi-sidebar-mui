@@ -11,7 +11,8 @@ import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import Button from "@mui/material/Button";
 import axios from "axios";
-import "./Home.css";
+// import "./Home.css";
+import "./style.css";
 
 export default function AddNewEntry() {
   const [personName, setPersonName] = useState();
@@ -50,7 +51,7 @@ export default function AddNewEntry() {
   };
 
   return (
-    <div className="addevent-container">
+    <div className="addentry_container">
       {/* <h1>Add New Entry</h1> */}
 
       <Box

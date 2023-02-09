@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import "./Home.css";
+// import "./Home.css";
+import "./style.css";
 import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { IconButton } from "@mui/material";
@@ -151,7 +152,7 @@ export default function EntriesList(props) {
   }, []);
 
   return (
-    <div className="entry_container">
+    <div className="entrylist_container">
       {/* <Header /> */}
       <div className="entry-body">
         {/* {eventslist.map((singleEvent, eventId) => (

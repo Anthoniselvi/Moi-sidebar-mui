@@ -13,7 +13,7 @@ import axios from "axios";
 import Button from "@mui/material/Button";
 import Fab from "@mui/material/Fab";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-
+import "./style.css";
 export default function EditEntry() {
   const [personName, setPersonName] = useState();
   const [city, setCity] = useState();
@@ -73,7 +73,7 @@ export default function EditEntry() {
   }, []);
 
   return (
-    <div className="addevent-container">
+    <div className="editentry_container">
       <h1>Edit Entry</h1>
 
       <Box

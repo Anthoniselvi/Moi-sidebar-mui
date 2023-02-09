@@ -11,7 +11,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import Fab from "@mui/material/Fab";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-
+import "./style.css";
 export default function EditEvent() {
   const [eventType, setEventType] = useState("");
   const [name, setName] = useState();
@@ -76,8 +76,13 @@ export default function EditEvent() {
   };
   // console.log("eventType before return :" + eventType);
   return (
-    <div className="addevent-container">
+    <div className="editevent_container">
       {/* <h1>Edit Event - {name}</h1> */}
+      <div className="editevent_header">
+        <ArrowBackIcon onClick={navigateToEventslist} />
+
+        <h2>Update Event</h2>
+      </div>
       <Box
         onSubmit={handleUpdateEvent}
         className="addevent-form"
@@ -138,11 +143,11 @@ export default function EditEvent() {
           Update
         </Button>
       </Box>
-      <Box sx={{ "& > :not(style)": { m: 1 } }} className="plus-icon">
+      {/* <Box sx={{ "& > :not(style)": { m: 1 } }} className="plus-icon">
         <Fab color="primary" aria-label="add">
           <ArrowBackIcon onClick={navigateToEventslist} />
         </Fab>
-      </Box>
+      </Box> */}
     </div>
   );
 }

@@ -7,7 +7,8 @@ import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import "./Home.css";
+// import "./Home.css";
+import "./style.css";
 import { useUserAuth } from "../Context/UserAuthContext";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import Menu from "@mui/material/Menu";
@@ -50,7 +51,7 @@ export default function Header(props) {
 
   return (
     // <div >
-    <Box sx={{ flexGrow: 1 }} className="header-container">
+    <Box sx={{ flexGrow: 1 }} className="header_container">
       <AppBar position="static" sx={{ backgroundColor: "#ffbe0b" }}>
         <Toolbar className="header-tool">
           {/* <IconButton

@@ -39,11 +39,11 @@ const [profileId, setProfileId] = useState()
     <Header />
       {/* <div className="home"> */}
      
-        <div className="home-body">
+        <div className="dashboard_body">
  
         {/* <h2>{props.name ? `Welcome ${props.name} !` : "Login Please"} </h2> */}
         {/* <h2>{ `Welcome ${props.name} !` } </h2> */}
-   <div className="home-content">
+   <div className="dashboard_content">
         <h1>Moi Registry</h1>
         <p>
           Families are like branches on a tree. We grow in different directions

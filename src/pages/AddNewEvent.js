@@ -13,6 +13,9 @@ import image1 from "../images/family.jpg";
 import image2 from "../images/family1.jpg";
 import image3 from "../images/family2.jpg";
 import image4 from "../images/family3.jpg";
+import "./style.css";
+import Fab from "@mui/material/Fab";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 // import { makeStyles } from "@material-ui/core";
 
 // const useStyles = makeStyles((theme) => ({
@@ -67,14 +70,23 @@ export default function AddNewEvent() {
   const moveToFrontPage = () => {
     navigate("/eventslist");
   };
-
+  const navigateToEventslist = () => {
+    navigate(`/eventslist?profile=${profileId}`);
+  };
   return (
-    <div className="addevent-container">
-      {/* <h1>Add New Event</h1> */}
-      {/* <form onSubmit={handleSubmitEvent}> */}
+    <div className="addevent_container">
+      <div className="addevent_header">
+        {/* <Box sx={{ "& > :not(style)": { m: 1 } }} className="plus-icon"> */}
+        {/* <Fab color="primary" aria-label="add"> */}
+
+        <ArrowBackIcon onClick={navigateToEventslist} />
+        {/* </Fab> */}
+        {/* </Box> */}
+        <h2>Create Event</h2>
+      </div>
       <Box
         onSubmit={handleSubmitEvent}
-        className="addevent-form"
+        className="addevent_form"
         component="form"
         // sx={{
         //   "& > :not(style)": { m: 1, width: "50ch" },
@@ -82,7 +94,7 @@ export default function AddNewEvent() {
         noValidate
         autoComplete="off"
       >
-        <FormControl fullWidth>
+        <FormControl sx={{ width: "300px" }}>
           <InputLabel id="demo-simple-select-label">Event Type</InputLabel>
           <Select
             labelId="demo-simple-select-label"
@@ -143,7 +155,6 @@ export default function AddNewEvent() {
           Add
         </Button>
       </Box>
-      {/* </form> */}
     </div>
   );
 }
