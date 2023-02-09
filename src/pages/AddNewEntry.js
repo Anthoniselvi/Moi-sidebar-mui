@@ -18,40 +18,40 @@ export default function AddNewEntry() {
   const [city, setCity] = useState();
   const [amount, setAmount] = useState(0);
   const [gift, setGift] = useState("");
-  const [selected, setSelected] = useState(1);
+  const [presentType, setPresentType] = useState("amount");
   // const [entries, setEntries] = useState();
   const navigate = useNavigate();
   const [searchParam] = useSearchParams();
   const eventId = searchParam.get("event");
   const profileId = searchParam.get("id");
-
+  console.log("Add New Entry-recd-eventId : " + eventId);
   const handleSubmitEntry = (e) => {
     e.preventDefault();
 
     axios
-      .post("http://localhost:2023/entries", {
+      .post("http://localhost:2010/entries", {
         personName: personName,
         city: city,
-        selected: selected,
+        presentType: presentType,
         amount: amount,
         gift: gift,
         eventId: eventId,
       })
       .then((response) => {
-        console.log(response);
+        console.log("Post new Entry Response : " + JSON.stringify(response));
         navigate(`/entryList?event=${eventId}`);
       });
 
     setPersonName("");
     setCity("");
-    setSelected("");
+    setPresentType("");
     setAmount("");
     setGift("");
   };
 
   return (
     <div className="addevent-container">
-      <h1>Add New Entry</h1>
+      {/* <h1>Add New Entry</h1> */}
 
       <Box
         onSubmit={handleSubmitEntry}
@@ -83,26 +83,26 @@ export default function AddNewEntry() {
               Type of Presentation :
             </FormLabel>
             <RadioGroup
-              value={selected}
-              onChange={(e) => setSelected(e.target.value)}
+              value={presentType}
+              onChange={(e) => setPresentType(e.target.value)}
             >
               <div className="radio-button">
                 <FormControlLabel
                   control={<Radio />}
                   label="Amount"
-                  value={1}
-                  // defaultChecked={selected === 1}
+                  value="amount"
+                  // defaultChecked={selected === "amount"}
                   // onChange={(e) => setSelected(e.target.value)}
                 />
                 <FormControlLabel
                   control={<Radio />}
                   label="Gift"
-                  value={0}
+                  value="gift"
                   // defaultChecked={selected === 0}
                   // onChange={(e) => setSelected(e.target.value)}
                 />
               </div>
-              {selected === 1 ? (
+              {presentType === "amount" ? (
                 <div>
                   <TextField
                     id="outlined-amount"
@@ -156,6 +156,11 @@ export default function AddNewEntry() {
         </Button>
         {/* <Button type="submit">Add</Button> */}
       </Box>
+      {/* <Box sx={{ "& > :not(style)": { m: 1 } }} className="plus-icon">
+        <Fab color="primary" aria-label="add">
+          <ArrowBackIcon onClick={navigateToEntryList} />
+        </Fab>
+      </Box> */}
     </div>
   );
 }

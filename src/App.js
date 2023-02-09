@@ -57,15 +57,30 @@ const App = () => {
                 </ProtectedRoute>
               }
             />
+            <Route
+              path="header"
+              element={
+                <ProtectedRoute>
+                  <Header name={name} />
+                </ProtectedRoute>
+              }
+            />
             <Route path="dashboard" element={<Dashboard name={name} />} />
             <Route path="signin" element={<SignIn />} />
             <Route path="signup" element={<NewSignUp />} />
-            <Route path="eventslist" element={<EventList />} />
+            <Route
+              path="eventslist"
+              element={
+                <ProtectedRoute>
+                  <EventList name={name} />
+                </ProtectedRoute>
+              }
+            />
             <Route path="event/new" element={<AddNewEvent />} />
             <Route path="entry/new" element={<AddNewEntry />} />
             <Route path="entrylist" element={<EntryList />} />
-            <Route path="event" element={<EditEvent />} />
-            <Route path="edit" element={<EditEntry />} />
+            <Route path="editevent" element={<EditEvent />} />
+            <Route path="editentry" element={<EditEntry />} />
             <Route path="footer" element={<Footer />} />
             <Route path="table" element={<EntryTable />} />
             <Route path="form" element={<Form />} />

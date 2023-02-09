@@ -30,11 +30,12 @@ export default function EntriesList(props) {
   const eventId = searchParam.get("event");
   // const entryId = searchParam.get("event");
   const [entries, setEntries] = useState([]);
+  const [eventslist, setEventsList] = useState([]);
   const [selectedEntry, setSelectedEntry] = useState("");
   const [show, setShow] = useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
-
+  console.log("entrylist-recd-eventId : " + eventId);
   const handleClick = (event) => {
     // event.stopPropagation();
     // setAnchorEl(event.currentTarget);
@@ -78,19 +79,17 @@ export default function EntriesList(props) {
 
   const navigateToEventslist = (id) => {
     axios
-      // .get(`http://localhost:2023/events/profileId/${eventId}`)
-      .get(`http://localhost:2023/events/profileId?eventId=${eventId}`)
+      .get(`http://localhost:2010/events/profileId/${eventId}`)
       .then((response) => {
-        console.log(id);
-        console.log(response);
-        console.log(response.data.id);
+        console.log("recd profileId from event : " + JSON.stringify(response));
+        console.log(response.data.profileId);
         // setEntries(response.data);
-        navigate(`/eventslist?id=${eventId}`);
+        navigate(`/eventslist?profile=${response.data.profileId}`);
       });
   };
 
-  const editEntry = (id) => {
-    navigate(`/edit?entry=${id}`);
+  const editEntry = (entryId) => {
+    navigate(`/editentry?entry=${entryId}`);
   };
 
   const deleteEntry = (entryId) => {
@@ -102,12 +101,12 @@ export default function EntriesList(props) {
     // setEntries(entryArray);
     // console.log(entryArray);
     axios
-      .delete(`http://localhost:2023/entries/${entryId}`)
+      .delete(`http://localhost:2010/entries/${entryId}`)
       .then((response) => {
         console.log("after deletion:" + response);
         console.log(response.data);
         axios
-          .get(`http://localhost:2023/entries/all/${eventId}`)
+          .get(`http://localhost:2010/entries/all/${eventId}`)
           .then((response) => {
             console.log(eventId);
             console.log(response);
@@ -120,23 +119,49 @@ export default function EntriesList(props) {
         // navigate("/eventslist");
       });
   };
-
-  useEffect(() => {
+  const fetchAllEvents = () => {
     axios
-      .get(`http://localhost:2023/entries/all/${eventId}`)
+      .get(`http://localhost:2010/events/profileId/${eventId}`)
+      .then((response) => {
+        console.log("recd profileId from event : " + JSON.stringify(response));
+        console.log(response.data.profileId);
+
+        axios
+          .get(`http://localhost:2010/events/all/${response.data.profileId}`)
+          .then((response) => {
+            // console.log(response);
+            console.log(response.data);
+            setEventsList(response.data);
+          });
+      });
+  };
+  const fetchAllEntries = () => {
+    axios
+      .get(`http://localhost:2010/entries/all/${eventId}`)
       .then((response) => {
         console.log(eventId);
         console.log(response);
         console.log(response.data);
         setEntries(response.data);
       });
+  };
+  useEffect(() => {
+    fetchAllEntries();
+    fetchAllEvents();
   }, []);
 
   return (
     <div className="entry_container">
-      <Header />
+      {/* <Header /> */}
       <div className="entry-body">
-        <h1 className="entry-title">Entry List</h1>
+        {/* {eventslist.map((singleEvent, eventId) => (
+          <>
+            {singleEvent.eventId === eventId && (
+              <h1 className="entry-title">Entry List - {singleEvent.name}</h1>
+            )}
+          </> */}
+        {/* ))} */}
+        {/* <h1 className="entry-title">Entry List</h1> */}
         <div className="entry_content">
           <div className="entry_searchbar">
             <BiSearch style={{ fontSize: "20px" }} />
@@ -162,7 +187,7 @@ export default function EntriesList(props) {
                 </thead>
                 <tbody>
                   {entries.map((entry) => (
-                    <tr key={entry.id}>
+                    <tr key={entry.entryId}>
                       <td>
                         <Avatar
                           name={entry.personName}
@@ -183,7 +208,7 @@ export default function EntriesList(props) {
                           onClick={(e) => {
                             e.stopPropagation();
                             console.log("set show clicked..");
-                            setSelectedEntry(entry.id);
+                            setSelectedEntry(entry.entryId);
                             setShow((show) => !show);
                           }}
                         >
@@ -233,12 +258,12 @@ export default function EntriesList(props) {
                           {/* <MenuItem onClick={handleLogout}>Logout</MenuItem> */}
                         {/* </Menu> */}
 
-                        {entry.id === selectedEntry && show ? (
+                        {entry.entryId === selectedEntry && show ? (
                           <div className="entry_dropdown">
-                            <p onClick={(e) => editEntry(entry.id)}>
+                            <p onClick={(e) => editEntry(entry.entryId)}>
                               Edit Entry
                             </p>
-                            <p onClick={(e) => deleteEntry(entry.id)}>
+                            <p onClick={(e) => deleteEntry(entry.entryId)}>
                               Delete Entry
                             </p>
                           </div>

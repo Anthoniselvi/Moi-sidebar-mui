@@ -35,21 +35,24 @@ export default function AddNewEvent() {
   const [date, setDate] = useState(new Date().toISOString().slice(0, 10));
   const navigate = useNavigate();
   const [searchParam] = useSearchParams();
-  const id = searchParam.get("id");
-
+  const profileId = searchParam.get("profile");
+  // const eventId = searchParam.get("event");
+  console.log("addNewEvent-recd-profileId : " + profileId);
+  // console.log("addNewEvent-recd-eventId : " + eventId);
   const handleSubmitEvent = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:2023/events", {
+      .post("http://localhost:2010/events", {
+        // eventId: eventId,
         eventType: eventType,
         name: name,
         place: place,
         date: date,
-        profileId: id,
+        profileId: profileId,
       })
       .then((response) => {
         console.log(response);
-        navigate(`/eventslist?id=${id}`);
+        navigate(`/eventslist?profile=${profileId}`);
       });
     setEventType("");
     setName("");
@@ -67,7 +70,7 @@ export default function AddNewEvent() {
 
   return (
     <div className="addevent-container">
-      <h1>Add New Event</h1>
+      {/* <h1>Add New Event</h1> */}
       {/* <form onSubmit={handleSubmitEvent}> */}
       <Box
         onSubmit={handleSubmitEvent}

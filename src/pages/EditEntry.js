@@ -11,50 +11,62 @@ import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import axios from "axios";
 import Button from "@mui/material/Button";
+import Fab from "@mui/material/Fab";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 export default function EditEntry() {
   const [personName, setPersonName] = useState();
   const [city, setCity] = useState();
   const [amount, setAmount] = useState();
   const [gift, setGift] = useState();
-  const [selected, setSelected] = useState(1);
+  const [presentType, setPresentType] = useState("");
 
   const navigate = useNavigate();
   const [searchParam] = useSearchParams();
   const entryId = searchParam.get("entry");
-
+  console.log("EditEntry recd entryId by searchParam :" + entryId);
   const handleSubmitEditEntry = (e) => {
     e.preventDefault();
     axios
-      .put("http://localhost:2023/entries/", {
-        id: entryId,
+      .put("http://localhost:2010/entries/", {
+        entryId: entryId,
         personName: personName,
         city: city,
-        selected: selected,
+        presentType: presentType,
         amount: amount,
         gift: gift,
         // eventId: eventId,
       })
       .then((response) => {
-        console.log(response);
-        // navigate("/eventslist");
+        console.log("Updated entry : " + JSON.stringify(response));
+
         axios
-          .get(`http://localhost:2023/entries/eventId?entryId=${entryId}`)
+          .get(`http://localhost:2010/entries/eventId/${entryId}`)
           .then((response) => {
-            console.log(response);
+            console.log(
+              "EventId recd from entries :" + JSON.stringify(response)
+            );
 
             navigate(`/entrylist?event=${response.data.eventId}`);
           });
       });
-    // navigate(`/entrylist?event=${entryId}`);
   };
 
+  const navigateToEntryList = () => {
+    axios
+      .get(`http://localhost:2010/entries/eventId/${entryId}`)
+      .then((response) => {
+        console.log("EventId recd from entries :" + JSON.stringify(response));
+
+        navigate(`/entrylist?event=${response.data.eventId}`);
+      });
+  };
   useEffect(() => {
-    axios.get(`http://localhost:2023/entries/${entryId}`).then((response) => {
-      console.log(response);
+    axios.get(`http://localhost:2010/entries/${entryId}`).then((response) => {
+      console.log("get selected Entry's data : " + JSON.stringify(response));
       setPersonName(response.data.personName);
       setCity(response.data.city);
-      setSelected(response.data.selected);
+      setPresentType(response.data.presentType);
       setAmount(response.data.amount);
       setGift(response.data.gift);
     });
@@ -95,26 +107,26 @@ export default function EditEntry() {
               Type of Presentation :
             </FormLabel>
             <RadioGroup
-              value={selected}
-              onChange={(e) => setSelected(e.target.value)}
+              value={presentType}
+              onChange={(e) => setPresentType(e.target.value)}
             >
               <div className="radio-button">
                 <FormControlLabel
                   control={<Radio />}
                   label="Amount"
-                  value={1}
+                  value="amount"
                   // defaultChecked={selected === 1}
                   // onChange={(e) => setSelected(e.target.value)}
                 />
                 <FormControlLabel
                   control={<Radio />}
                   label="Gift"
-                  value={0}
+                  value="gift"
                   // defaultChecked={selected === 0}
                   // onChange={(e) => setSelected(e.target.value)}
                 />
               </div>
-              {selected === 1 && (
+              {presentType === "amount" ? (
                 <div>
                   <TextField
                     id="outlined-amount"
@@ -124,8 +136,8 @@ export default function EditEntry() {
                     sx={{ width: "300px" }}
                   />
                 </div>
-              )}
-              {selected === 0 && (
+              ) : (
+                // {presentType === "gift" && (
                 <div className="gift-box">
                   <TextField
                     id="outlined-multiline-static"
@@ -144,6 +156,11 @@ export default function EditEntry() {
         <Button variant="contained" type="submit">
           Update
         </Button>
+      </Box>
+      <Box sx={{ "& > :not(style)": { m: 1 } }} className="plus-icon">
+        <Fab color="primary" aria-label="add">
+          <ArrowBackIcon onClick={navigateToEntryList} />
+        </Fab>
       </Box>
     </div>
   );

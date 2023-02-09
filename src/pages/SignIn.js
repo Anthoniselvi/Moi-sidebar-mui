@@ -40,7 +40,7 @@ export default function SignIn() {
 
   const [dataIsCorrect, setDataIsCorrect] = useState(false);
   const [searchParam] = useSearchParams();
-  const id = searchParam.get("id");
+  const profileId = searchParam.get("profile");
 
   const handleChange = (event) => {
     setSigninData({
@@ -58,16 +58,16 @@ export default function SignIn() {
     try {
       await googleSignIn();
       axios
-        .post("http://localhost:2023/profile", {
-          id: user.uid,
+        .post("http://localhost:2010/profile", {
+          profileId: user.uid,
           name: user.displayName,
           email: user.email,
         })
         .then((response) => {
           console.log(response);
           console.log(response.data);
-          console.log(response.data.id);
-          navigate(`/eventslist?id=${id}`);
+          console.log(response.data.profileId);
+          navigate(`/eventslist?profile=${response.user.uid}`);
         });
 
       // signInWithPopup(auth, provider).then((data) => {
@@ -87,7 +87,7 @@ export default function SignIn() {
     signInWithEmailAndPassword(auth, signinData.email, signinData.password)
       .then(async (res) => {
         console.log(res);
-        navigate(`/eventslist?id=${res.user.uid}`);
+        navigate(`/eventslist?profile=${res.user.uid}`);
         // navigate(`/chart?id=${res.user.uid}`);
       })
       .catch((err) => {

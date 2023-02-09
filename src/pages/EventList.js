@@ -62,9 +62,10 @@ export default function EventList(props) {
   const [selectedEvent, setSelectedEvent] = useState("");
   const [show, setShow] = useState(false);
   const [searchParam] = useSearchParams();
-  const profileId = searchParam.get("id");
+  const profileId = searchParam.get("profile");
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+  console.log("eventslist-recd-profileId : " + profileId);
 
   const handleClose = () => {
     setAnchorEl(null);
@@ -93,29 +94,30 @@ export default function EventList(props) {
 
   const navigateToAddNewEvent = (e) => {
     e.stopPropagation();
-    navigate(`/event/new?id=${profileId}`);
+    console.log("eventslist-navigate-profileId : " + profileId);
+    navigate(`/event/new?profile=${profileId}`);
   };
 
-  const navigateToAddNewEntry = (e, eventId) => {
-    e.stopPropagation();
-    navigate(`/entry/new?id=${profileId}&event=${eventId}`);
-  };
-  const navigateToEntryList = (id) => {
-    navigate(`/entryList?event=${id}`);
+  // const navigateToAddNewEntry = (e, eventId) => {
+  //   e.stopPropagation();
+  //   navigate(`/entry/new?id=${profileId}&event=${eventId}`);
+  // };
+  const navigateToEntryList = (eventId) => {
+    navigate(`/entryList?event=${eventId}`);
   };
 
   // const handleClick = () => {
   //   return <MenuList />;
   // };
   const moveToFrontPage = () => {
-    navigate("/frontpage");
+    navigate("/dashboard");
   };
   const openMenu = () => {
     <MenuList />;
   };
   const fetchAllEvents = () => {
     axios
-      .get(`http://localhost:2023/events/all/${profileId}`)
+      .get(`http://localhost:2010/events/all/${profileId}`)
       .then((response) => {
         // console.log(response);
         console.log(response.data);
@@ -124,7 +126,7 @@ export default function EventList(props) {
   };
 
   const fetchAllEntries = () => {
-    axios.get("http://localhost:2023/entries").then((response) => {
+    axios.get("http://localhost:2010/entries").then((response) => {
       // console.log(response);
       console.log(response.data);
       setEntries(response.data);
@@ -135,9 +137,9 @@ export default function EventList(props) {
     fetchAllEntries();
   }, []);
 
-  const editEvent = (e, id) => {
+  const editEvent = (e, eventId) => {
     e.stopPropagation();
-    navigate(`/event?event=${id}`);
+    navigate(`/editevent?event=${eventId}`);
   };
 
   const deleteEvent = (e, eventId) => {
@@ -146,45 +148,47 @@ export default function EventList(props) {
     console.log(eventId);
 
     axios
-      .delete(`http://localhost:2023/entries/all/${eventId}`)
+      .delete(`http://localhost:2010/entries/all/${eventId}`)
       .then((response) => {
-        console.log(response);
+        console.log("deleted entries list :" + JSON.stringify(response));
         // fetchAllEvents();
         // navigate("/eventslist");
       });
-    axios.delete(`http://localhost:2023/events/${eventId}`).then((response) => {
-      console.log(response);
+    axios.delete(`http://localhost:2010/events/${eventId}`).then((response) => {
+      console.log("deleted event : " + JSON.stringify(response));
       fetchAllEvents();
-      navigate("/eventslist");
+      navigate(`/eventslist?profile=${profileId}`);
     });
   };
   useEffect(() => {
-    axios.get("http://localhost:2023/profile").then((response) => {
+    axios.get("http://localhost:2010/profile").then((response) => {
       // console.log(response);
-      console.log(response.data);
+      console.log("get profile : " + JSON.stringify(response.data));
       setProfile(response.data);
     });
   }, []);
   return (
-    <div className="eventlist-container">
-      <Header />
+    <div className="container">
+      <Header name={props.name} />
       <div className="eventlist-body">
-        <div className="eventlist-head">
-          {profile.map((singleProfile) => (
+        {/* <div className="eventlist-head"> */}
+        {/* {profile.map((singleProfile) => (
             <>
-              {singleProfile.id === profileId && (
+              {singleProfile.profileId === profileId && (
                 <h2 className="welcome-name">
+                  {console.log("Profile Name :" + singleProfile.name)}
                   Welcome {singleProfile.name} !{" "}
                 </h2>
               )}
             </>
-          ))}
-        </div>
-        <h1 className="entry-title">Total Events List</h1>
+          ))} */}
+        {/* <h2 className="eventlist-heading">Welcome {props.name} !</h2> */}
+        {/* </div> */}
+        {/* <h1 className="entry-title">Total Events List</h1> */}
         <div className="eventlist-content">
           {eventsList.length > 0 && (
             <>
-              {eventsList.map((singleEvent, id) => (
+              {eventsList.map((singleEvent, eventId) => (
                 <div
                   className="card-container"
                   // onClick={(e) => {
@@ -207,7 +211,7 @@ export default function EventList(props) {
                         onClick={(e) => {
                           e.stopPropagation();
                           console.log("Navigating to entry list");
-                          navigateToEntryList(singleEvent.id);
+                          navigateToEntryList(singleEvent.eventId);
                         }}
                         avatar={
                           <Avatar
@@ -216,7 +220,7 @@ export default function EventList(props) {
                             onClick={(e) => {
                               e.stopPropagation();
                               console.log("Navigating to entry list");
-                              navigateToEntryList(singleEvent.id);
+                              navigateToEntryList(singleEvent.eventId);
                             }}
                           ></Avatar>
                         }
@@ -230,7 +234,7 @@ export default function EventList(props) {
                         onClick={(e) => {
                           e.stopPropagation();
                           console.log("set show clicked..");
-                          setSelectedEvent(singleEvent.id);
+                          setSelectedEvent(singleEvent.eventId);
                           setShow((show) => !show);
                         }}
                       >
@@ -238,19 +242,21 @@ export default function EventList(props) {
                         <MoreVertIcon />
                       </IconButton>
 
-                      {singleEvent.id === selectedEvent && show ? (
+                      {singleEvent.eventId === selectedEvent && show ? (
                         <div className="event_dropdown">
-                          <p
+                          {/* <p
                             onClick={(e) =>
                               navigateToAddNewEntry(e, singleEvent.id)
                             }
                           >
                             Add Entry
-                          </p>
-                          <p onClick={(e) => editEvent(e, singleEvent.id)}>
+                          </p> */}
+                          <p onClick={(e) => editEvent(e, singleEvent.eventId)}>
                             Edit Event
                           </p>
-                          <p onClick={(e) => deleteEvent(e, singleEvent.id)}>
+                          <p
+                            onClick={(e) => deleteEvent(e, singleEvent.eventId)}
+                          >
                             Delete Event
                           </p>
                         </div>
@@ -320,7 +326,7 @@ export default function EventList(props) {
                         height="194"
                         onClick={(e) => {
                           e.stopPropagation();
-                          navigateToEntryList(singleEvent.id);
+                          navigateToEntryList(singleEvent.eventId);
                         }}
                       />
                     ) : null}
@@ -330,7 +336,7 @@ export default function EventList(props) {
                         height="194"
                         onClick={(e) => {
                           e.stopPropagation();
-                          navigateToEntryList(singleEvent.id);
+                          navigateToEntryList(singleEvent.eventId);
                         }}
                       />
                     ) : null}
@@ -340,7 +346,7 @@ export default function EventList(props) {
                         height="194"
                         onClick={(e) => {
                           e.stopPropagation();
-                          navigateToEntryList(singleEvent.id);
+                          navigateToEntryList(singleEvent.eventId);
                         }}
                       />
                     ) : null}
@@ -350,7 +356,7 @@ export default function EventList(props) {
                         height="194"
                         onClick={(e) => {
                           e.stopPropagation();
-                          navigateToEntryList(singleEvent.id);
+                          navigateToEntryList(singleEvent.eventId);
                         }}
                       />
                     ) : null}
@@ -360,17 +366,19 @@ export default function EventList(props) {
                         color="text.secondary"
                         onClick={(e) => {
                           e.stopPropagation();
-                          navigateToEntryList(singleEvent.id);
+                          navigateToEntryList(singleEvent.eventId);
                         }}
                       >
                         <ul className="event-list">
                           <li>
                             <p>Total Amount - Rs.</p>
-                            <span>{getTotalAmount(singleEvent.id)}</span>
+                            <span>{getTotalAmount(singleEvent.eventId)}</span>
                           </li>
                           <li>
                             <p>Total No.of Gifts - </p>
-                            <span>{gettotalGiftforEvent(singleEvent.id)}</span>
+                            <span>
+                              {gettotalGiftforEvent(singleEvent.eventId)}
+                            </span>
                           </li>
                         </ul>
                       </Typography>

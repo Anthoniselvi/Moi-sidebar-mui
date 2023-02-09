@@ -55,7 +55,7 @@ export default function NewSignUp() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [searchParam] = useSearchParams();
-  const id = searchParam.get("id");
+  const profileId = searchParam.get("profile");
   const { signUp, user } = useUserAuth();
 
   const navigateToSignIn = () => {
@@ -93,8 +93,8 @@ export default function NewSignUp() {
         });
         console.log("firebase signup created");
         axios
-          .post("http://localhost:2023/profile", {
-            id: user.uid,
+          .post("http://localhost:2010/profile", {
+            profileId: user.uid,
             // id: id,
             name: signupData.name,
             email: signupData.email,
@@ -102,9 +102,9 @@ export default function NewSignUp() {
           .then((response) => {
             console.log(response);
             console.log(response.data);
-            console.log("axios id:" + response.data.id);
+            console.log("axios id:" + response.data.profileId);
             // navigate(`/eventslist?id=${id}`);
-            navigate(`/eventslist?id=${user.uid}`);
+            navigate(`/eventslist?profile=${user.uid}`);
           });
 
         // navigate("/signin");

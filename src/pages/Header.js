@@ -9,17 +9,17 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import "./Home.css";
 import { useUserAuth } from "../Context/UserAuthContext";
-
+import AccountCircle from "@mui/icons-material/AccountCircle";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 
-export default function Header() {
+export default function Header(props) {
   const navigate = useNavigate();
   const { logOut, user } = useUserAuth();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const [searchParam] = useSearchParams();
-  const profileId = searchParam.get("id");
+  const profileId = searchParam.get("profile");
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -33,11 +33,11 @@ export default function Header() {
 
   const navigateToProfile = () => {
     // navigate("/profile");
-    navigate(`/profile?id=${profileId}`);
+    navigate(`/profile?profile=${profileId}`);
   };
 
   const navigateToNewEvent = () => {
-    navigate("/event/new");
+    navigate(`/event/new?profile=${profileId}`);
   };
   const handleLogout = async () => {
     try {
@@ -49,11 +49,11 @@ export default function Header() {
   };
 
   return (
-    <div className="header-container">
-      <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static" sx={{ backgroundColor: "#ffbe0b" }}>
-          <Toolbar>
-            {/* <IconButton
+    // <div >
+    <Box sx={{ flexGrow: 1 }} className="header-container">
+      <AppBar position="static" sx={{ backgroundColor: "#ffbe0b" }}>
+        <Toolbar className="header-tool">
+          {/* <IconButton
               size="large"
               edge="start"
               color="inherit"
@@ -62,6 +62,16 @@ export default function Header() {
             >
               <MenuIcon />
             </IconButton> */}
+
+          <Typography
+            variant="h6"
+            component="div"
+            sx={{ flexGrow: 1 }}
+            className="head-line"
+          >
+            Moi App
+          </Typography>
+          <div className="head-body">
             <Button
               id="demo-positioned-button"
               aria-controls={open ? "demo-positioned-menu" : undefined}
@@ -69,8 +79,11 @@ export default function Header() {
               aria-expanded={open ? "true" : undefined}
               onClick={handleClick}
             >
-              <MenuIcon />
+              <AccountCircle style={{ fontSize: "30px" }} />
             </Button>
+            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+              {props.name}
+            </Typography>
             <Menu
               id="demo-positioned-menu"
               aria-labelledby="demo-positioned-button"
@@ -87,28 +100,18 @@ export default function Header() {
               }}
             >
               <MenuItem onClick={navigateToProfile}>Profile</MenuItem>
-              <MenuItem onClick={navigateToNewEvent}>My account</MenuItem>
-              <MenuItem onClick={handleLogout}>Logout</MenuItem>
-            </Menu>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              Moi App
-            </Typography>
+              {/* <MenuItem onClick={navigateToNewEvent}>My account</MenuItem> */}
 
-            {/* <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              {user.name}
-            </Typography> */}
-            {!user ? (
-              <Button color="inherit" onClick={navigateToSignIn}>
-                Login
-              </Button>
-            ) : (
-              <Button color="inherit" onClick={handleLogout}>
-                Logout
-              </Button>
-            )}
-          </Toolbar>
-        </AppBar>
-      </Box>
-    </div>
+              {!user ? (
+                <MenuItem onClick={navigateToSignIn}>LogIn</MenuItem>
+              ) : (
+                <MenuItem onClick={handleLogout}>Logout</MenuItem>
+              )}
+            </Menu>
+          </div>
+        </Toolbar>
+      </AppBar>
+    </Box>
+    // </div>
   );
 }
