@@ -25,7 +25,7 @@ function Chart(props) {
   const [entries, setEntries] = useState();
   const [eventsList, setEventsList] = useState([]);
   const [searchParam] = useSearchParams();
-  const profileId = searchParam.get("id");
+  const profileId = searchParam.get("profile");
   const options = {
     responsive: true,
     plugins: {
@@ -68,7 +68,7 @@ function Chart(props) {
 
   const fetchAllEvents = () => {
     axios
-      .get(`http://localhost:2023/events/all/${profileId}`)
+      .get(`http://localhost:2010/events/all/${profileId}`)
       .then((response) => {
         // console.log(response);
         console.log(response.data);
@@ -77,7 +77,7 @@ function Chart(props) {
   };
 
   const fetchAllEntries = () => {
-    axios.get("http://localhost:2023/entries").then((response) => {
+    axios.get("http://localhost:2010/entries").then((response) => {
       // console.log(response);
       console.log(response.data);
       setEntries(response.data);

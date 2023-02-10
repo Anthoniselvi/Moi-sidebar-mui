@@ -7,7 +7,7 @@
      
 }
 .header_container{
-    width: 100%;
+    width: 100vw;
     height: 10%;
     background-color: #9C27B0;
 }
@@ -60,40 +60,108 @@
 }
 
 .eventslist_container{
-    width: 100%;
+    width: 100vw;
     height: 100%;
- 
+ margin: 0;
+ padding: 0;
     /* overflow-y:hidden; */
 }
 
 .eventlist_body{
-    /* height:90%; */
-    width: 100%;
-    padding: 10px;
-   display: grid;
-   grid-template-columns: 1fr 1fr;
-   /* grid-template-rows: 1fr 1fr 1fr; */
-   /* gap: 10px; */
+  border: 1px solid red;
+   /* width: fit-content; */
+   padding: 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px;
+  align-items: center;
+ 
 }
-.plus-icon1{
-
- position: fixed;
- top: 90%;
- left:90%;
- z-index: 3000;
-
+.card-image-birthday{
+  background-image: url("../images/family3.jpg");
+  background-size: contain;
+  border: none;
+  outline: none;
+  height: 200px;
+}
+.card-image-wedding{
+  background-image: url("../images/family.jpg");
+  background-size: contain;
+  border: none;
+  outline: none;
+  height: 200px;
+}
+.card-image-baby{
+  background-image: url("../images/baby.jpg");
+  background-size: contain;
+  border: none;
+  outline: none;
+  height: 200px;
+}
+.card-image-other{
+  background-image: url("../images/other.jpg");
+  background-size: contain;
+  border: none;
+  background-position: center;
+  outline: none;
+  height: 200px;
+}
+.add-btn{
+  left: 100%;
+  top: 80%;
+    position: fixed;
+  
   }
-  /* @media (max-width: 945px) {
-    .plus-icon1{
-        left:80%;
-        top: 95%;
+  .entry_body{
+    padding: 20px;
+  }
+@media (max-width: 600px) {
+  .eventlist_body{
+    border: 1px solid red;
+     /* width: fit-content; */
+     padding: 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    align-items: center;
+   
+ }
+ .plus-icon1{
+ 
+  position: fixed;
+  top: 90%;
+  left:90%;
+  z-index: 3000;
+ 
+   }
+   .add-btn{
+    left: 75%;
+    top: 90%;
+      position: fixed;
+    
     }
+   .card-image-birthday{
+   background-size: cover;
+    height: 100px;
   }
-  @media (max-width: 750px) {
-    .plus-icon1{
-        left:60%;
-        }
-  } */
+  .card-image-wedding{
+    
+    height: 100px;
+  }
+  .card-image-baby{
+  
+    height: 100px;
+  }
+  .card-image-other{
+    
+    height: 100px;
+  }
+  .event-name{
+    font-size: 10px;
+  }
+}
+
+
   .addevent_container{
     width: 100%;
     height: 100vh;
@@ -107,7 +175,19 @@ width: 100%;
 display: flex;
 align-items: center;
 gap: 20px;
-background-color: #ffbe0b;
+background-color: #9C27B0;
+color: #FFFFFF;
+  }
+  .entrylist_header{
+    
+    height: 40vh;
+    width: 100%;
+    background-color: #9C27B0;
+color: #FFFFFF;
+    /* background-size: cover;
+    background-image: url("../images/family1.jpg");
+    background-repeat: no-repeat;
+    background-position: center; */
   }
   .addevent_form{
     /* padding: 20px; */
@@ -119,30 +199,21 @@ background-color: #ffbe0b;
     justify-content: center;
     gap: 20px;
   }
-  .plus-icon{
-    /* position: fixed;
-    display: flex;
-    justify-content: space-between;
-    top: 80vh;
-    width: 90%; */
-  }
+ 
 
   .card_content{
     padding: 0;
-    line-height: 2px;
-height: 60px;
-    /* display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-columns: 1fr;
-    gap: 10px; */
+    /* line-height: 2px; */
+/* height: 80px; */
+ 
   } 
   .card_name{
     padding-left: 0;
     margin-top: 0;
   }
 .card_container{
-  width: 160px;
-  height: 160px;
+  /* width: fit-content; */
+ 
 }
   .card_header{
     display: flex;
@@ -160,8 +231,8 @@ height: 60px;
 
   }
   .card_bottom{
-    padding: 0 20px;
-    padding-top: 10px;
+    padding: 0 10px;
+    /* padding-top: 10px; */
     margin: 0;
     background-color: #ffff3f;
   }
@@ -171,44 +242,16 @@ height: 60px;
     outline: none;
     /* height: 100px; */
   }
-  .card-image-birthday{
-    background-image: url("../images/family3.jpg");
-    background-size: contain;
-    border: none;
-    outline: none;
-    height: 100px;
-  }
-  .card-image-wedding{
-    background-image: url("../images/family.jpg");
-    background-size: contain;
-    border: none;
-    outline: none;
-    height: 100px;
-  }
-  .card-image-baby{
-    background-image: url("../images/baby.jpg");
-    background-size: contain;
-    border: none;
-    outline: none;
-    height: 100px;
-  }
-  .card-image-other{
-    background-image: url("../images/other.jpg");
-    background-size: contain;
-    border: none;
-    background-position: center;
-    outline: none;
-    height: 100px;
-  }
+  
   .amount-row, .gift-row{
-    padding: 10px 20px;
-    padding-left: 0;
-   
-    padding-top: 5px;
-    padding-bottom: 0;
+   padding: 0;
+   margin: 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    justify-content: left;
+  column-gap: 10px;
+height: auto;
   }
   .inner-box{
     display: flex;
@@ -219,39 +262,17 @@ height: 60px;
     border: 1px solid red; */
   }
   
-  @media (max-width:860px){
-    /* .eventlist_content{
-        grid-template-columns: 1fr 1fr;
-    } */
-  }
-  @media (max-width:600px){
-    /* .eventlist_content{
-        grid-template-columns: 1fr 1fr;
-    } */
-    /* .card_container{
-      height: 100px;
-    }
-    
-    .card_header{
-      height:50px;
- 
-    }
-    .card_heading{
-      padding: 0;
-      display: flex;
-      justify-content: space-between;
-    }
-    .card-image-birthday{
-      height: 50px;
-    } */
-  }
   .head-body{
      align-items: center;
     display: flex;
   }
   .add-btn{
-  
+  left: 75%;
+  top: 80%;
     position: fixed;
-    left: 57%;
-    top: 85%;
+  
+  }
+  .event-row{
+    padding: 0;
+    margin: 0;
   }

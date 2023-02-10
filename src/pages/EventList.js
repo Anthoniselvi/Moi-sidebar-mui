@@ -451,29 +451,59 @@ export default function EventList(props) {
                           navigateToEntryList(singleEvent.eventId);
                         }}
                       >
-                        <ul>
+                        <ul className="event-row">
                           <li className="amount-row">
-                            <CurrencyRupeeIcon
-                              sx={{ fontSize: "14px", color: "black" }}
-                            />
-                            <p style={{ fontSize: "14px", color: "black" }}>
-                              Amount
-                            </p>
-                            <span style={{ fontSize: "14px", color: "black" }}>
+                            <>
+                              <CurrencyRupeeIcon
+                                sx={{ fontSize: "14px", color: "black" }}
+                              />
+                              <p
+                                style={{
+                                  fontSize: "14px",
+                                  color: "black",
+                                  margin: 2,
+                                }}
+                              >
+                                Amount
+                              </p>
+                            </>
+                            <p
+                              style={{
+                                fontSize: "14px",
+                                color: "#9C27B0",
+                                margin: 2,
+                                alignItems: "right",
+                              }}
+                            >
                               {getTotalAmount(singleEvent.eventId)}
-                            </span>
+                            </p>
                           </li>
                           <li className="amount-row">
-                            <CardGiftcardIcon
-                              sx={{ fontSize: "14px", color: "black" }}
-                            />
-                            <p style={{ fontSize: "14px", color: "black" }}>
-                              {" "}
-                              No.of Gifts{" "}
-                            </p>
-                            <span style={{ fontSize: "14px", color: "black" }}>
+                            <>
+                              <CardGiftcardIcon
+                                sx={{ fontSize: "14px", color: "black" }}
+                              />
+                              <p
+                                style={{
+                                  fontSize: "14px",
+                                  color: "black",
+                                  margin: 2,
+                                }}
+                              >
+                                {" "}
+                                No.of Gifts{" "}
+                              </p>
+                            </>
+                            <p
+                              style={{
+                                fontSize: "14px",
+                                color: "black",
+                                margin: 2,
+                                alignItems: "right",
+                              }}
+                            >
                               {gettotalGiftforEvent(singleEvent.eventId)}
-                            </span>
+                            </p>
                           </li>
                         </ul>
                       </Typography>

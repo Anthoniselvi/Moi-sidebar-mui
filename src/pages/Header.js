@@ -54,7 +54,7 @@ export default function Header(props) {
     <Box
       sx={{
         flexGrow: 1,
-        width: "100%",
+        width: "100vw",
         height: "10%",
         backgroundColor: "#9C27B0",
       }}
@@ -84,17 +84,17 @@ export default function Header(props) {
             Moi App
           </Typography>
           <div className="head-body">
-            <Button
-              id="demo-positioned-button"
-              aria-controls={open ? "demo-positioned-menu" : undefined}
-              aria-haspopup="true"
-              aria-expanded={open ? "true" : undefined}
-              onClick={handleClick}
-            >
-              <AccountCircle style={{ fontSize: "30px" }} />
-            </Button>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               {props.name}
+              <Button
+                id="demo-positioned-button"
+                aria-controls={open ? "demo-positioned-menu" : undefined}
+                aria-haspopup="true"
+                aria-expanded={open ? "true" : undefined}
+                onClick={handleClick}
+              >
+                <AccountCircle style={{ fontSize: "30px", color: "#FFFFFF" }} />
+              </Button>
             </Typography>
             <Menu
               id="demo-positioned-menu"

@@ -10,18 +10,37 @@ function ChartOutput() {
   const [total, setTotal] = useState([]);
   const [searchParam] = useSearchParams();
   const profileId = searchParam.get("profile");
+
   const [data, setData] = useState([
     {
       //   labels: "Moi Amount",
       labels: eventsList.map((singleEvent) => singleEvent.name),
       // Event Map
-      //   data: [{ values: [13, 14, 15] }, { values: [5, 10, 20] }],
+      // data: [{ values: [1500, 10000, 7000, 1000] }, { values: [1, 1, 1, 1] }],
       data: [
         { values: total.map((singleTotal) => singleTotal.totalAmount) },
         { values: total.map((singleTotal) => singleTotal.totalGift) },
       ],
     },
   ]);
+  console.log("data : " + JSON.stringify(data));
+  console.log(
+    "event Name in data values : " +
+      eventsList.map((singleEvent) => singleEvent.name)
+  );
+
+  const TotalMapArray = total.map((singleTotal) => singleTotal.totalAmount);
+  console.log("TotalMapArray : " + JSON.stringify(TotalMapArray));
+  console.log("Type of Array : " + typeof TotalMapArray);
+  //  console.log(
+  //     "totalAmount in data values : " +
+  //       total.map((singleTotal) => singleTotal.totalAmount)
+  //   )
+
+  console.log(
+    "totalGift in data values : " +
+      total.map((singleTotal) => singleTotal.totalGift)
+  );
 
   const fetchAllEvents = () => {
     axios
@@ -35,13 +54,13 @@ function ChartOutput() {
       });
   };
 
-  const fetchAllEntries = () => {
-    axios.get("http://localhost:2010/entries").then((response) => {
-      // console.log(response);
-      console.log(response.data);
-      setEntries(response.data);
-    });
-  };
+  // const fetchAllEntries = () => {
+  //   axios.get("http://localhost:2010/entries").then((response) => {
+  //     // console.log(response);
+  //     console.log(response.data);
+  //     setEntries(response.data);
+  //   });
+  // };
 
   const fetchTotal = () => {
     axios
