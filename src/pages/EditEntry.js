@@ -74,7 +74,11 @@ export default function EditEntry() {
 
   return (
     <div className="editentry_container">
-      <h1>Edit Entry</h1>
+      <div className="editentry_header">
+        <ArrowBackIcon onClick={navigateToEntryList} />
+
+        <h2>Update Entry</h2>
+      </div>
 
       <Box
         onSubmit={handleSubmitEditEntry}
@@ -91,14 +95,14 @@ export default function EditEntry() {
           // label="Person Name"
           onChange={(e) => setPersonName(e.target.value)}
           value={personName}
-          sx={{ width: "300px" }}
+          sx={{ width: "300px", marginBottom: "5%" }}
         />
         <TextField
           id="outlined-place"
           // label="City"
           onChange={(e) => setCity(e.target.value)}
           value={city}
-          sx={{ width: "300px" }}
+          sx={{ width: "300px", marginBottom: "5%" }}
         />
 
         <div className="radio-box">
@@ -133,7 +137,7 @@ export default function EditEntry() {
                     label="Rs."
                     onChange={(e) => setAmount(e.target.value)}
                     value={amount}
-                    sx={{ width: "300px" }}
+                    sx={{ width: "300px", marginBottom: "5%" }}
                   />
                 </div>
               ) : (
@@ -144,7 +148,7 @@ export default function EditEntry() {
                     label="about gift"
                     multiline
                     rows={4}
-                    sx={{ width: "300px" }}
+                    sx={{ width: "300px", marginBottom: "5%" }}
                     onChange={(e) => setGift(e.target.value)}
                     value={gift}
                   />
@@ -153,15 +157,19 @@ export default function EditEntry() {
             </RadioGroup>
           </FormControl>
         </div>
-        <Button variant="contained" type="submit">
+        <Button
+          variant="contained"
+          type="submit"
+          sx={{ backgroundColor: "#9C27B0" }}
+        >
           Update
         </Button>
       </Box>
-      <Box sx={{ "& > :not(style)": { m: 1 } }} className="plus-icon">
+      {/* <Box sx={{ "& > :not(style)": { m: 1 } }} className="plus-icon">
         <Fab color="primary" aria-label="add">
           <ArrowBackIcon onClick={navigateToEntryList} />
         </Fab>
-      </Box>
+      </Box> */}
     </div>
   );
 }

@@ -97,6 +97,7 @@ export default function EditEvent() {
           <InputLabel id="demo-simple-select-label">Event Type</InputLabel>
           {/* {console.log("eventType inside return :" + eventType)} */}
           <Select
+            sx={{ width: "300px", marginBottom: "5%" }}
             labelId="demo-simple-select-label"
             id="demo-simple-select"
             value={eventType}
@@ -120,7 +121,7 @@ export default function EditEvent() {
           label="Event Name"
           onChange={(e) => setName(e.target.value)}
           value={name}
-          sx={{ width: "300px" }}
+          sx={{ width: "300px", marginBottom: "5%" }}
           // className={classes.textField}
         />
         <TextField
@@ -128,7 +129,7 @@ export default function EditEvent() {
           label="Event Place"
           value={place}
           onChange={(e) => setPlace(e.target.value)}
-          sx={{ width: "300px" }}
+          sx={{ width: "300px", marginBottom: "5%" }}
         />
         <TextField
           id="outlined-date"
@@ -136,10 +137,14 @@ export default function EditEvent() {
           type="date"
           value={date}
           onChange={(e) => setDate(e.target.value)}
-          sx={{ width: "300px" }}
+          sx={{ width: "300px", marginBottom: "5%" }}
         />
 
-        <Button variant="contained" type="submit">
+        <Button
+          variant="contained"
+          sx={{ backgroundColor: "#9C27B0" }}
+          type="submit"
+        >
           Update
         </Button>
       </Box>

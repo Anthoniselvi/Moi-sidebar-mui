@@ -18,6 +18,10 @@ const [profileId, setProfileId] = useState()
   // const profileId = searchParam.get("profile");
   const { logOut, user } = useUserAuth();
 
+  const navigateToSignIn = () => {
+    navigate("/signin");
+  };
+  
   const navigateToEventsList = () => {
     if(user) {
        navigate(`/eventslist?profile=${profileId}`)
@@ -55,7 +59,7 @@ const [profileId, setProfileId] = useState()
         {/* <button className="home-button" onClick={navigateToSignUp}>Start</button> */}
         <Box sx={{ '& button': { m: 1 } }} >
         
-              <Button variant="contained" onClick={navigateToEventsList} size="large" style={{ backgroundColor: "#03045e", color: "skyblue", fontWeight: "600"}}>
+              <Button variant="contained" onClick={navigateToSignIn} size="large" style={{ backgroundColor: "#03045e", color: "skyblue", fontWeight: "600"}}>
                 Start
               </Button>
    

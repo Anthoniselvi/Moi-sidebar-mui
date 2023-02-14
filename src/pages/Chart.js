@@ -26,6 +26,7 @@ function Chart(props) {
   const [eventsList, setEventsList] = useState([]);
   const [searchParam] = useSearchParams();
   const profileId = searchParam.get("profile");
+
   const options = {
     responsive: true,
     plugins: {

@@ -514,7 +514,9 @@ export default function EventList(props) {
             ))}
           </>
         )}
-        <Box className="add-btn" sx={{ "& > :not(style)": { m: 1 } }}>
+      </div>
+      <div className="add-btn">
+        <Box sx={{ "& > :not(style)": { m: 1 } }}>
           <Fab color="secondary" aria-label="add">
             <AddIcon onClick={navigateToAddNewEvent} />
           </Fab>

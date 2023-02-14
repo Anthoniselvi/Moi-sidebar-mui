@@ -36,23 +36,7 @@ import MoreIcon from "@mui/icons-material/MoreVert";
 import InputBase from "@mui/material/InputBase";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
-import Entries from "./Entries";
-import {
-  FacebookShareButton,
-  WhatsappShareButton,
-  WhatsappIcon,
-  FacebookIcon,
-} from "react-share";
 
-const StyledToolbar = styled(Toolbar)(({ theme }) => ({
-  alignItems: "flex-start",
-  paddingTop: theme.spacing(1),
-  paddingBottom: theme.spacing(2),
-  // Override media queries injected by theme.mixins.toolbar
-  "@media all": {
-    minHeight: 128,
-  },
-}));
 const StyledPaper = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
   ...theme.typography.body2,
@@ -103,7 +87,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export default function EntriesList(props) {
+export default function Entries() {
   const navigate = useNavigate();
   const [searchParam] = useSearchParams();
   const eventId = searchParam.get("event");
@@ -232,154 +216,103 @@ export default function EntriesList(props) {
   }, []);
 
   return (
-    <div className="entrylist_container">
-      <div className="entries_header">
-        <ArrowBackIcon onClick={navigateToEventslist} />
-        <h2 className="entrylist-head">{eventslist.name}</h2>
-        <ShareIcon style={{ color: "#FFFFFF" }} />
-        <div className="head-body">
-          <Button
-            id="demo-positioned-button"
-            aria-controls={open ? "demo-positioned-menu" : undefined}
-            aria-haspopup="true"
-            aria-expanded={open ? "true" : undefined}
-            // onClick={handleClick}
-            onClick={(e) => {
-              e.stopPropagation();
-              console.log("set show clicked..");
-              setSelectedEvent(eventslist.eventId);
-              // setShow((show) => !show);
-              setAnchorEl(e.currentTarget);
-            }}
-          >
-            <MoreVertIcon style={{ color: "#FFFFFF" }} />
-          </Button>
-          {eventslist.eventId === selectedEvent && anchorEl ? (
-            <Menu
-              id="demo-positioned-menu"
-              aria-labelledby="demo-positioned-button"
-              anchorEl={anchorEl}
-              open={open}
-              onClose={handleClose}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "left",
-              }}
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "left",
-              }}
+    <div>
+      <Search>
+        <SearchIconWrapper onChange={onChangeHandle}>
+          <SearchIcon />
+        </SearchIconWrapper>
+        <StyledInputBase
+          sx={{
+            border: "1px solid #9C27B0",
+            alignItems: "right",
+            width: "100%",
+          }}
+          onChange={onChangeHandle}
+          placeholder="Search…"
+          inputProps={{ "aria-label": "search" }}
+        />
+      </Search>
+      {entries.length > 0 && (
+        <>
+          {entries.map((entry) => (
+            <Box
+              sx={{ flexGrow: 1, overflow: "hidden", px: 1 }}
+              key={entry.entryId}
             >
-              <MenuItem onClick={(e) => editEvent(e, eventslist.eventId)}>
-                Update
-              </MenuItem>
-
-              <MenuItem onClick={(e) => deleteEvent(e, eventslist.eventId)}>
-                Delete
-              </MenuItem>
-            </Menu>
-          ) : null}
-        </div>
-      </div>
-      {/* <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static">
-          <StyledToolbar
-            sx={{ backgroundColor: "#9C27B0" }}
-            // className="entrylist_header"
-          >
-            <IconButton
-              size="large"
-              edge="start"
-              color="inherit"
-              aria-label="open drawer"
-              sx={{ mr: 2 }}
-            >
-              <ArrowBackIcon onClick={navigateToEventslist} />
-            </IconButton>
-
-            <Typography
-              className="event-name"
-              variant="h5"
-              noWrap
-              component="div"
-              sx={{ flexGrow: 1, fontSize: 16, alignSelf: "center" }}
-            >
-              {eventslist.name}
-            </Typography> */}
-
-      {/* <IconButton size="large" aria-label="search" color="inherit">
-              <SearchIcon />
-            </IconButton> */}
-      {/* <Search>
-              <SearchIconWrapper>
-                <SearchIcon />
-              </SearchIconWrapper>
-              <StyledInputBase
-                placeholder="Search…"
-                inputProps={{ "aria-label": "search" }}
-              />
-            </Search> */}
-      {/* <IconButton aria-label="share">
-              <ShareIcon style={{ color: "#FFFFFF" }} />
-            </IconButton> */}
-
-      {/* <div className="head-body">
-              <Button
-                id="demo-positioned-button"
-                aria-controls={open ? "demo-positioned-menu" : undefined}
-                aria-haspopup="true"
-                aria-expanded={open ? "true" : undefined}
-                // onClick={handleClick}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  console.log("set show clicked..");
-                  setSelectedEvent(eventslist.eventId);
-                  // setShow((show) => !show);
-                  setAnchorEl(e.currentTarget);
+              <StyledPaper
+                sx={{
+                  my: 1,
+                  mx: "auto",
+                  p: 1,
                 }}
               >
-                <MoreVertIcon style={{ color: "#FFFFFF" }} />
-              </Button>
-              {eventslist.eventId === selectedEvent && anchorEl ? (
-                <Menu
-                  id="demo-positioned-menu"
-                  aria-labelledby="demo-positioned-button"
-                  anchorEl={anchorEl}
-                  open={open}
-                  onClose={handleClose}
-                  anchorOrigin={{
-                    vertical: "top",
-                    horizontal: "left",
-                  }}
-                  transformOrigin={{
-                    vertical: "top",
-                    horizontal: "left",
-                  }}
-                >
-                  <MenuItem onClick={(e) => editEvent(e, eventslist.eventId)}>
-                    Update
-                  </MenuItem>
-
-                  <MenuItem onClick={(e) => deleteEvent(e, eventslist.eventId)}>
-                    Delete
-                  </MenuItem>
-                </Menu>
-              ) : null}
-            </div> */}
-      {/* </StyledToolbar>
-        </AppBar>
-      </Box> */}
-      <div className="entry_body">
-        <Entries />
-
-        <div className="add-btn">
-          <Box sx={{ "& > :not(style)": { m: 1 } }}>
-            <Fab color="secondary" aria-label="add">
-              <AddIcon onClick={navigateToAddNewEntry} />
-            </Fab>
-          </Box>
-        </div>
-      </div>
+                <Grid container wrap="nowrap" spacing={4}>
+                  <Grid item xs alignSelf="center">
+                    <Avatar
+                      name={entry.personName}
+                      size="35"
+                      round={true}
+                      maxInitials="1"
+                    />
+                  </Grid>
+                  <Grid item xs alignSelf="center">
+                    <Typography>{entry.personName}</Typography>
+                  </Grid>
+                  <Grid item xs alignSelf="center">
+                    {entry.presentType === "amount" ? (
+                      <Typography> {entry.amount}</Typography>
+                    ) : (
+                      <Typography> {entry.gift}</Typography>
+                    )}
+                  </Grid>
+                  <Grid item xs alignSelf="right">
+                    <IconButton
+                      aria-label="settings"
+                      className="more-icon"
+                      // className="event_icon_dropdown"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        console.log("set show clicked..");
+                        setSelectedEntry(entry.entryId);
+                        // setShow((show) => !show);
+                        setAnchorEl(e.currentTarget);
+                      }}
+                    >
+                      <MoreVertIcon />
+                    </IconButton>
+                    {entry.entryId === selectedEntry && anchorEl ? (
+                      <Menu
+                        className="entry_dropdown"
+                        id="demo-positioned-menu"
+                        aria-labelledby="demo-positioned-button"
+                        anchorEl={anchorEl}
+                        open={open}
+                        onClose={handleClose}
+                        anchorOrigin={{
+                          vertical: "top",
+                          horizontal: "left",
+                        }}
+                        transformOrigin={{
+                          vertical: "top",
+                          horizontal: "left",
+                        }}
+                      >
+                        <MenuItem onClick={() => editEntry(entry.entryId)}>
+                          Update
+                        </MenuItem>
+                        <MenuItem onClick={() => deleteEntry(entry.entryId)}>
+                          Delete
+                        </MenuItem>
+                      </Menu>
+                    ) : null}
+                  </Grid>
+                </Grid>
+              </StyledPaper>
+            </Box>
+          ))}
+        </>
+      )}
+      {entries.length < 1 && <p className="no-text">No Entries found</p>}
     </div>
   );
 }

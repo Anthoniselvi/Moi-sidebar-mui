@@ -88,6 +88,8 @@ export default function SignIn() {
       .then(async (res) => {
         console.log(res);
         navigate(`/eventslist?profile=${res.user.uid}`);
+        // navigate(`/demobar?profile=${res.user.uid}`);
+        // navigate(`/demopie?profile=${res.user.uid}`);
         // navigate(`/chart?id=${res.user.uid}`);
       })
       .catch((err) => {

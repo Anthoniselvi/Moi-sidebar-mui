@@ -84,42 +84,50 @@ export default function Header(props) {
             Moi App
           </Typography>
           <div className="head-body">
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              {props.name}
-              <Button
-                id="demo-positioned-button"
-                aria-controls={open ? "demo-positioned-menu" : undefined}
-                aria-haspopup="true"
-                aria-expanded={open ? "true" : undefined}
-                onClick={handleClick}
-              >
-                <AccountCircle style={{ fontSize: "30px", color: "#FFFFFF" }} />
-              </Button>
-            </Typography>
-            <Menu
-              id="demo-positioned-menu"
-              aria-labelledby="demo-positioned-button"
-              anchorEl={anchorEl}
-              open={open}
-              onClose={handleClose}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "left",
-              }}
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "left",
-              }}
-            >
-              <MenuItem onClick={navigateToProfile}>Profile</MenuItem>
-              {/* <MenuItem onClick={navigateToNewEvent}>My account</MenuItem> */}
+            {!user ? (
+              <MenuItem onClick={navigateToSignIn}>LogIn</MenuItem>
+            ) : (
+              <>
+                <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                  {props.name}
+                  <Button
+                    id="demo-positioned-button"
+                    aria-controls={open ? "demo-positioned-menu" : undefined}
+                    aria-haspopup="true"
+                    aria-expanded={open ? "true" : undefined}
+                    onClick={handleClick}
+                  >
+                    <AccountCircle
+                      style={{ fontSize: "30px", color: "#FFFFFF" }}
+                    />
+                  </Button>
+                </Typography>
+                <Menu
+                  id="demo-positioned-menu"
+                  aria-labelledby="demo-positioned-button"
+                  anchorEl={anchorEl}
+                  open={open}
+                  onClose={handleClose}
+                  anchorOrigin={{
+                    vertical: "top",
+                    horizontal: "left",
+                  }}
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "left",
+                  }}
+                >
+                  {/* <MenuItem onClick={navigateToNewEvent}>My account</MenuItem> */}
 
-              {!user ? (
+                  {/* {!user ? (
                 <MenuItem onClick={navigateToSignIn}>LogIn</MenuItem>
-              ) : (
-                <MenuItem onClick={handleLogout}>Logout</MenuItem>
-              )}
-            </Menu>
+              ) : ( */}
+
+                  <MenuItem onClick={navigateToProfile}>Profile</MenuItem>
+                  <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                </Menu>
+              </>
+            )}
           </div>
         </Toolbar>
       </AppBar>

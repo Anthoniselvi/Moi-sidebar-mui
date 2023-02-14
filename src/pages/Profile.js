@@ -15,6 +15,7 @@ import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 function Profile(props) {
   const navigate = useNavigate();
@@ -56,6 +57,9 @@ function Profile(props) {
       });
   };
 
+  const navigateToEventsList = () => {
+    navigate(`/eventslist?profile=${profileId}`);
+  };
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       console.log(user);
@@ -105,6 +109,7 @@ function Profile(props) {
 
   return (
     <div className="editprofile-container">
+      <ArrowBackIcon onClick={navigateToEventsList} />
       <h1>Profile</h1>
 
       <div className="editprofile-image">

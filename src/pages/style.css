@@ -68,7 +68,7 @@
 }
 
 .eventlist_body{
-  border: 1px solid red;
+  /* border: 1px solid red; */
    /* width: fit-content; */
    padding: 20px;
   display: grid;
@@ -117,7 +117,7 @@
   }
 @media (max-width: 600px) {
   .eventlist_body{
-    border: 1px solid red;
+    /* border: 1px solid red; */
      /* width: fit-content; */
      padding: 10px;
     display: grid;
@@ -130,13 +130,17 @@
  
   position: fixed;
   top: 90%;
-  left:90%;
+  left:80%;
   z-index: 3000;
  
    }
    .add-btn{
-    left: 75%;
-    top: 90%;
+    /* border: 2px solid red; */
+    /* margin-right: 20%; */
+    margin-left: -13%;
+    margin-top: 5%;
+    /* left: 0;
+    top: 80%; */
       position: fixed;
     
     }
@@ -158,6 +162,15 @@
   }
   .event-name{
     font-size: 10px;
+  }
+  .pie_container{
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+ 
+  }
+  .entry-grid{
+    align-items: center;
+    justify-content: center;
   }
 }
 
@@ -267,8 +280,8 @@ height: auto;
     display: flex;
   }
   .add-btn{
-  left: 75%;
-  top: 80%;
+  left: 90%;
+  top: 85%;
     position: fixed;
   
   }
@@ -276,3 +289,56 @@ height: auto;
     padding: 0;
     margin: 0;
   }
+  .pie_container{
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+ align-items: center;
+ /* gap: 100px; */
+    width: fit-content;
+  }
+  .newentry_dropdown{
+    z-index: 3000;
+  }
+  .new-icon{
+    z-index: 1;
+  }
+  .editevent_header, .editentry_header, .addevent_header, .addentry_header, .entries_header{
+    padding-left: 10%;
+    background-color: #9C27B0;
+    color: #FFFFFF;
+    display: flex;
+    gap: 10%;
+    align-items: center;
+  }
+  .entries_header{
+    justify-content: space-between;
+    /* width: fit-content; */
+  }
+  .entries_header_left{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid red;
+
+  }
+  .entries_header_right{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .entrylist-head{
+    font-size: 19px;
+    /* padding-right: 5%; */
+  }
+  .addevent-form{
+padding: 10%;
+
+  }
+  /* .entrylist_header{
+    background-image: url("../images/family5.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  } */

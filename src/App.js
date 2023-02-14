@@ -31,6 +31,9 @@ import Image from "./pages/Image";
 import ChartOutput from "./pages/ChartOutput";
 // import BarChart from "./pages/BarChart";
 import CardContainer from "./pages/CardContainer";
+import DemoBar from "./pages/DemoBar";
+import DemoPie from "./pages/DemoPie";
+import Entries from "./pages/Entries";
 
 const App = () => {
   const [name, setName] = useState("");
@@ -94,6 +97,9 @@ const App = () => {
             {/* <Route path="barchart" element={<BarChart />} /> */}
             <Route path="chart" element={<ChartOutput />} />
             <Route path="card" element={<CardContainer />} />
+            <Route path="demobar" element={<DemoBar />} />
+            <Route path="demopie" element={<DemoPie />} />
+            <Route path="entries" element={<Entries />} />
           </Routes>
         </UserAuthContextProvider>
       </BrowserRouter>

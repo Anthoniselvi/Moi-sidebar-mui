@@ -16,11 +16,11 @@ function ChartOutput() {
       //   labels: "Moi Amount",
       labels: eventsList.map((singleEvent) => singleEvent.name),
       // Event Map
-      // data: [{ values: [1500, 10000, 7000, 1000] }, { values: [1, 1, 1, 1] }],
-      data: [
-        { values: total.map((singleTotal) => singleTotal.totalAmount) },
-        { values: total.map((singleTotal) => singleTotal.totalGift) },
-      ],
+      data: [{ values: [1500, 10000, 7000, 1000] }, { values: [1, 1, 1, 1] }],
+      // data: [
+      //   { values: total.map((singleTotal) => singleTotal.totalAmount) },
+      //   { values: total.map((singleTotal) => singleTotal.totalGift) },
+      // ],
     },
   ]);
   console.log("data : " + JSON.stringify(data));

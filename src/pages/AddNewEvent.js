@@ -76,12 +76,8 @@ export default function AddNewEvent() {
   return (
     <div className="addevent_container">
       <div className="addevent_header">
-        {/* <Box sx={{ "& > :not(style)": { m: 1 } }} className="plus-icon"> */}
-        {/* <Fab color="primary" aria-label="add"> */}
-
         <ArrowBackIcon onClick={navigateToEventslist} />
-        {/* </Fab> */}
-        {/* </Box> */}
+
         <h2>Create Event</h2>
       </div>
       <Box
@@ -151,7 +147,11 @@ export default function AddNewEvent() {
             setDate(moment(value).format("DD-MM-YYYY"));
           }}
         /> */}
-        <Button variant="contained" type="submit">
+        <Button
+          variant="contained"
+          type="submit"
+          sx={{ backgroundColor: "#9C27B0" }}
+        >
           Add
         </Button>
       </Box>

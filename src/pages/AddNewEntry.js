@@ -11,6 +11,7 @@ import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import Button from "@mui/material/Button";
 import axios from "axios";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 // import "./Home.css";
 import "./style.css";
 
@@ -50,9 +51,17 @@ export default function AddNewEntry() {
     setGift("");
   };
 
+  const navigateToEntryList = () => {
+    navigate(`/entryList?event=${eventId}`);
+  };
+
   return (
     <div className="addentry_container">
-      {/* <h1>Add New Entry</h1> */}
+      <div className="addentry_header">
+        <ArrowBackIcon onClick={navigateToEntryList} />
+
+        <h2>Create Entry</h2>
+      </div>
 
       <Box
         onSubmit={handleSubmitEntry}
@@ -69,17 +78,17 @@ export default function AddNewEntry() {
           label="Person Name"
           onChange={(e) => setPersonName(e.target.value)}
           value={personName}
-          sx={{ width: "300px" }}
+          sx={{ width: "300px", marginBottom: "5%" }}
         />
         <TextField
           id="outlined-place"
           label="City"
           onChange={(e) => setCity(e.target.value)}
           value={city}
-          sx={{ width: "300px" }}
+          sx={{ width: "300px", marginBottom: "5%" }}
         />
         <div className="radio-box">
-          <FormControl>
+          <FormControl sx={{ marginBottom: "5%" }}>
             <FormLabel id="demo-controlled-radio-buttons-group">
               Type of Presentation :
             </FormLabel>
@@ -110,7 +119,7 @@ export default function AddNewEntry() {
                     label="Rs."
                     onChange={(e) => setAmount(e.target.value)}
                     value={amount}
-                    sx={{ width: "300px" }}
+                    sx={{ width: "300px", marginBottom: "5%" }}
                   />
                 </div>
               ) : (
@@ -120,7 +129,7 @@ export default function AddNewEntry() {
                     label="about gift"
                     multiline
                     rows={4}
-                    sx={{ width: "300px" }}
+                    sx={{ width: "300px", marginBottom: "5%" }}
                     onChange={(e) => setGift(e.target.value)}
                     value={gift}
                   />
@@ -152,7 +161,11 @@ export default function AddNewEntry() {
             </RadioGroup>
           </FormControl>
         </div>
-        <Button variant="contained" type="submit">
+        <Button
+          variant="contained"
+          type="submit"
+          sx={{ backgroundColor: "#9C27B0" }}
+        >
           Add
         </Button>
         {/* <Button type="submit">Add</Button> */}

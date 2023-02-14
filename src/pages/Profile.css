@@ -1,11 +1,12 @@
 .editprofile-container{
     display: flex;
     flex-direction: column;
-  
+  padding: 5% 10%;
     /* gap:50px; */
   }
   .profile-icon{
     font-size: 40px;
+    color: #9C27B0;
   }
   .editprofile-image{
     border: 1px solid gray;
