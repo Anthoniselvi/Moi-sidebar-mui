@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { useReactToPrint } from "react-to-print";
+
 import { useSearchParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 // import "./Home.css";
@@ -36,6 +38,9 @@ import MoreIcon from "@mui/icons-material/MoreVert";
 import InputBase from "@mui/material/InputBase";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
+import { CSVLink } from "react-csv";
+import Card from "@mui/material/Card";
+import CardHeader from "@mui/material/CardHeader";
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -90,8 +95,9 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export default function Entries() {
   const navigate = useNavigate();
   const [searchParam] = useSearchParams();
+  const [data, setData] = useState([]);
   const eventId = searchParam.get("event");
-  // const entryId = searchParam.get("event");
+  const profileId = searchParam.get("profile");
   const [entries, setEntries] = useState([]);
   const [eventslist, setEventsList] = useState({});
   const [selectedEntry, setSelectedEntry] = useState("");
@@ -100,17 +106,20 @@ export default function Entries() {
   const open = Boolean(anchorEl);
   const [selectedEvent, setSelectedEvent] = useState("");
   console.log("entrylist-recd-eventId : " + eventId);
-  const handleClick = (event) => {
-    // event.stopPropagation();
-    // setAnchorEl(event.currentTarget);
-    // console.log("set show clicked..");
-    // setSelectedEntry(entry.id);
-    // setShow((show) => !show);
-  };
+  const componentRef = useRef();
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+  });
 
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const totalAmount = entries
+    .map((entry) => entry.amount)
+    .reduce((acc, value) => acc + +value, 0);
+
+  const totalGift = entries.filter((entry) => entry.gift !== "").length;
 
   function onChangeHandle(e) {
     console.log("e.target.value", e.target.value);
@@ -125,12 +134,6 @@ export default function Entries() {
     );
     setEntries(searchResult);
   }
-
-  const totalAmount = entries
-    .map((entry) => entry.amount)
-    .reduce((acc, value) => acc + +value, 0);
-
-  const totalGift = entries.filter((entry) => entry.gift !== "").length;
 
   const navigateToAddNewEntry = () => {
     // e.stopPropagation();
@@ -210,14 +213,46 @@ export default function Entries() {
         setEntries(response.data);
       });
   };
+
+  const getTotal = () => {
+    axios
+      .get(`http://localhost:2010/events/profileId/${eventId}`)
+      .then((response) => {
+        console.log("recd profileId from event : " + JSON.stringify(response));
+        console.log(response.data.profileId);
+        // setEntries(response.data);
+        axios
+          .get(
+            `http://localhost:2010/events/total/all/${response.data.profileId}`
+          )
+          .then((response) => {
+            // console.log(response);
+            console.log(
+              "total recd in useEffect : " + JSON.stringify(response.data)
+            );
+            setData(response.data);
+            console.log("Recd Data in useEffect : " + JSON.stringify(data));
+          });
+      });
+  };
   useEffect(() => {
     fetchAllEntries();
     fetchAllEvents();
+    getTotal();
   }, []);
 
   return (
-    <div>
-      <Search>
+    <div className="entrieslist_container">
+      <Button
+        sx={{
+          backgroundColor: "#9C27B0",
+          color: "#FFFFFF",
+        }}
+        onClick={handlePrint}
+      >
+        Export
+      </Button>
+      <Search className="entrieslist_search">
         <SearchIconWrapper onChange={onChangeHandle}>
           <SearchIcon />
         </SearchIconWrapper>
@@ -232,87 +267,180 @@ export default function Entries() {
           inputProps={{ "aria-label": "search" }}
         />
       </Search>
+
       {entries.length > 0 && (
         <>
           {entries.map((entry) => (
-            <Box
-              sx={{ flexGrow: 1, overflow: "hidden", px: 1 }}
-              key={entry.entryId}
-            >
-              <StyledPaper
-                sx={{
-                  my: 1,
-                  mx: "auto",
-                  p: 1,
-                }}
-              >
-                <Grid container wrap="nowrap" spacing={4}>
-                  <Grid item xs alignSelf="center">
+            <Card sx={{ width: "100%" }} ref={componentRef}>
+              {entry.presentType === "amount" ? (
+                <CardHeader
+                  avatar={
                     <Avatar
                       name={entry.personName}
                       size="35"
                       round={true}
                       maxInitials="1"
                     />
-                  </Grid>
-                  <Grid item xs alignSelf="center">
-                    <Typography>{entry.personName}</Typography>
-                  </Grid>
-                  <Grid item xs alignSelf="center">
-                    {entry.presentType === "amount" ? (
-                      <Typography> {entry.amount}</Typography>
-                    ) : (
-                      <Typography> {entry.gift}</Typography>
-                    )}
-                  </Grid>
-                  <Grid item xs alignSelf="right">
-                    <IconButton
-                      aria-label="settings"
-                      className="more-icon"
-                      // className="event_icon_dropdown"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        console.log("set show clicked..");
-                        setSelectedEntry(entry.entryId);
-                        // setShow((show) => !show);
-                        setAnchorEl(e.currentTarget);
-                      }}
-                    >
-                      <MoreVertIcon />
+                  }
+                  action={
+                    <IconButton aria-label="settings">
+                      <MoreVertIcon
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          console.log("set show clicked..");
+                          setSelectedEntry(entry.entryId);
+                          // setShow((show) => !show);
+                          setAnchorEl(e.currentTarget);
+                        }}
+                      />
                     </IconButton>
-                    {entry.entryId === selectedEntry && anchorEl ? (
-                      <Menu
-                        className="entry_dropdown"
-                        id="demo-positioned-menu"
-                        aria-labelledby="demo-positioned-button"
-                        anchorEl={anchorEl}
-                        open={open}
-                        onClose={handleClose}
-                        anchorOrigin={{
-                          vertical: "top",
-                          horizontal: "left",
+                  }
+                  title={entry.personName}
+                  subheader={entry.amount}
+                />
+              ) : (
+                <CardHeader
+                  avatar={
+                    <Avatar
+                      name={entry.personName}
+                      size="35"
+                      round={true}
+                      maxInitials="1"
+                    />
+                  }
+                  action={
+                    <IconButton aria-label="settings">
+                      <MoreVertIcon
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          console.log("set show clicked..");
+                          setSelectedEntry(entry.entryId);
+                          // setShow((show) => !show);
+                          setAnchorEl(e.currentTarget);
                         }}
-                        transformOrigin={{
-                          vertical: "top",
-                          horizontal: "left",
-                        }}
-                      >
-                        <MenuItem onClick={() => editEntry(entry.entryId)}>
-                          Update
-                        </MenuItem>
-                        <MenuItem onClick={() => deleteEntry(entry.entryId)}>
-                          Delete
-                        </MenuItem>
-                      </Menu>
-                    ) : null}
-                  </Grid>
-                </Grid>
-              </StyledPaper>
-            </Box>
+                      />
+                    </IconButton>
+                  }
+                  title={entry.personName}
+                  subheader={entry.gift}
+                  // disableTypography={true}
+                />
+              )}
+
+              {/* <Box */}
+              {/* //   sx={{ flexGrow: 1, overflow: "hidden", px: 1 }}
+            //   key={entry.entryId}
+            // >
+            //   <StyledPaper */}
+              {/* //     sx={{ */}
+              {/* //       my: 1,
+            //       mx: "auto",
+            //       p: 1,
+            //     }}
+            //   >
+            //     <Grid container wrap="nowrap" spacing={4}>
+            //       <Grid item xs alignSelf="center">
+            //         <Avatar */}
+              {/* //           name={entry.personName}
+            //           size="35"
+            //           round={true}
+            //           maxInitials="1"
+            //         /> */}
+              {/* //       </Grid> */}
+              {/* //       <Grid */}
+              {/* //         item
+            //         xs
+            //         alignSelf="center"
+            //         sx={{ width: "max-content" }}
+            //       >
+            //         <Typography */}
+              {/* //           sx={{ */}
+              {/* //             alignItems: "left",
+            //             justifyItems: "center",
+            //             // width: "max-content",
+            //           }}
+            //         >
+            //           {entry.personName}
+            //         </Typography> */}
+              {/* //       </Grid> */}
+              {/* //       <Grid item xs alignSelf="center">
+            //         {entry.presentType === "amount" ? ( */}
+              {/* //           <Typography */}
+              {/* //             sx={{ alignItems: "left", justifyItems: "center" }}
+            //           >
+            //             {" "}
+            //             {entry.amount}
+            //           </Typography> */}
+              {/* //         ) : (
+            //           <Typography */}
+              {/* //             sx={{ alignItems: "left", justifyItems: "center" }}
+            //           >
+            //             {" "}
+            //             {entry.gift}
+            //           </Typography> */}
+              {/* //         )}
+            //       </Grid> */}
+              {/* //       <Grid item xs alignSelf="right">
+            //         <IconButton */}
+              {/* //           aria-label="settings"
+            //           className="more-icon"
+            //           // className="event_icon_dropdown"
+            //           onClick={(e) => { */}
+              {/* //             e.stopPropagation();
+            //             console.log("set show clicked..");
+            //             setSelectedEntry(entry.entryId);
+            //             // setShow((show) => !show);
+            //             setAnchorEl(e.currentTarget);
+            //           }}
+            //         >
+            //           <MoreVertIcon />
+            //         </IconButton> */}
+              {entry.entryId === selectedEntry && anchorEl ? (
+                <Menu
+                  className="entry_dropdown"
+                  id="demo-positioned-menu"
+                  aria-labelledby="demo-positioned-button"
+                  anchorEl={anchorEl}
+                  open={open}
+                  onClose={handleClose}
+                  anchorOrigin={{
+                    vertical: "top",
+                    horizontal: "left",
+                  }}
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "left",
+                  }}
+                >
+                  <MenuItem onClick={() => editEntry(entry.entryId)}>
+                    Update
+                  </MenuItem>
+                  <MenuItem onClick={() => deleteEntry(entry.entryId)}>
+                    Delete
+                  </MenuItem>
+                </Menu>
+              ) : null}
+              {/* //       </Grid> */}
+              {/* //       <p>
+            //         {data.totalAmount}, {data.totalGift}
+            //       </p>
+            //     </Grid> */}
+              {/* // <Grid>
+            //       <Grid>
+            //         <Typography>{data.totalAmount}</Typography>
+            //       </Grid>
+            //       <Grid>
+            //         <Typography>{data.totalGift}</Typography>
+            //       </Grid>
+            //     </Grid>
+            //   </StyledPaper> */}
+              {/* </Box> */}
+            </Card>
           ))}
         </>
       )}
       {entries.length < 1 && <p className="no-text">No Entries found</p>}
+      <CSVLink data={entries}>Download</CSVLink>
     </div>
   );
 }

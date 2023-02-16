@@ -37,12 +37,14 @@ import InputBase from "@mui/material/InputBase";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import Entries from "./Entries";
+import ShareButton from "./Share";
 import {
   FacebookShareButton,
   WhatsappShareButton,
   WhatsappIcon,
   FacebookIcon,
 } from "react-share";
+import ShareLinks from "./ShareLinks";
 
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   alignItems: "flex-start",
@@ -112,10 +114,15 @@ export default function EntriesList(props) {
   const [eventslist, setEventsList] = useState({});
   const [selectedEntry, setSelectedEntry] = useState("");
   const [show, setShow] = useState(false);
+  const toggle = () => setShow(!show);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const [selectedEvent, setSelectedEvent] = useState("");
   console.log("entrylist-recd-eventId : " + eventId);
+
+  // const [isOpen, setIsOpen] = useState(false);
+  // const toggle = () => setIsOpen(!isOpen);
+
   const handleClick = (event) => {
     // event.stopPropagation();
     // setAnchorEl(event.currentTarget);
@@ -231,54 +238,85 @@ export default function EntriesList(props) {
     fetchAllEvents();
   }, []);
 
+  const navigateToShareLinks = () => {
+    console.log("share button clicked");
+    <ShareLinks />;
+  };
   return (
     <div className="entrylist_container">
       <div className="entries_header">
-        <ArrowBackIcon onClick={navigateToEventslist} />
-        <h2 className="entrylist-head">{eventslist.name}</h2>
-        <ShareIcon style={{ color: "#FFFFFF" }} />
-        <div className="head-body">
-          <Button
-            id="demo-positioned-button"
-            aria-controls={open ? "demo-positioned-menu" : undefined}
-            aria-haspopup="true"
-            aria-expanded={open ? "true" : undefined}
-            // onClick={handleClick}
+        <div className="entries_header_left">
+          <ArrowBackIcon onClick={navigateToEventslist} />
+          <h2 className="entrylist-head">{eventslist.name}</h2>
+        </div>
+        <div className="entries_header_right">
+          <ShareIcon
+            style={{ color: "#FFFFFF" }}
             onClick={(e) => {
-              e.stopPropagation();
+              // e.stopPropagation();
               console.log("set show clicked..");
-              setSelectedEvent(eventslist.eventId);
-              // setShow((show) => !show);
-              setAnchorEl(e.currentTarget);
+              setShow((show) => !show);
             }}
-          >
-            <MoreVertIcon style={{ color: "#FFFFFF" }} />
-          </Button>
-          {eventslist.eventId === selectedEvent && anchorEl ? (
-            <Menu
-              id="demo-positioned-menu"
-              aria-labelledby="demo-positioned-button"
-              anchorEl={anchorEl}
-              open={open}
-              onClose={handleClose}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "left",
-              }}
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "left",
+          />
+          {/* <ShareButton
+          title="List of Moi Enties"
+          text="Check out this link!"
+          url="www.google.com"
+        /> */}
+          {/* {show ? (
+          <div>
+            <WhatsappShareButton url="https://localhost:3000/">
+              <WhatsappIcon size={40} round={true} />
+            </WhatsappShareButton>
+            <FacebookShareButton url="https://localhost:3000/">
+              <FacebookIcon size={40} round={true} />
+            </FacebookShareButton>
+          </div>
+        ) : null} */}
+
+          <div className="head-body">
+            <Button
+              id="demo-positioned-button"
+              aria-controls={open ? "demo-positioned-menu" : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? "true" : undefined}
+              // onClick={handleClick}
+              onClick={(e) => {
+                e.stopPropagation();
+                console.log("set show clicked..");
+                setSelectedEvent(eventslist.eventId);
+                // setShow((show) => !show);
+                setAnchorEl(e.currentTarget);
               }}
             >
-              <MenuItem onClick={(e) => editEvent(e, eventslist.eventId)}>
-                Update
-              </MenuItem>
+              <MoreVertIcon style={{ color: "#FFFFFF" }} />
+            </Button>
+            {eventslist.eventId === selectedEvent && anchorEl ? (
+              <Menu
+                id="demo-positioned-menu"
+                aria-labelledby="demo-positioned-button"
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleClose}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "left",
+                }}
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "left",
+                }}
+              >
+                <MenuItem onClick={(e) => editEvent(e, eventslist.eventId)}>
+                  Update
+                </MenuItem>
 
-              <MenuItem onClick={(e) => deleteEvent(e, eventslist.eventId)}>
-                Delete
-              </MenuItem>
-            </Menu>
-          ) : null}
+                <MenuItem onClick={(e) => deleteEvent(e, eventslist.eventId)}>
+                  Delete
+                </MenuItem>
+              </Menu>
+            ) : null}
+          </div>
         </div>
       </div>
       {/* <Box sx={{ flexGrow: 1 }}>
@@ -371,7 +409,23 @@ export default function EntriesList(props) {
       </Box> */}
       <div className="entry_body">
         <Entries />
-
+        {show ? (
+          <div
+            className="share_box"
+            style={{
+              display: show ? "block" : "none",
+              color: "#fff",
+              backgroundColor: "red",
+            }}
+          >
+            <WhatsappShareButton url="https://localhost:3000/">
+              <WhatsappIcon size={40} round={true} />
+            </WhatsappShareButton>
+            <FacebookShareButton url="https://localhost:3000/">
+              <FacebookIcon size={40} round={true} />
+            </FacebookShareButton>
+          </div>
+        ) : null}
         <div className="add-btn">
           <Box sx={{ "& > :not(style)": { m: 1 } }}>
             <Fab color="secondary" aria-label="add">

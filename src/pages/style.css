@@ -78,14 +78,14 @@
  
 }
 .card-image-birthday{
-  background-image: url("../images/family3.jpg");
+  background-image: url("../images/birthday1.jpg");
   background-size: contain;
   border: none;
   outline: none;
   height: 200px;
 }
 .card-image-wedding{
-  background-image: url("../images/family.jpg");
+  background-image: url("../images/wedding.jpg");
   background-size: contain;
   border: none;
   outline: none;
@@ -135,13 +135,16 @@
  
    }
    .add-btn{
-    /* border: 2px solid red; */
+ 
     /* margin-right: 20%; */
     margin-left: -13%;
-    margin-top: 5%;
-    /* left: 0;
-    top: 80%; */
+    margin-top: 5%; 
+   /* display: flex;
+   align-items: center;
+   justify-content: center;
+   width: 100%; */
       position: fixed;
+     
     
     }
    .card-image-birthday{
@@ -172,6 +175,7 @@
     align-items: center;
     justify-content: center;
   }
+ 
 }
 
 
@@ -302,7 +306,7 @@ height: auto;
   .new-icon{
     z-index: 1;
   }
-  .editevent_header, .editentry_header, .addevent_header, .addentry_header, .entries_header{
+  .editevent_header, .editentry_header, .addevent_header, .addentry_header{
     padding-left: 10%;
     background-color: #9C27B0;
     color: #FFFFFF;
@@ -311,22 +315,27 @@ height: auto;
     align-items: center;
   }
   .entries_header{
-    justify-content: space-between;
-    /* width: fit-content; */
+  
+    display: grid;
+    grid-template-columns: 4fr 1fr;
+    align-items: center;
+    background-color: #9C27B0;
+    color: #FFFFFF;
+    padding-left: 5%;
   }
   .entries_header_left{
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    border: 1px solid red;
 
+    align-items: center;
+gap:5%;
   }
   .entries_header_right{
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+
     align-items: center;
+
   }
   .entrylist-head{
     font-size: 19px;
@@ -342,3 +351,20 @@ padding: 10%;
     background-position: center;
     background-repeat: no-repeat;
   } */
+  .ent_box{
+    width: 100%;
+  }
+  .entrieslist_container{
+    padding: 0% 5%;
+  }
+  .entrieslist_search{
+    margin-bottom: 5%;
+    margin-top: 5%;
+
+  }
+  .share_box{
+   top:-50%;
+    padding: 20%;
+    /* height:50%; */
+    z-index: 4000;
+  }

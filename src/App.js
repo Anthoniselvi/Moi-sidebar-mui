@@ -34,6 +34,7 @@ import CardContainer from "./pages/CardContainer";
 import DemoBar from "./pages/DemoBar";
 import DemoPie from "./pages/DemoPie";
 import Entries from "./pages/Entries";
+import PdfDownload from "./pages/PdfDownload";
 
 const App = () => {
   const [name, setName] = useState("");
@@ -100,6 +101,7 @@ const App = () => {
             <Route path="demobar" element={<DemoBar />} />
             <Route path="demopie" element={<DemoPie />} />
             <Route path="entries" element={<Entries />} />
+            <Route path="pdf" element={<PdfDownload />} />
           </Routes>
         </UserAuthContextProvider>
       </BrowserRouter>

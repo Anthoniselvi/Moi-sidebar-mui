@@ -85,8 +85,16 @@ export default function Header(props) {
           </Typography>
           <div className="head-body">
             {!user ? (
-              <MenuItem onClick={navigateToSignIn}>LogIn</MenuItem>
+              <Button
+                variant="contained"
+                type="submit"
+                sx={{ backgroundColor: "#FFFFFF", color: "#9C27B0" }}
+                onClick={navigateToSignIn}
+              >
+                LogIn
+              </Button>
             ) : (
+              // <MenuItem onClick={navigateToSignIn}>LogIn</MenuItem>
               <>
                 <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                   {props.name}
