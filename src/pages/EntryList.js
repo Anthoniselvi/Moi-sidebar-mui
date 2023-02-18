@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { confirmDialog } from "./ConfirmDialog";
 // import "./Home.css";
 import "./style.css";
 import Button from "@mui/material/Button";
@@ -45,6 +46,14 @@ import {
   FacebookIcon,
 } from "react-share";
 import ShareLinks from "./ShareLinks";
+
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
 
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   alignItems: "flex-start",
@@ -119,9 +128,11 @@ export default function EntriesList(props) {
   const open = Boolean(anchorEl);
   const [selectedEvent, setSelectedEvent] = useState("");
   console.log("entrylist-recd-eventId : " + eventId);
-
+  const [openDialog, setOpenDialog] = React.useState(false);
   // const [isOpen, setIsOpen] = useState(false);
   // const toggle = () => setIsOpen(!isOpen);
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
 
   const handleClick = (event) => {
     // event.stopPropagation();
@@ -165,7 +176,47 @@ export default function EntriesList(props) {
     navigate(`/editevent?event=${eventId}`);
   };
 
-  const deleteEvent = () => {};
+  const deleteEvent = (e, eventId) => {
+    setAnchorEl(null);
+    // if (window.confirm("Do you want to Delete")) {
+    e.stopPropagation();
+    console.log(eventId);
+
+    axios
+      .delete(`http://localhost:2010/entries/all/${eventId}`)
+      .then((response) => {
+        console.log("deleted entries list :" + JSON.stringify(response));
+        // fetchAllEvents();
+        // navigate("/eventslist");
+      });
+    axios.delete(`http://localhost:2010/events/${eventId}`).then((response) => {
+      console.log("deleted event : " + JSON.stringify(response));
+      fetchAllEvents();
+      // navigate(`/eventslist?profile=${profileId}`);
+    });
+    axios
+      .get(`http://localhost:2010/events/profileId/${eventId}`)
+      .then((response) => {
+        console.log("recd profileId from event : " + JSON.stringify(response));
+        console.log(response.data.profileId);
+        // setEntries(response.data);
+        navigate(`/eventslist?profile=${response.data.profileId}`);
+      });
+    // }
+  };
+  const printEvent = () => {
+    navigate(`/pdf?event=${eventId}`);
+  };
+
+  const handleOpenDialog = () => {
+    setOpenDialog(true);
+    // setAnchorEl(null);
+  };
+
+  const closeDialog = () => {
+    setAnchorEl(null);
+    setOpenDialog(false);
+  };
   const navigateToEventslist = (id) => {
     axios
       .get(`http://localhost:2010/events/profileId/${eventId}`)
@@ -292,29 +343,65 @@ export default function EntriesList(props) {
               <MoreVertIcon style={{ color: "#FFFFFF" }} />
             </Button>
             {eventslist.eventId === selectedEvent && anchorEl ? (
-              <Menu
-                id="demo-positioned-menu"
-                aria-labelledby="demo-positioned-button"
-                anchorEl={anchorEl}
-                open={open}
-                onClose={handleClose}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "left",
-                }}
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "left",
-                }}
-              >
-                <MenuItem onClick={(e) => editEvent(e, eventslist.eventId)}>
-                  Update
-                </MenuItem>
+              <>
+                <Menu
+                  id="demo-positioned-menu"
+                  aria-labelledby="demo-positioned-button"
+                  anchorEl={anchorEl}
+                  open={open}
+                  onClose={handleClose}
+                  anchorOrigin={{
+                    vertical: "top",
+                    horizontal: "left",
+                  }}
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "left",
+                  }}
+                >
+                  <MenuItem onClick={(e) => editEvent(e, eventslist.eventId)}>
+                    Update
+                  </MenuItem>
 
-                <MenuItem onClick={(e) => deleteEvent(e, eventslist.eventId)}>
-                  Delete
-                </MenuItem>
-              </Menu>
+                  <MenuItem
+                    onClick={handleOpenDialog}
+
+                    // onClick={(e) => deleteEvent(e, eventslist.eventId)}
+                  >
+                    Delete
+                  </MenuItem>
+
+                  <MenuItem onClick={(e) => printEvent(e, eventslist.eventId)}>
+                    Export in Pdf
+                  </MenuItem>
+                </Menu>
+                <Dialog
+                  fullScreen={fullScreen}
+                  open={openDialog}
+                  onClose={closeDialog}
+                  aria-labelledby="responsive-dialog-title"
+                >
+                  <DialogTitle id="responsive-dialog-title">
+                    Delete Confirmation
+                  </DialogTitle>
+                  <DialogContent>
+                    <DialogContentText>
+                      Do You want to delete the entry permanently?
+                    </DialogContentText>
+                  </DialogContent>
+                  <DialogActions>
+                    <Button autoFocus onClick={closeDialog}>
+                      No
+                    </Button>
+                    <Button
+                      onClick={(e) => deleteEvent(e, eventslist.eventId)}
+                      autoFocus
+                    >
+                      Yes
+                    </Button>
+                  </DialogActions>
+                </Dialog>
+              </>
             ) : null}
           </div>
         </div>

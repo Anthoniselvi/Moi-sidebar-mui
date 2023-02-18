@@ -41,6 +41,9 @@ import Grid from "@mui/material/Grid";
 import { CSVLink } from "react-csv";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
+import { PDFExport, savePDF } from "@progress/kendo-react-pdf";
+import NewPdf from "./NewPdf";
+import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -106,11 +109,16 @@ export default function Entries() {
   const open = Boolean(anchorEl);
   const [selectedEvent, setSelectedEvent] = useState("");
   console.log("entrylist-recd-eventId : " + eventId);
-  const componentRef = useRef();
-  const handlePrint = useReactToPrint({
-    content: () => componentRef.current,
-  });
+  // const componentRef = useRef();
+  const pdfExportComponent = useRef(null);
+  // const handlePrint = useReactToPrint({
+  //   content: () => componentRef.current,
+  // });
 
+  const handleExportWithComponent = (event) => {
+    pdfExportComponent.current.save();
+    // navigate(`/pdf?event=${eventId}`);
+  };
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -140,12 +148,6 @@ export default function Entries() {
     navigate(`/entry/new?event=${eventId}`);
   };
 
-  const editEvent = (e, eventId) => {
-    e.stopPropagation();
-    navigate(`/editevent?event=${eventId}`);
-  };
-
-  const deleteEvent = () => {};
   const navigateToEventslist = (id) => {
     axios
       .get(`http://localhost:2010/events/profileId/${eventId}`)
@@ -243,15 +245,6 @@ export default function Entries() {
 
   return (
     <div className="entrieslist_container">
-      <Button
-        sx={{
-          backgroundColor: "#9C27B0",
-          color: "#FFFFFF",
-        }}
-        onClick={handlePrint}
-      >
-        Export
-      </Button>
       <Search className="entrieslist_search">
         <SearchIconWrapper onChange={onChangeHandle}>
           <SearchIcon />
@@ -267,11 +260,14 @@ export default function Entries() {
           inputProps={{ "aria-label": "search" }}
         />
       </Search>
-
+      {/* <PDFExport ref={pdfExportComponent}> */}
       {entries.length > 0 && (
         <>
           {entries.map((entry) => (
-            <Card sx={{ width: "100%" }} ref={componentRef}>
+            <Card
+              sx={{ width: "100%" }}
+              onClick={() => editEntry(entry.entryId)}
+            >
               {entry.presentType === "amount" ? (
                 <CardHeader
                   avatar={
@@ -283,20 +279,32 @@ export default function Entries() {
                     />
                   }
                   action={
-                    <IconButton aria-label="settings">
-                      <MoreVertIcon
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          console.log("set show clicked..");
-                          setSelectedEntry(entry.entryId);
-                          // setShow((show) => !show);
-                          setAnchorEl(e.currentTarget);
+                    <div>
+                      <CurrencyRupeeIcon
+                        sx={{
+                          fontSize: "14px",
+                          color: "black",
+                          alignItems: "center",
                         }}
                       />
-                    </IconButton>
+                      <span>{entry.amount}</span>
+                    </div>
                   }
                   title={entry.personName}
-                  subheader={entry.amount}
+                  subheader={entry.city}
+                  // subheader={entry.amount}
+                  //   subheader={
+                  //     <div>
+                  //       <CurrencyRupeeIcon
+                  //         sx={{
+                  //           fontSize: "14px",
+                  //           color: "black",
+                  //           alignItems: "center",
+                  //         }}
+                  //       />
+                  //       <span>{entry.amount}</span>
+                  //     </div>
+                  //   }
                 />
               ) : (
                 <CardHeader
@@ -309,92 +317,17 @@ export default function Entries() {
                     />
                   }
                   action={
-                    <IconButton aria-label="settings">
-                      <MoreVertIcon
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          console.log("set show clicked..");
-                          setSelectedEntry(entry.entryId);
-                          // setShow((show) => !show);
-                          setAnchorEl(e.currentTarget);
-                        }}
-                      />
-                    </IconButton>
+                    <div>
+                      <span>{entry.gift}</span>
+                    </div>
                   }
                   title={entry.personName}
-                  subheader={entry.gift}
+                  subheader={entry.city}
+                  // subheader={entry.gift}
                   // disableTypography={true}
                 />
               )}
 
-              {/* <Box */}
-              {/* //   sx={{ flexGrow: 1, overflow: "hidden", px: 1 }}
-            //   key={entry.entryId}
-            // >
-            //   <StyledPaper */}
-              {/* //     sx={{ */}
-              {/* //       my: 1,
-            //       mx: "auto",
-            //       p: 1,
-            //     }}
-            //   >
-            //     <Grid container wrap="nowrap" spacing={4}>
-            //       <Grid item xs alignSelf="center">
-            //         <Avatar */}
-              {/* //           name={entry.personName}
-            //           size="35"
-            //           round={true}
-            //           maxInitials="1"
-            //         /> */}
-              {/* //       </Grid> */}
-              {/* //       <Grid */}
-              {/* //         item
-            //         xs
-            //         alignSelf="center"
-            //         sx={{ width: "max-content" }}
-            //       >
-            //         <Typography */}
-              {/* //           sx={{ */}
-              {/* //             alignItems: "left",
-            //             justifyItems: "center",
-            //             // width: "max-content",
-            //           }}
-            //         >
-            //           {entry.personName}
-            //         </Typography> */}
-              {/* //       </Grid> */}
-              {/* //       <Grid item xs alignSelf="center">
-            //         {entry.presentType === "amount" ? ( */}
-              {/* //           <Typography */}
-              {/* //             sx={{ alignItems: "left", justifyItems: "center" }}
-            //           >
-            //             {" "}
-            //             {entry.amount}
-            //           </Typography> */}
-              {/* //         ) : (
-            //           <Typography */}
-              {/* //             sx={{ alignItems: "left", justifyItems: "center" }}
-            //           >
-            //             {" "}
-            //             {entry.gift}
-            //           </Typography> */}
-              {/* //         )}
-            //       </Grid> */}
-              {/* //       <Grid item xs alignSelf="right">
-            //         <IconButton */}
-              {/* //           aria-label="settings"
-            //           className="more-icon"
-            //           // className="event_icon_dropdown"
-            //           onClick={(e) => { */}
-              {/* //             e.stopPropagation();
-            //             console.log("set show clicked..");
-            //             setSelectedEntry(entry.entryId);
-            //             // setShow((show) => !show);
-            //             setAnchorEl(e.currentTarget);
-            //           }}
-            //         >
-            //           <MoreVertIcon />
-            //         </IconButton> */}
               {entry.entryId === selectedEntry && anchorEl ? (
                 <Menu
                   className="entry_dropdown"
@@ -420,27 +353,13 @@ export default function Entries() {
                   </MenuItem>
                 </Menu>
               ) : null}
-              {/* //       </Grid> */}
-              {/* //       <p>
-            //         {data.totalAmount}, {data.totalGift}
-            //       </p>
-            //     </Grid> */}
-              {/* // <Grid>
-            //       <Grid>
-            //         <Typography>{data.totalAmount}</Typography>
-            //       </Grid>
-            //       <Grid>
-            //         <Typography>{data.totalGift}</Typography>
-            //       </Grid>
-            //     </Grid>
-            //   </StyledPaper> */}
-              {/* </Box> */}
             </Card>
           ))}
         </>
       )}
+      {/* </PDFExport> */}
       {entries.length < 1 && <p className="no-text">No Entries found</p>}
-      <CSVLink data={entries}>Download</CSVLink>
+      {/* <CSVLink data={entries}>Download</CSVLink> */}
     </div>
   );
 }

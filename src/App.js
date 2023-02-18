@@ -35,6 +35,10 @@ import DemoBar from "./pages/DemoBar";
 import DemoPie from "./pages/DemoPie";
 import Entries from "./pages/Entries";
 import PdfDownload from "./pages/PdfDownload";
+import NewPdf from "./pages/NewPdf";
+import Banner from "./pages/Banner";
+import DialogConfirmation from "./pages/DialogConfirmation";
+// import CarouselPage from "./pages/CarouselPage";
 
 const App = () => {
   const [name, setName] = useState("");
@@ -101,7 +105,10 @@ const App = () => {
             <Route path="demobar" element={<DemoBar />} />
             <Route path="demopie" element={<DemoPie />} />
             <Route path="entries" element={<Entries />} />
-            <Route path="pdf" element={<PdfDownload />} />
+            <Route path="pdf" element={<NewPdf />} />
+            <Route path="banner" element={<Banner />} />
+            {/* <Route path="carousel" element={<CarouselPage />} /> */}
+            <Route path="dialogconfirmation" element={<DialogConfirmation />} />
           </Routes>
         </UserAuthContextProvider>
       </BrowserRouter>
@@ -110,3 +117,81 @@ const App = () => {
 };
 
 export default App;
+// import React from "react";
+// import Carousel from "./pages/Carousel";
+// import wedding from "./images/wedding.jpg";
+// import birthday from "./images/birthday.jpg";
+
+// function App() {
+//   const items = [wedding, birthday, "Item 3", "Item 4", "Item 5"];
+//   const itemWidth = 60;
+
+//   return (
+//     <div className="App">
+//       <Carousel items={items} itemWidth={itemWidth} />
+//     </div>
+//   );
+// }
+// export default App;
+
+// import React, { useState, useEffect } from "react";
+// import "./App.css";
+// import CarouselList from "./newpages/CarouselList";
+// import Data from "./newpages/Data";
+// import { BsArrowLeft, BsArrowRight } from "react-icons/bs";
+
+// export default function App() {
+//   const [activeSlide, setActiveSlide] = useState(0);
+
+//   const [slideDirection, setSlideDirection] = useState("Right");
+//   useEffect(() => {
+//     let current = activeSlide;
+//     let direction = slideDirection;
+//     const autoPlay = () => {
+//       if (current === Data.length - 1) {
+//         current -= 1;
+//         setActiveSlide(current);
+//         setSlideDirection("Left");
+//       } else if (current === 0) {
+//         current += 1;
+//         setActiveSlide(current);
+//         setSlideDirection("Right");
+//       } else if (current > 0 && direction === "Right") {
+//         current += 1;
+//         setActiveSlide(current);
+//       } else if (current < Data.length - 1 && direction === "Left") {
+//         current -= 1;
+//         setActiveSlide(current);
+//       }
+//     };
+//     const timerId = setInterval(() => {
+//       autoPlay();
+//     }, 5000);
+//     return () => clearInterval(timerId);
+//   }, [activeSlide, slideDirection]);
+
+//   const moveLeft = (slideIndex) => {
+//     setActiveSlide(slideIndex - 1);
+//     setSlideDirection("Left");
+//   };
+//   const moveRight = (slideIndex) => {
+//     setActiveSlide(slideIndex + 1);
+//     setSlideDirection("Right");
+//   };
+//   return (
+//     <div className="app">
+//       <h1 className="main-head">Moi Application</h1>
+//       <div className="slideshow-container">
+//         <CarouselList activeSlide={activeSlide} />
+//         <BsArrowLeft
+//           className={activeSlide === 0 ? "display prev" : "prev"}
+//           onClick={() => moveLeft(activeSlide)}
+//         />
+//         <BsArrowRight
+//           className={activeSlide === Data.length - 1 ? "display next" : "next"}
+//           onClick={() => moveRight(activeSlide)}
+//         />
+//       </div>
+//     </div>
+//   );
+// }

@@ -355,7 +355,8 @@ padding: 10%;
     width: 100%;
   }
   .entrieslist_container{
-    padding: 0% 5%;
+    width: 100%;
+    /* padding: 0% 5%; */
   }
   .entrieslist_search{
     margin-bottom: 5%;
@@ -367,4 +368,23 @@ padding: 10%;
     padding: 20%;
     /* height:50%; */
     z-index: 4000;
+  }
+  .banner_container{
+    width: 500px;
+    height: 500px;
+  }
+  .image1{
+    width: 1000px;
+    height: 500px;
+    background-image: url("../images/wedding.jpg");
+  }
+  .image2{
+    width: 1000px;
+    height: 500px;
+    background-image: url("../images/birthday.jpg");
+  }
+  .image3{
+    width: 1000px;
+    height: 500px;
+    background-image: url("../images/baby.jpg");
   }
