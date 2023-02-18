@@ -266,7 +266,7 @@ export default function Entries() {
           {entries.map((entry) => (
             <Card
               sx={{ width: "100%" }}
-              onClick={() => editEntry(entry.entryId)}
+              // onClick={() => editEntry(entry.entryId)}
             >
               {entry.presentType === "amount" ? (
                 <CardHeader
@@ -290,21 +290,15 @@ export default function Entries() {
                       <span>{entry.amount}</span>
                     </div>
                   }
-                  title={entry.personName}
+                  title={
+                    <div
+                      className="entry_head_name"
+                      onClick={() => editEntry(entry.entryId)}
+                    >
+                      {entry.personName}
+                    </div>
+                  }
                   subheader={entry.city}
-                  // subheader={entry.amount}
-                  //   subheader={
-                  //     <div>
-                  //       <CurrencyRupeeIcon
-                  //         sx={{
-                  //           fontSize: "14px",
-                  //           color: "black",
-                  //           alignItems: "center",
-                  //         }}
-                  //       />
-                  //       <span>{entry.amount}</span>
-                  //     </div>
-                  //   }
                 />
               ) : (
                 <CardHeader
@@ -321,7 +315,14 @@ export default function Entries() {
                       <span>{entry.gift}</span>
                     </div>
                   }
-                  title={entry.personName}
+                  title={
+                    <div
+                      className="entry_head_name"
+                      onClick={() => editEntry(entry.entryId)}
+                    >
+                      {entry.personName}
+                    </div>
+                  }
                   subheader={entry.city}
                   // subheader={entry.gift}
                   // disableTypography={true}

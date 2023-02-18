@@ -14,12 +14,17 @@ import Button from "@mui/material/Button";
 import Fab from "@mui/material/Fab";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import "./style.css";
+import IconButton from "@mui/material/IconButton";
+import DeleteIcon from "@mui/icons-material/Delete";
+
 export default function EditEntry() {
+  const [entries, setEntries] = useState([]);
   const [personName, setPersonName] = useState();
   const [city, setCity] = useState();
   const [amount, setAmount] = useState();
   const [gift, setGift] = useState();
   const [presentType, setPresentType] = useState("");
+  const [eventId, setEventId] = useState();
 
   const navigate = useNavigate();
   const [searchParam] = useSearchParams();
@@ -61,6 +66,45 @@ export default function EditEntry() {
         navigate(`/entrylist?event=${response.data.eventId}`);
       });
   };
+
+  const deleteEntry = (entryId) => {
+    axios
+      .delete(`http://localhost:2010/entries/${entryId}`)
+      .then((response) => {
+        console.log("after deletion response:" + response);
+        console.log(
+          "after deletion response data:" + JSON.stringify(response.data)
+        );
+
+        axios
+          .get(`http://localhost:2010/entries/all/${eventId}`)
+          .then((response) => {
+            console.log(
+              "after deletion get All entries:" + JSON.rectify(response.data)
+            );
+            setEntries(response.data);
+          });
+        navigate(`/entrylist?event=${eventId}`);
+      });
+    // });
+  };
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:2010/entries/eventId/${entryId}`)
+      .then((response) => {
+        console.log(response);
+        console.log(response.data.eventId);
+        axios
+          .get(`http://localhost:2010/entries/all/${response.data.eventId}`)
+          .then((response) => {
+            console.log(response);
+            console.log(response.data);
+            setEntries(response.data);
+          });
+      });
+  }, []);
+
   useEffect(() => {
     axios.get(`http://localhost:2010/entries/${entryId}`).then((response) => {
       console.log("get selected Entry's data : " + JSON.stringify(response));
@@ -70,6 +114,12 @@ export default function EditEntry() {
       setAmount(response.data.amount);
       setGift(response.data.gift);
     });
+    axios
+      .get(`http://localhost:2010/entries/eventId/${entryId}`)
+      .then((response) => {
+        console.log("EventId recd from entries :" + JSON.stringify(response));
+        setEventId(response.data.eventId);
+      });
   }, []);
 
   return (
@@ -78,6 +128,13 @@ export default function EditEntry() {
         <ArrowBackIcon onClick={navigateToEntryList} />
 
         <h2>Update Entry</h2>
+
+        <IconButton aria-label="settings">
+          <DeleteIcon
+            style={{ color: "#FFFFFF" }}
+            onClick={() => deleteEntry(entryId)}
+          />
+        </IconButton>
       </div>
 
       <Box

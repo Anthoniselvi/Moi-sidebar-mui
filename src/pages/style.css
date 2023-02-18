@@ -388,3 +388,9 @@ padding: 10%;
     height: 500px;
     background-image: url("../images/baby.jpg");
   }
+  .entry_head_name{
+    cursor: pointer;
+  }
+  .entry_head_name:hover{
+    color: blue;
+  }
