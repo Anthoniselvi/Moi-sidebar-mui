@@ -1,7 +1,8 @@
 
-.dashboard_container{
-   
-    width: 100%;
+.dashboard_container, .slider-container, .home_container, .home1_container{
+   margin: 0;
+   padding: 0;
+    width: 100vw;
     height: 100vh;
     overflow-y:hidden;
      
@@ -9,7 +10,23 @@
 .header_container{
     width: 100vw;
     height: 10%;
+    margin-top: 0;
     background-color: #9C27B0;
+}
+.home_container{
+  padding: 10%;
+  background-color: #9C27B0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* justify-content: center; */
+}
+.home1_container{
+  padding: 10%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #9C27B0;
 }
 .dashboard_body{
     width: 100%;

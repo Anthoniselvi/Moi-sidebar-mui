@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-// import "./EditProfile.css";
+
 import { AiFillCloseCircle, AiFillCheckCircle } from "react-icons/ai";
 import { FaUserAlt } from "react-icons/fa";
 import axios from "axios";
 import "./Profile.css";
 import { auth } from "./firebase";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import AddProfile from "./AddProfile";
+
 import { useUserAuth } from "../Context/UserAuthContext";
 import TextField from "@mui/material/TextField";
 import { Box } from "@mui/material";
@@ -233,11 +233,6 @@ function Profile(props) {
           Update
         </Button>
       </Box>
-      {/* ) : (
-            <AddProfile />
-          )}
-        </>
-      ))} */}
     </div>
   );
 }
